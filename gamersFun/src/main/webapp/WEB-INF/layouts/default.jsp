@@ -1,3 +1,7 @@
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -7,6 +11,7 @@
     <title>UltraNews - Bootstrap 4 Magazine Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <c:set var="contextRoot" value="${pageContext.request.contextPath}"/>
     <link rel="shortcut icon" type="image/x-icon" href="${contextRoot}/imgs/favicon.png">
     <!-- UltraNews CSS  -->
     <link rel="stylesheet" href="${contextRoot}/css/style.css">
@@ -692,7 +697,7 @@
                                             <li><a href="shop-product-detail-full.html">Product details full</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="about.html">About</a></li>
+                                    <li><a href="${contextRoot}/about">About</a></li>
                                     <li class="menu-item-has-children">
                                         <a href="category.html">Category</a>
                                         <ul class="sub-menu">
