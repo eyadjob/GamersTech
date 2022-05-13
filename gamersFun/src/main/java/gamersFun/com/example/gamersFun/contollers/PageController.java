@@ -1,7 +1,6 @@
 package gamersFun.com.example.gamersFun.contollers;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +20,11 @@ public class PageController {
     @RequestMapping("/about")
     String about(){
         return "app.about";
+    }
+
+    @RequestMapping("/eyad")
+    String eyadTest(){
+        return "eyad test";
     }
 
     @RequestMapping("/contactUs")
