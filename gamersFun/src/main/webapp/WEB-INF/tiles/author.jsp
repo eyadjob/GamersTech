@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/favicon.png">
     <!-- UltraNews CSS  -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/widgets.css">
-    <link rel="stylesheet" href="assets/css/color.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="${contextRoot}/css/style.css">
+    <link rel="stylesheet" href="${contextRoot}/css/widgets.css">
+    <link rel="stylesheet" href="${contextRoot}/css/color.css">
+    <link rel="stylesheet" href="${contextRoot}/css/responsive.css">
 </head>
 
 <body class="author">
@@ -207,7 +207,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-12 align-center-vertical">
                             <a href="index.html">
-                                <img class="logo-img d-inline" src="assets/imgs/logo-2.png" alt="">
+                                <img class="logo-img d-inline" src="${contextRoot}/imgs/logo-2.png" alt="">
                             </a>
                         </div>
                         <div class="col-lg-8 col-md-12 align-center-vertical d-none d-lg-inline text-right">
@@ -232,12 +232,12 @@
                             </div>
                             <div class="logo-tablet d-md-inline d-lg-none d-none">
                                 <a href="index.html">
-                                    <img class="logo-img d-inline" src="assets/imgs/logo-tablet.png" alt="">
+                                    <img class="logo-img d-inline" src="${contextRoot}/imgs/logo-tablet.png" alt="">
                                 </a>
                             </div>
                             <div class="logo-mobile d-inline d-md-none">
                                 <a href="index.html">
-                                    <img class="logo-img d-inline" src="assets/imgs/logo-mobile.png" alt="">
+                                    <img class="logo-img d-inline" src="${contextRoot}/imgs/logo-mobile.png" alt="">
                                 </a>
                             </div>
                             <!-- Main-menu -->
@@ -1356,27 +1356,27 @@
     <!-- Main Wrap End-->
     <div class="dark-mark"></div>
     <!-- Vendor JS-->
-    <script src="./assets/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="./assets/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="./assets/js/vendor/popper.min.js"></script>
-    <script src="./assets/js/vendor/bootstrap.min.js"></script>
-    <script src="./assets/js/vendor/jquery.slicknav.js"></script>
-    <script src="./assets/js/vendor/owl.carousel.min.js"></script>
-    <script src="./assets/js/vendor/slick.min.js"></script>
-    <script src="./assets/js/vendor/wow.min.js"></script>
-    <script src="./assets/js/vendor/animated.headline.js"></script>
-    <script src="./assets/js/vendor/jquery.magnific-popup.js"></script>
-    <script src="./assets/js/vendor/jquery.ticker.js"></script>
-    <script src="./assets/js/vendor/jquery.vticker-min.js"></script>
-    <script src="./assets/js/vendor/jquery.scrollUp.min.js"></script>
-    <script src="./assets/js/vendor/jquery.nice-select.min.js"></script>
-    <script src="./assets/js/vendor/jquery.sticky.js"></script>
-    <script src="./assets/js/vendor/perfect-scrollbar.js"></script>
-    <script src="./assets/js/vendor/waypoints.min.js"></script>
-    <script src="./assets/js/vendor/jquery.counterup.min.js"></script>
-    <script src="./assets/js/vendor/jquery.theia.sticky.js"></script>
+    <script src="${contextRoot}/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="${contextRoot}/js/vendor/popper.min.js"></script>
+    <script src="${contextRoot}/js/vendor/bootstrap.min.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery.slicknav.js"></script>
+    <script src="${contextRoot}/js/vendor/owl.carousel.min.js"></script>
+    <script src="${contextRoot}/js/vendor/slick.min.js"></script>
+    <script src="${contextRoot}/js/vendor/wow.min.js"></script>
+    <script src="${contextRoot}/js/vendor/animated.headline.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery.magnific-popup.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery.ticker.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery.vticker-min.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery.scrollUp.min.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery.nice-select.min.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery.sticky.js"></script>
+    <script src="${contextRoot}/js/vendor/perfect-scrollbar.js"></script>
+    <script src="${contextRoot}/js/vendor/waypoints.min.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery.counterup.min.js"></script>
+    <script src="${contextRoot}/js/vendor/jquery.theia.sticky.js"></script>
     <!-- UltraNews JS -->
-    <script src="./assets/js/main.js"></script>
+    <script src="${contextRoot}/js/main.js"></script>
 </body>
 
 </html>
