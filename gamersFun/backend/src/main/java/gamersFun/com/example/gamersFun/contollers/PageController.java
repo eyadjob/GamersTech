@@ -40,6 +40,17 @@ public class PageController {
     }
 
 
+    @RequestMapping("/author")
+    String author(){
+        return "app.author";
+    }
+
+    @RequestMapping("/search")
+    String search(){
+        return "app.search";
+    }
+
+
     @RequestMapping("/contactUs")
     String contactUs(){
         return "app.contactUs";
