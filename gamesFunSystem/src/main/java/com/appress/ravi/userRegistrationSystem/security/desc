@@ -1,0 +1,3 @@
+The BasicAuthenticationFilter object is responsible for processing any HTTP request that contains an HTTP request header of Authorization with an authentication schema of Basic Authentication and a Base64-encoded username:password token.
+
+If the authentication is successful, BasicAuthenticationFilter in Spring is responsible for putting the result (the Authentication object) into the SecurityContextHolder.
