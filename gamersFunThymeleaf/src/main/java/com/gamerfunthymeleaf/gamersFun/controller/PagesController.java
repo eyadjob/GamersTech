@@ -15,8 +15,8 @@ public class PagesController {
 
 
 	@RequestMapping("/getHome")
-	public String homePage(Model model) {
-//		model.addAttribute("appName", appName);
+	public String homePage() {
+
 		return "/gamersfun/html/home-2.html";
 	}
 
