@@ -39,11 +39,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/invaliduser",
                         "/expiredtoken",
                         "/verifyEmail",
-                        "/confirmRegister"
-
-
+                        "/confirmRegister",
+                        "/eyad",
+                        "/hello-world"
                 )
                 .permitAll()
+                .antMatchers(HttpMethod.POST,"/bike")  .permitAll()
                 .antMatchers(
                         "/js/*",
                         "/js/**",
@@ -56,8 +57,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addCategory",
                         "/addNews",
                         "/admin/*"
-
                         )
+
+
                 .hasRole("ADMIN")//.access("hasRole('ADMIN')")
                 //Accessible links for authenticated to ADMIN users links
                 .antMatchers("/webjars/**",
