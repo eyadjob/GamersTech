@@ -1,18 +1,18 @@
-package gamersFun.com.example.gamersFun.contollers;
+package com.gamerfunthymeleaf.gamersFun.controller;
 
-import java.util.List;
-import gamersFun.com.example.gamersFun.entity.Bike;
-import gamersFun.com.example.gamersFun.repository.BikeRepository;
-import gamersFun.com.example.gamersFun.service.BikeService;
+
+import com.gamerfunthymeleaf.gamersFun.entity.Bike;
+import com.gamerfunthymeleaf.gamersFun.repository.BikeRepository;
+import com.gamerfunthymeleaf.gamersFun.service.BikeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
-@Controller
-//@RequestMapping("/api/v1/bikes")
+
+@RestController
+@RequestMapping("/api/v1")
 public class BikesController {
 	@Autowired
 	private BikeService bikeService;
@@ -39,5 +39,9 @@ public class BikesController {
 		return bikeRepository.getOne(id);
 	}
 
+	@RequestMapping(path = "/eyad", method = RequestMethod.GET)
+	public String eyad(){
+		return "eyad string";
+	}
 
 }
