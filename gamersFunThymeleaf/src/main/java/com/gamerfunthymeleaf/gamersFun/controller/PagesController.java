@@ -20,7 +20,7 @@ public class PagesController {
 	}
 	@RequestMapping("/about")
 	String about(){
-		return "/gamersfun/html/home-2.html";
+		return "/gamersfun/html/about.html";
 	}
 
 	@RequestMapping(path = "/eyad", method = RequestMethod.GET)
