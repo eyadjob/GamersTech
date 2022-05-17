@@ -36,7 +36,9 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.POST,"/bike")  .permitAll()
                 .antMatchers(
-                        "/static/**")
+                        "/static/**",
+                        "/assets/**")
+
                 .permitAll()
                 .antMatchers("/addCategory",
                         "/addNews",
