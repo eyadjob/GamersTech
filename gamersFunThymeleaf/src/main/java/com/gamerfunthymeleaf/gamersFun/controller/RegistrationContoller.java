@@ -4,14 +4,13 @@ package com.gamerfunthymeleaf.gamersFun.controller;
 import com.gamerfunthymeleaf.gamersFun.entity.User;
 import com.gamerfunthymeleaf.gamersFun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -24,32 +23,33 @@ public class RegistrationContoller {
 
 //    @RequestMapping(value="/signup",method = RequestMethod.GET)
     @RequestMapping("/signup")
-    String register(ModelAndView modelAndView){
-//        User siteUser = new User();
+    String register(Model model){
+        User siteUser = new User();
 //        modelAndView.setViewName("/gamersfun/html/signup.html");
 //        modelAndView.getModel().put("user",siteUser);
-        return "/gamersfun/html/signup.html";
+        return "/gamersfun/html/signup";
     }
 
-//    @RequestMapping(value="/signup",method = RequestMethod.POST)
-    @RequestMapping(path = "/signup", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    String postRegister(ModelAndView modelAndView, @ModelAttribute(value = "user") @Valid User user, BindingResult bindingResult){
+     @RequestMapping(value = "/signup", method = RequestMethod.POST)
+     String postRegister(ModelAndView modelAndView, @ModelAttribute(value = "user") @Valid User user, BindingResult bindingResult){
         modelAndView.setViewName("/gamersfun/html/signup.html");
         if(!bindingResult.hasErrors()){
 
             UserDetails userDetails = userService.loadUserByUsername(user.getEmail());
             if(userDetails != null){
                 bindingResult.addError(new ObjectError("email","Email already used ."));
-                return "/gamersfun/html/signup.html";
+                return "redirect:/gamersfun/html/signup";
             }
             userService.register(user);
-
-
-            modelAndView.setViewName("/gamersfun/html/verifyEmail.html");
+            modelAndView.setViewName("/gamersfun/html/verifyEmail");
         }
-
-        return "/gamersfun/html/signup.html";
+        return "redirect:/gamersfun/html/verifyEmail";
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public String createUser(Model model, @ModelAttribute User userInfo) {
+        userService.register(userInfo);
+        return "redirect:/users/";
+    }
 
 }
