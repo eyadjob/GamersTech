@@ -43,7 +43,10 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                         "/api/v1/**"
                 )
                 .permitAll()
-                .antMatchers(HttpMethod.POST,"/api/v1/bike")  .permitAll()
+                .antMatchers(HttpMethod.POST,
+                        "/api/v1/bike",
+                        "/signup**")
+                .permitAll()
                 .antMatchers(
                         "/static/**",
                         "/assets/**")
