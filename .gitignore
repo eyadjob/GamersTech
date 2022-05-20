@@ -1,5 +1,11 @@
 **/debug.log
-**/.idea/
+**/.idea/**
+gamersFun/.idea/misc.xml
+/g/gamersFun/.idea/misc.xml
+gamersFun/.idea/misc.xml
+gamersFun/.idea/modules.xml
+gamersFun/.idea/vcs.xml
+
 **/build/
 **/temp/
 **/customReports/
