@@ -1,5 +1,6 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:url var="loginUrl" value="/login"/>
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -10,13 +11,13 @@
     <title>Login - UltraNews - Bootstrap 4 Magazine Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="${contextRoot}/imgs/favicon.png">
     <!-- UltraNews CSS  -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/shop.css">
-    <link rel="stylesheet" href="assets/css/widgets.css">
-    <link rel="stylesheet" href="assets/css/color.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="${contextRoot}/css/style.css">
+    <link rel="stylesheet" href="${contextRoot}/css/shop.css">
+    <link rel="stylesheet" href="${contextRoot}/css/widgets.css">
+    <link rel="stylesheet" href="${contextRoot}/css/color.css">
+    <link rel="stylesheet" href="${contextRoot}/css/responsive.css">
 </head>
 
 <body class="category archive js">
@@ -206,9 +207,18 @@
                                     <div class="heading_s1">
                                         <h3 class="mb-30">Login</h3>
                                     </div>
-                                    <form method="post">
+                                    <c:if test="${param.error != null}">
+                                        <div class="login-error">
+                                            Incorrect email or password
+                                        </div>
+                                    </c:if>
+                                    <form method="post" action="${loginUrl}">
+                                        <%--cross site request forgeries
+                                             if i used spring boot tags no need to this hidden field--%>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                         <div class="form-group">
-                                            <input type="text" required="" class="form-control" name="email" placeholder="Your Email">
+                                            <%--<input type="text" required="" class="form-control" name="email" placeholder="Your Email">--%>
+                                            <input type="text" required="" name="username" placeholder="Your Email" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <input class="form-control" required="" type="password" name="password" placeholder="Password">
@@ -247,5 +257,5 @@
     <div class="dark-mark"></div>
     <tiles:insertAttribute name="jsScripts"/>
 </body>
-
+uuuuuuuuuuuuuuuuuuuuuuuuuuuuu
 </html>

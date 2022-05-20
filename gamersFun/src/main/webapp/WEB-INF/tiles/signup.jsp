@@ -220,6 +220,11 @@
                     <div class="row justify-content-center">
                         <div class="col-xl-6 col-md-10">
                             <div class="login_wrap widget-taber-content p-30 background-white border-radius-5">
+                                <%-- <form:errors path="email"></form:errors>
+                                 <form:errors path="password"></form:errors>--%>
+                                <form:errors path="user.*"></form:errors>
+                            </div>
+                            <div class="login_wrap widget-taber-content p-30 background-white border-radius-5">
                                 <div class="padding_eight_all bg-white">
                                     <div class="heading_s1">
                                         <h3 class="mb-30">Create an Account</h3>

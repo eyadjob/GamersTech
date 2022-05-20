@@ -1,3 +1,7 @@
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!-- Main Wrap Start -->
 <header class="main-header header-style-2">
     <div class="top-bar background-white d-none d-md-block">
@@ -34,20 +38,50 @@
                             <li class="list-inline-item"><a class="social-icon instagram-icon text-xs-center" target="_blank" href="#"><i class="ti-instagram"></i></a></li>
                         </ul>
                         <div class="vline-space d-inline-block"></div>
-                        <div class="user-account d-inline-block font-small">
-                            <a class="dropdown-toggle" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="ti-user"></i>
-                                <span>Account</span>
-                            </a>
-                            <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                                <a class="dropdown-item" href="#"><i class="ti-pencil-alt"></i>Edit Profile</a>
-                                <a class="dropdown-item" href="#"><i class="ti-settings"></i>Account Settings</a>
-                                <a class="dropdown-item" href="#"><i class="ti-stats-up"></i>Your Dashboard</a>
-                                <a class="dropdown-item" href="#"><i class="ti-heart"></i>Your Favorites</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="login.html"><i class="ti-share"></i>Logout</a>
+                        <sec:authorize access="!isAuthenticated()">
+                            <div class="user-account d-inline-block font-small">
+                                <a class="dropdown-toggle" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="ti-user"></i>
+                                    <span>Crate Account</span>
+                                </a>
+                                <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                                    <a class="dropdown-item" href="${contextRoot}/signup"><i class="ti-pencil-alt"></i>Sign Up</a>
+                                </div>
                             </div>
-                        </div>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <div class="user-account d-inline-block font-small">
+                                <a class="dropdown-toggle" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="ti-user"></i>
+                                    <span>Account</span>
+                                </a>
+                                <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                                    <a class="dropdown-item" href="#"><i class="ti-pencil-alt"></i>Go to Admin Page</a>
+                                    <a class="dropdown-item" href="javascript:$('#logoutForm').submit()"><i class="ti-share"></i>Logout</a>
+                                </div>
+                            </div>
+                        </sec:authorize>
+                        <sec:authorize access="isAuthenticated()">
+                            <div class="user-account d-inline-block font-small">
+                                <a class="dropdown-toggle" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="ti-user"></i>
+                                    <span>Account</span>
+                                </a>
+                                <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                                    <a class="dropdown-item" href="#"><i class="ti-pencil-alt"></i>Edit Profile</a>
+                                    <a class="dropdown-item" href="#"><i class="ti-settings"></i>Account Settings</a>
+                                    <a class="dropdown-item" href="#"><i class="ti-stats-up"></i>Your Dashboard</a>
+                                    <a class="dropdown-item" href="#"><i class="ti-heart"></i>Your Favorites</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:$('#logoutForm').submit()"><i class="ti-share"></i>Logout</a>
+                                </div>
+                            </div>
+                        </sec:authorize>
+
+                        <c:url var="logoutLink" value="/logout"/>
+                        <form id="logoutForm" method="post" action="${logoutLink}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -545,6 +579,9 @@
                                         <li><a href="shop-product-detail-full.html">Product details full</a></li>
                                     </ul>
                                 </li>
+                                <sec:authorize access="!isAuthenticated()">
+                                    <li><a href="${contextRoot}/login">Sign In</a></li>
+                                </sec:authorize>
                                 <li><a href="${contextRoot}/about">About</a></li>
                                 <li class="menu-item-has-children">
                                     <a href="category.html">Category</a>
