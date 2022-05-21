@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class PageController {
 
 
-
     @RequestMapping("/")
     ModelAndView home(ModelAndView modelAndView){
         modelAndView.setViewName("app.homepage");

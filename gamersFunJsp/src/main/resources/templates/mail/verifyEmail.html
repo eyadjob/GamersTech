@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+            <div class="header-logo background-white pt-20 pb-20 d-none d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 align-center-vertical">
+                    <a href="index.html">
+                        <img class="logo-img d-inline"  src="cid:high-logo"  alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div></div>
+            <span th:text="'Hello ' + ${name}">Hi there </span>
+            <p>Thank you for registration to Gamers website please click on the link below to verify your email </p>
+            <p>Please click <a th:href="@{${siteUrl} + '/confirmRegister?t=' + ${token}}">here</a> to verify your email address. </p>
+    </body>
+
+</th:block>
+</html>
