@@ -3,9 +3,9 @@ package gamersFun.com.example.gamersFun.service;
 
 import gamersFun.com.example.gamersFun.entity.TokenType;
 import gamersFun.com.example.gamersFun.entity.User;
-import gamersFun.com.example.gamersFun.entity.VerficationToken;
+import gamersFun.com.example.gamersFun.entity.VerificationToken;
 import gamersFun.com.example.gamersFun.repository.UserDao;
-import gamersFun.com.example.gamersFun.repository.VerficationDao;
+import gamersFun.com.example.gamersFun.repository.VerificationDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private VerficationDao tokenDao;
+    private VerificationDao tokenDao;
 
 
     public void register(User siteUser){
@@ -66,20 +66,20 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public String createVerficationToken(User user,TokenType tokenType){
-        VerficationToken token = new VerficationToken(user,tokenType,UUID.randomUUID().toString());
+    public String createVerificationToken(User user, TokenType tokenType){
+        VerificationToken token = new VerificationToken(user,tokenType,UUID.randomUUID().toString());
         tokenDao.save(token);
         return token.getToken();
     }
 
 
-    public VerficationToken getVerification(String token){
+    public VerificationToken getVerification(String token){
         return tokenDao.findByToken(token);
 
     }
 
 
-    public void deleteToken(VerficationToken token){
+    public void deleteToken(VerificationToken token){
         tokenDao.delete(token);
     }
 }

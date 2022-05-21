@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-@Table(name = "verfication")
-public class VerficationToken {
+@Table(name = "verification")
+public class VerificationToken {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -28,11 +28,11 @@ public class VerficationToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date expire;
 
-    public VerficationToken(){
+    public VerificationToken(){
 
     }
 
-    public VerficationToken(User user,TokenType tokenType, String token){
+    public VerificationToken(User user, TokenType tokenType, String token){
         this.user = user;
         this.tokenType = tokenType;
         this.token = token;

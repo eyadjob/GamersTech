@@ -40,49 +40,5 @@ public class MailConfig {
         return props;
     }
 
-    public void sendReportEmail(String emailSubject, String content, String sendEmailTo, String BccSendEmailTo) {
-        final String username = user;
-        final String password = this.password;
-        try {
-            Session session = Session.getDefaultInstance(configEmailProperties(),
-                    new Authenticator() {
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(username, password);
-                        }
-                    });
-            Message msg = new MimeMessage(session);
-            MimeMultipart multipart = new MimeMultipart("related");
-            MimeBodyPart body = new MimeBodyPart();
-            body.setContent(content, "text/html; charset=UTF-8");
-            multipart.addBodyPart(body);
-            multipart = addYeloEmailImages(multipart);
-            msg.setFrom(new InternetAddress(username));
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(sendEmailTo, false));
-            msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(BccSendEmailTo, false));
-            msg.setSubject(emailSubject);
-            msg.setContent(multipart);
-            msg.setSentDate(new Date());
-            Transport.send(msg);
-            System.out.println("Message sent.");
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public MimeMultipart addYeloEmailImages(MimeMultipart multipart) throws MessagingException {
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\logo high.png", "<high-logo>");
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\website-icon.png", "<web-icon>");
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\facebook-icon.png", "<facebook-icon>");
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\twitter-icon.png", "<twitter-icon>");
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\linkedin-icon.png", "<linkedin-icon>");
-        return multipart;
-    }
-    public MimeMultipart addMultiPartFile(MimeMultipart multipart, String filePath, String fileId) throws MessagingException {
-        MimeBodyPart messageBodyPart = new MimeBodyPart();
-        DataSource linkedInLogo = new FileDataSource(filePath);
-        messageBodyPart.setDataHandler(new DataHandler(linkedInLogo));
-        messageBodyPart.setHeader("Content-ID", fileId);
-        multipart.addBodyPart(messageBodyPart);
-        return multipart;
-    }
 }
