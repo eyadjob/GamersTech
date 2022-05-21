@@ -54,10 +54,7 @@ public class RegistrationContoller {
 
             String token = userService.createVerficationToken(user, TokenType.REGISTRATION);
 
-
             userService.register(user);
-
-            String token = userService.createVerficationToken(user, TokenType.REGISTRATION);
 
             emailService.sendVerficationEmail(user.getEmail(),token);
 
