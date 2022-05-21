@@ -38,11 +38,6 @@ public class EmailsConfiguration {
     @Value("${spring.mail.password}")
     private String password;
 
-    @Value("${spring.mail.username}")
-    private String user;
-    @Value("${spring.mail.password}")
-    private String password;
-
     @Bean
     public Properties configEmailProperties() {
         Properties props = new Properties();

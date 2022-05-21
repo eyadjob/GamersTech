@@ -41,14 +41,6 @@ public class EmailService {
     @Value("${spring.mail.port}")
     private Integer port;
 
-
-
-    private void send(MimeMessagePreparator mimeMessagePreparator) {
-        if (enable) {
-            mailSender.send(mimeMessagePreparator);
-        }
-    }
-
     public Session getEmailSession() {
         final String username = emailsConfiguration.getUser();
         final String password = emailsConfiguration.getPassword();
@@ -59,7 +51,6 @@ public class EmailService {
         });
         return session;
     }
-
     public String getVerificationEmailBody(String userName,String verificationToken)  {
         Context context = new Context();
         context.setVariable("name", userName);
@@ -98,7 +89,6 @@ public class EmailService {
         addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\logo.png", "<high-logo>");
         return multipart;
     }
-
     public MimeMultipart addMultiPartFile(MimeMultipart multipart, String filePath, String fileId) throws MessagingException {
         MimeBodyPart messageBodyPart = new MimeBodyPart();
         DataSource linkedInLogo = new FileDataSource(filePath);
@@ -107,8 +97,6 @@ public class EmailService {
         multipart.addBodyPart(messageBodyPart);
         return multipart;
     }
-
-
 }
 
 
