@@ -34,7 +34,6 @@ public class RegistrationContoller {
      String postRegister(ModelAndView modelAndView, @ModelAttribute(value = "user") @Valid User user, BindingResult bindingResult){
         modelAndView.setViewName("/gamersfun/html/signup.html");
         if(!bindingResult.hasErrors()){
-
             UserDetails userDetails = userService.loadUserByUsername(user.getEmail());
             if(userDetails != null){
                 bindingResult.addError(new ObjectError("email","Email already used ."));
@@ -43,8 +42,14 @@ public class RegistrationContoller {
             userService.register(user);
             modelAndView.setViewName("/gamersfun/html/verifyEmail");
         }
-        return "redirect:/gamersfun/html/verifyEmail";
+        return "redirect:/verifyEmail";
     }
+
+    @RequestMapping("/verifyEmail")
+    String getVerifyPage(){
+        return "/gamersfun/html/verifyEmail";
+    }
+
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String createUser(Model model, @ModelAttribute User userInfo) {
