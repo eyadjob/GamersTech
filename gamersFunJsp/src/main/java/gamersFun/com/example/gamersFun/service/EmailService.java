@@ -40,49 +40,8 @@ public class EmailService {
     private String host;
     @Value("${spring.mail.port}")
     private Integer port;
-    @Value("${spring.mail.username}")
-    private String user;
-    @Value("${spring.mail.password}")
-    private String password;
 
 
-//    @Autowired
-//    public TemplateEngine EmailService() {
-//        TemplateEngine templateEngine = new TemplateEngine();
-//        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-//        resolver.setPrefix("mail/");
-//        resolver.setSuffix(".html");
-//        resolver.setTemplateMode("HTML5");
-//        resolver.setCacheable(false);
-//        templateEngine.setTemplateResolver(resolver);
-//        return templateEngine;
-//    }
-
-
-//    @Async// we should enable it from main method when start app
-//    public void sendVerificationEmail(String mail, String token) {
-//        Context context = new Context();
-//        context.setVariable("token", token);
-//        context.setVariable("siteUrl", siteUrl);
-//        String emailContent = templateEngine.process("verifyEmail", context);
-//
-//        System.out.println(emailContent);
-//        MimeMessagePreparator mimeMessagePreparator = new MimeMessagePreparator() {
-//            @Override
-//            public void prepare(MimeMessage mimeMessage) throws Exception {
-//                MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-//                messageHelper.setTo(mail);
-//                messageHelper.setCc("odai.1989@gmail.com");
-//                messageHelper.setFrom(new InternetAddress("no-replay@gamersFun.com"));
-//                messageHelper.setSubject("Please Verify Your email Address");
-//                messageHelper.setSentDate(new Date());
-//                messageHelper.setText(emailContent, Boolean.TRUE);
-//
-//            }
-//        };
-//
-//        send(mimeMessagePreparator);
-//    }
 
     private void send(MimeMessagePreparator mimeMessagePreparator) {
         if (enable) {
@@ -91,8 +50,8 @@ public class EmailService {
     }
 
     public Session getEmailSession() {
-        final String username = user;
-        final String password = this.password;
+        final String username = emailsConfiguration.getUser();
+        final String password = emailsConfiguration.getPassword();
        Session session = Session.getDefaultInstance(emailsConfiguration.configEmailProperties(), new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
@@ -122,7 +81,7 @@ public class EmailService {
             body.setContent(verificationEmailBody, "text/html; charset=UTF-8");
             multipart.addBodyPart(body);
             multipart = addYeloEmailImages(multipart);
-            msg.setFrom(new InternetAddress(user));
+            msg.setFrom(new InternetAddress(emailsConfiguration.getUser()));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(sendEmailTo, false));
             msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(BccSendEmailTo, false));
             msg.setSubject("Please verify your email");
@@ -137,10 +96,6 @@ public class EmailService {
 
     public MimeMultipart addYeloEmailImages(MimeMultipart multipart) throws MessagingException {
         addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\logo.png", "<high-logo>");
-//        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\website-icon.png", "<web-icon>");
-//        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\facebook-icon.png", "<facebook-icon>");
-//        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\twitter-icon.png", "<twitter-icon>");
-//        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\linkedin-icon.png", "<linkedin-icon>");
         return multipart;
     }
 

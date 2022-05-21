@@ -1,5 +1,6 @@
 package gamersFun.com.example.gamersFun.configuration.email;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,12 +26,18 @@ import java.util.Properties;
 @Component
 @Configuration
 @PropertySource("application.properties")
+@Getter
 public class EmailsConfiguration {
 
     @Value("${spring.mail.host}")
     private String host;
     @Value("${spring.mail.port}")
     private Integer port;
+    @Value("${spring.mail.username}")
+    private String user;
+    @Value("${spring.mail.password}")
+    private String password;
+
     @Value("${spring.mail.username}")
     private String user;
     @Value("${spring.mail.password}")
