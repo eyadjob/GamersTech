@@ -1,7 +1,7 @@
 package gamersFun.com.example.gamersFun.service;
 
 
-import gamersFun.com.example.gamersFun.configuration.MailConfig;
+import gamersFun.com.example.gamersFun.configuration.email.EmailsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,9 +26,8 @@ import java.util.Date;
 @Service
 public class EmailService {
 
-    private final TemplateEngine templateEngine;
     @Autowired
-    MailConfig mailConfig;
+    EmailsConfiguration emailsConfiguration;
     @Autowired
     private JavaMailSender mailSender;
     @Value("${mail.enable}")
@@ -47,42 +46,43 @@ public class EmailService {
     private String password;
 
 
-    @Autowired
-    public EmailService(TemplateEngine templateEngine) {
-        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-        resolver.setPrefix("mail/");
-        resolver.setSuffix(".html");
-        resolver.setTemplateMode("HTML5");
-        resolver.setCacheable(false);
-        templateEngine.setTemplateResolver(resolver);
-        this.templateEngine = templateEngine;
-    }
+//    @Autowired
+//    public TemplateEngine EmailService() {
+//        TemplateEngine templateEngine = new TemplateEngine();
+//        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+//        resolver.setPrefix("mail/");
+//        resolver.setSuffix(".html");
+//        resolver.setTemplateMode("HTML5");
+//        resolver.setCacheable(false);
+//        templateEngine.setTemplateResolver(resolver);
+//        return templateEngine;
+//    }
 
 
-    @Async// we should enable it from main method when start app
-    public void sendVerificationEmail(String mail, String token) {
-        Context context = new Context();
-        context.setVariable("token", token);
-        context.setVariable("siteUrl", siteUrl);
-        String emailContent = templateEngine.process("verifyEmail", context);
-
-        System.out.println(emailContent);
-        MimeMessagePreparator mimeMessagePreparator = new MimeMessagePreparator() {
-            @Override
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-                messageHelper.setTo(mail);
-                messageHelper.setCc("odai.1989@gmail.com");
-                messageHelper.setFrom(new InternetAddress("no-replay@gamersFun.com"));
-                messageHelper.setSubject("Please Verify Your email Address");
-                messageHelper.setSentDate(new Date());
-                messageHelper.setText(emailContent, Boolean.TRUE);
-
-            }
-        };
-
-        send(mimeMessagePreparator);
-    }
+//    @Async// we should enable it from main method when start app
+//    public void sendVerificationEmail(String mail, String token) {
+//        Context context = new Context();
+//        context.setVariable("token", token);
+//        context.setVariable("siteUrl", siteUrl);
+//        String emailContent = templateEngine.process("verifyEmail", context);
+//
+//        System.out.println(emailContent);
+//        MimeMessagePreparator mimeMessagePreparator = new MimeMessagePreparator() {
+//            @Override
+//            public void prepare(MimeMessage mimeMessage) throws Exception {
+//                MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+//                messageHelper.setTo(mail);
+//                messageHelper.setCc("odai.1989@gmail.com");
+//                messageHelper.setFrom(new InternetAddress("no-replay@gamersFun.com"));
+//                messageHelper.setSubject("Please Verify Your email Address");
+//                messageHelper.setSentDate(new Date());
+//                messageHelper.setText(emailContent, Boolean.TRUE);
+//
+//            }
+//        };
+//
+//        send(mimeMessagePreparator);
+//    }
 
     private void send(MimeMessagePreparator mimeMessagePreparator) {
         if (enable) {
@@ -93,7 +93,7 @@ public class EmailService {
     public Session getEmailSession() {
         final String username = user;
         final String password = this.password;
-       Session session = Session.getDefaultInstance(mailConfig.configEmailProperties(), new Authenticator() {
+       Session session = Session.getDefaultInstance(emailsConfiguration.configEmailProperties(), new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }
@@ -101,19 +101,21 @@ public class EmailService {
         return session;
     }
 
-    public String getVerificationEmailBody(String verificationToken)  {
+    public String getVerificationEmailBody(String userName,String verificationToken)  {
         Context context = new Context();
+        context.setVariable("name", userName);
         context.setVariable("token", verificationToken);
         context.setVariable("siteUrl", siteUrl);
-        String emailContent = templateEngine.process("verifyEmail", context);
+        String emailContent = emailsConfiguration.emailTemplateEngine().process("/verifyEmail", context);
         System.out.println(emailContent);
         return emailContent;
     }
-    public void sendVerificationEmail( String verificationToken, String sendEmailTo, String BccSendEmailTo) {
+    @Async
+    public void sendVerificationEmail(String userName, String sendEmailTo, String verificationToken,  String BccSendEmailTo) {
         try {
             Session session = getEmailSession();
 
-            String verificationEmailBody = getVerificationEmailBody(verificationToken);
+            String verificationEmailBody = getVerificationEmailBody(userName,verificationToken);
             Message msg = new MimeMessage(session);
             MimeMultipart multipart = new MimeMultipart("related");
             MimeBodyPart body = new MimeBodyPart();
@@ -134,11 +136,11 @@ public class EmailService {
     }
 
     public MimeMultipart addYeloEmailImages(MimeMultipart multipart) throws MessagingException {
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\logo high.png", "<high-logo>");
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\website-icon.png", "<web-icon>");
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\facebook-icon.png", "<facebook-icon>");
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\twitter-icon.png", "<twitter-icon>");
-        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "email html" + "\\linkedin-icon.png", "<linkedin-icon>");
+        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\logo.png", "<high-logo>");
+//        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\website-icon.png", "<web-icon>");
+//        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\facebook-icon.png", "<facebook-icon>");
+//        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\twitter-icon.png", "<twitter-icon>");
+//        addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\linkedin-icon.png", "<linkedin-icon>");
         return multipart;
     }
 

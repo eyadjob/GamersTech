@@ -52,7 +52,7 @@ public class RegistrationContoller {
             }
             userService.register(user);
             String token = userService.createVerificationToken(user, TokenType.REGISTRATION);
-            emailService.sendVerificationEmail(user.getEmail(),token);
+            emailService.sendVerificationEmail(user.getUserName(),user.getEmail(),token,"");
             modelAndView.setViewName("redirect:/verifyEmail");
         }
 
