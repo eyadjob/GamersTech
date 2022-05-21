@@ -7,7 +7,7 @@
         <title>Title</title>
     </head>
     <body>
-            <span th:text="'Hello ' + ${name}">Hi there </span>
+            <span th:text="'Hello ' + ${email}">Hi there </span>
             <p>Thank you for registration to Gamers website please click link below to verify your email </p>
             <p>Please click <a th:href="@{${siteUrl} + '/confirmRegister?t=' + ${token}}">Verify email</a> to verif your email address. </p>
     </body>

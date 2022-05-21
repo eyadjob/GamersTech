@@ -53,6 +53,7 @@ public class EmailService {
         }*/
 
         Context context = new Context();
+        context.setVariable("email",mail);
         context.setVariable("token",token);
         context.setVariable("siteUrl",siteUrl);
         String emailContent = templateEngine.process("verifyEmail",context);
