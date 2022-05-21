@@ -2,12 +2,11 @@ package gamersFun.com.example.gamersFun.contollers;
 
 import gamersFun.com.example.gamersFun.entity.TokenType;
 import gamersFun.com.example.gamersFun.entity.User;
-import gamersFun.com.example.gamersFun.entity.VerficationToken;
+import gamersFun.com.example.gamersFun.entity.VerificationToken;
 import gamersFun.com.example.gamersFun.service.EmailService;
 import gamersFun.com.example.gamersFun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -48,19 +47,12 @@ public class RegistrationContoller {
 
             UserDetails userDetails = userService.loadUserByUsername(user.getEmail());
             if(userDetails != null){
-                bindingResult.addError(new ObjectError("email","Email already used ."));
+                bindingResult.addError(new ObjectError("email","Email already used."));
                 return modelAndView;
             }
-
-            String token = userService.createVerficationToken(user, TokenType.REGISTRATION);
-
-
             userService.register(user);
-
-            String token = userService.createVerficationToken(user, TokenType.REGISTRATION);
-
-            emailService.sendVerficationEmail(user.getEmail(),token);
-
+            String token = userService.createVerificationToken(user, TokenType.REGISTRATION);
+            emailService.sendVerificationEmail(user.getUserName(),user.getEmail(),token,"");
             modelAndView.setViewName("redirect:/verifyEmail");
         }
 
@@ -74,27 +66,27 @@ public class RegistrationContoller {
 
     @RequestMapping(value = "/confirmRegister",method = RequestMethod.GET)
     ModelAndView configrmRegistration(ModelAndView modelAndView, @RequestParam("t") String token){
-        VerficationToken verficationToken = userService.getVerification(token);
-        if(null == verficationToken){
+        VerificationToken verificationToken = userService.getVerification(token);
+        if(null == verificationToken){
             modelAndView.setViewName("redirect:/invalidUser");
             return modelAndView;
         }
 
-        Date exireDate = verficationToken.getExpire();
+        Date exireDate = verificationToken.getExpire();
         if(exireDate.before(new Date())){
-            userService.deleteToken(verficationToken);
+            userService.deleteToken(verificationToken);
             modelAndView.setViewName("redirect:/expiredToken");
             return modelAndView;
         }
 
-        User user = verficationToken.getUser();
+        User user = verificationToken.getUser();
         if(user == null){
-            userService.deleteToken(verficationToken);
+            userService.deleteToken(verificationToken);
             modelAndView.setViewName("redirect:/invalidUser");
             return modelAndView;
         }
 
-        userService.deleteToken(verficationToken);
+        userService.deleteToken(verificationToken);
         user.setEnabled(Boolean.TRUE);
         userService.save(user);
         modelAndView.getModel().put("message",registrationConfirmMessage);
