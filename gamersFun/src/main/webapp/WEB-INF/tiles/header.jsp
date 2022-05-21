@@ -1,4 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- Main Wrap Start -->
 <header class="main-header header-style-2">
@@ -47,6 +49,18 @@
                                 </div>
                             </div>
                         </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <div class="user-account d-inline-block font-small">
+                                <a class="dropdown-toggle" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="ti-user"></i>
+                                    <span>Account</span>
+                                </a>
+                                <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                                    <a class="dropdown-item" href="#"><i class="ti-pencil-alt"></i>Go to Admin Page</a>
+                                    <a class="dropdown-item" href="javascript:$('#logoutForm').submit()"><i class="ti-share"></i>Logout</a>
+                                </div>
+                            </div>
+                        </sec:authorize>
                         <sec:authorize access="isAuthenticated()">
                             <div class="user-account d-inline-block font-small">
                                 <a class="dropdown-toggle" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,10 +73,15 @@
                                     <a class="dropdown-item" href="#"><i class="ti-stats-up"></i>Your Dashboard</a>
                                     <a class="dropdown-item" href="#"><i class="ti-heart"></i>Your Favorites</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="login.html"><i class="ti-share"></i>Logout</a>
+                                    <a class="dropdown-item" href="javascript:$('#logoutForm').submit()"><i class="ti-share"></i>Logout</a>
                                 </div>
                             </div>
                         </sec:authorize>
+
+                        <c:url var="logoutLink" value="/logout"/>
+                        <form id="logoutForm" method="post" action="${logoutLink}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
                     </div>
                 </div>
             </div>
