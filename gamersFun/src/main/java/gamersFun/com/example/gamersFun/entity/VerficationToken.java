@@ -74,6 +74,7 @@ public class VerficationToken {
         return expire;
     }
 
+    //TODO: the time should configured
     @PrePersist
     private void setExpireDate(){
         Calendar calendar = Calendar.getInstance();
