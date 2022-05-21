@@ -51,16 +51,9 @@ public class RegistrationContoller {
                 bindingResult.addError(new ObjectError("email","Email already used ."));
                 return modelAndView;
             }
-
-            String token = userService.createVerficationToken(user, TokenType.REGISTRATION);
-
-
             userService.register(user);
-
             String token = userService.createVerficationToken(user, TokenType.REGISTRATION);
-
             emailService.sendVerficationEmail(user.getEmail(),token);
-
             modelAndView.setViewName("redirect:/verifyEmail");
         }
 
