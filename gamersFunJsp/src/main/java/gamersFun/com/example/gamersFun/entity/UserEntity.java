@@ -2,7 +2,7 @@ package gamersFun.com.example.gamersFun.entity;
 
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import gamersFun.com.example.gamersFun.validation.PasswordMath;
+//import gamersFun.com.example.gamersFun.validation.PasswordMath;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
-@PasswordMath(message = "{error.password.mismatch}")
+//@PasswordMath(message = "{error.password.mismatch}")
 public class UserEntity {
     public UserEntity(){
 
