@@ -1,17 +1,12 @@
 package gamersFun.com.example.gamersFun.service;
 
-
 import gamersFun.com.example.gamersFun.configuration.email.EmailsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -28,6 +23,7 @@ public class EmailService {
 
     @Autowired
     EmailsConfiguration emailsConfiguration;
+
     @Autowired
     private JavaMailSender mailSender;
     @Value("${mail.enable}")
@@ -44,14 +40,15 @@ public class EmailService {
     public Session getEmailSession() {
         final String username = emailsConfiguration.getUser();
         final String password = emailsConfiguration.getPassword();
-       Session session = Session.getDefaultInstance(emailsConfiguration.configEmailProperties(), new Authenticator() {
+        Session session = Session.getDefaultInstance(emailsConfiguration.configEmailProperties(), new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }
         });
         return session;
     }
-    public String getVerificationEmailBody(String userName,String verificationToken)  {
+
+    public String getVerificationEmailBody(String userName, String verificationToken) {
         Context context = new Context();
         context.setVariable("name", userName);
         context.setVariable("token", verificationToken);
@@ -60,12 +57,13 @@ public class EmailService {
         System.out.println(emailContent);
         return emailContent;
     }
+
     @Async
-    public void sendVerificationEmail(String userName, String sendEmailTo, String verificationToken,  String BccSendEmailTo) {
+    public void sendVerificationEmail(String userName, String sendEmailTo, String verificationToken, String BccSendEmailTo) {
         try {
             Session session = getEmailSession();
 
-            String verificationEmailBody = getVerificationEmailBody(userName,verificationToken);
+            String verificationEmailBody = getVerificationEmailBody(userName, verificationToken);
             Message msg = new MimeMessage(session);
             MimeMultipart multipart = new MimeMultipart("related");
             MimeBodyPart body = new MimeBodyPart();
@@ -89,6 +87,7 @@ public class EmailService {
         addMultiPartFile(multipart, System.getProperty("user.dir") + "\\" + "\\src\\main\\resources\\templates\\mail\\imgs" + "\\logo.png", "<high-logo>");
         return multipart;
     }
+
     public MimeMultipart addMultiPartFile(MimeMultipart multipart, String filePath, String fileId) throws MessagingException {
         MimeBodyPart messageBodyPart = new MimeBodyPart();
         DataSource linkedInLogo = new FileDataSource(filePath);
