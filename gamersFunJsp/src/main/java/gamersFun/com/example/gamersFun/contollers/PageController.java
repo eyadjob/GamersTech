@@ -1,9 +1,16 @@
 package gamersFun.com.example.gamersFun.contollers;
 
 
+import gamersFun.com.example.gamersFun.entity.CategoryEntity;
+import gamersFun.com.example.gamersFun.entity.NewsPageEntity;
+import gamersFun.com.example.gamersFun.entity.UserEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 public class PageController {
@@ -45,10 +52,6 @@ public class PageController {
         return "app.contactUs";
     }
 
-    @RequestMapping("/adminConsole")
-    String getAdminConsole() {
-        return "app.admin-console";
-    }
 
     @RequestMapping("/shopAccount")
     String getShopAccountPage() {

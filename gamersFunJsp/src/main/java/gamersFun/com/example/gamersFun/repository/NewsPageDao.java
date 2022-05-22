@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NewsPageDao extends CrudRepository<NewsPageEntity, Long> {
-    NewsPageEntity findByEmail(String email);
+    NewsPageEntity findById(int id);
 }

@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "news_page")
+@Table(name = "category")
 @Data
 @EqualsAndHashCode
 public class CategoryEntity {
