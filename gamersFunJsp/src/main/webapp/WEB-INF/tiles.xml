@@ -12,6 +12,20 @@
         <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
     </definition>
 
+    <definition  name="app.admin-console" template="/WEB-INF/tiles/admin-console.jsp" >
+        <put-attribute name="admin console page" value="Admin Console Page" />
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="jsScripts" value="/WEB-INF/tiles/includeScripts.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+    </definition>
+    
+    <definition  name="app.shop-account" template="/WEB-INF/tiles/shop-account.jsp" >
+        <put-attribute name="shop account page" value="Shop Account Page" />
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="jsScripts" value="/WEB-INF/tiles/includeScripts.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+    </definition>
+
     <definition name="app.homepage" extends="app.default">
         <put-attribute name="content" value="/WEB-INF/tiles/home.jsp" />
     </definition>
@@ -66,7 +80,6 @@
         <put-attribute name="content" value="/WEB-INF/tiles/register.jsp" />
     </definition>
 
-
     <definition name="app.viewStatus" extends="app.default">
         <put-attribute name="content" value="/WEB-INF/tiles/viewStatus.jsp" />
     </definition>
@@ -91,5 +104,7 @@
     <definition name="app.products" extends="app.default">
         <put-attribute name="content" value="/WEB-INF/tiles/products.jsp" />
     </definition>
+
+
 
 </tiles-definitions>

@@ -3,7 +3,6 @@ package gamersFun.com.example.gamersFun.service;
 import gamersFun.com.example.gamersFun.configuration.email.EmailsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
@@ -20,22 +19,10 @@ import java.util.Date;
 
 @Service
 public class EmailService {
-
     @Autowired
     EmailsConfiguration emailsConfiguration;
-
-    @Autowired
-    private JavaMailSender mailSender;
-    @Value("${mail.enable}")
-    private Boolean enable;
-
     @Value("${site.url}")
     private String siteUrl;
-
-    @Value("${spring.mail.host}")
-    private String host;
-    @Value("${spring.mail.port}")
-    private Integer port;
 
     public Session getEmailSession() {
         final String username = emailsConfiguration.getUser();
