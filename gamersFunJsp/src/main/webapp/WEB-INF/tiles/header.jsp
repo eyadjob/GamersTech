@@ -45,6 +45,7 @@
                                     <span>Crate Account</span>
                                 </a>
                                 <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                                    <a class="dropdown-item" href="${contextRoot}/login"><i class="ti-pencil-alt"></i>Sign In</a>
                                     <a class="dropdown-item" href="${contextRoot}/signup"><i class="ti-pencil-alt"></i>Sign Up</a>
                                 </div>
                             </div>
@@ -69,7 +70,7 @@
                                 </a>
                                 <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
                                     <a class="dropdown-item" href="#"><i class="ti-pencil-alt"></i>Edit Profile</a>
-                                    <a class="dropdown-item" href="#"><i class="ti-settings"></i>Account Settings</a>
+                                    <a class="dropdown-item" href="/profile"><i class="ti-settings"></i>Account Settings</a>
                                     <a class="dropdown-item" href="#"><i class="ti-stats-up"></i>Your Dashboard</a>
                                     <a class="dropdown-item" href="#"><i class="ti-heart"></i>Your Favorites</a>
                                     <div class="dropdown-divider"></div>
@@ -579,9 +580,7 @@
                                         <li><a href="shop-product-detail-full.html">Product details full</a></li>
                                     </ul>
                                 </li>
-                                <sec:authorize access="!isAuthenticated()">
-                                    <li><a href="${contextRoot}/login">Sign In</a></li>
-                                </sec:authorize>
+
                                 <li><a href="${contextRoot}/about">About</a></li>
                                 <li class="menu-item-has-children">
                                     <a href="category.html">Category</a>

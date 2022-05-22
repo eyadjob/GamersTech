@@ -35,6 +35,13 @@
         <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
     </definition>
 
+    <definition name="app.profile" template="/WEB-INF/tiles/profile.jsp">
+        <put-attribute name="title" value="Profile Page" />
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="jsScripts" value="/WEB-INF/tiles/includeScripts.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+    </definition>
+
     <definition name="app.login" template="/WEB-INF/tiles/login.jsp">
         <put-attribute name="title" value="Login Page" />
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
@@ -77,9 +84,7 @@
     <definition name="app.exception" extends="app.default">
         <put-attribute name="content" value="/WEB-INF/errors/exception.jsp" />
     </definition>
-    <definition name="app.profile" extends="app.default">
-        <put-attribute name="content" value="/WEB-INF/tiles/profile.jsp" />
-    </definition>
+
     <definition name="app.editProfile" extends="app.default">
         <put-attribute name="content" value="/WEB-INF/tiles/editProfile.jsp" />
     </definition>
