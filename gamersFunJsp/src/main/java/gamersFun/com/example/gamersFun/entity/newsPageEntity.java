@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "verification")
-public class VerificationToken {
+public class newsPageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -16,24 +16,24 @@ public class VerificationToken {
     private String token;
 
 
-    @OneToOne(targetEntity = User.class)
+    @OneToOne(targetEntity = UserEntity.class)
     @JoinColumn(name = "user_id",nullable = false)
-    private User user;
+    private UserEntity userEntity;
 
     @Column(name = "token_type")
     @Enumerated
-    private TokenType tokenType;
+    private TokenTypeEntity tokenType;
 
     @Column(name = "expiry_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expire;
 
-    public VerificationToken(){
+    public newsPageEntity(){
 
     }
 
-    public VerificationToken(User user, TokenType tokenType, String token){
-        this.user = user;
+    public newsPageEntity(UserEntity userEntity, TokenTypeEntity tokenType, String token){
+        this.userEntity = userEntity;
         this.tokenType = tokenType;
         this.token = token;
     }
@@ -54,19 +54,19 @@ public class VerificationToken {
         this.token = token;
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUser() {
+        return userEntity;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
-    public TokenType getTokenType() {
+    public TokenTypeEntity getTokenType() {
         return tokenType;
     }
 
-    public void setTokenType(TokenType tokenType) {
+    public void setTokenType(TokenTypeEntity tokenType) {
         this.tokenType = tokenType;
     }
 

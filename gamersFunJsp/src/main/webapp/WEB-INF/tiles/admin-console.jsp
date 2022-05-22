@@ -223,7 +223,7 @@
                         <div class="dashboard-menu ">
                             <ul class="nav flex-column" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="ti-panel mr-5"></i>Dashboard</a>
+                                    <a class="nav-link active" id="add-page-tab" data-toggle="tab" href="#addNewPage" role="tab" aria-controls="dashboard" aria-selected="false"><i class="ti-panel mr-5"></i>Add New Page</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="ti-shopping-cart-full mr-5"></i>Orders</a>
@@ -242,10 +242,10 @@
                     </div>
                     <div class="col-lg-9 col-md-8">
                         <div class="tab-content dashboard-content">
-                            <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                            <div class="tab-pane fade active show" id="addNewPage" role="tabpanel" aria-labelledby="addNewpage-tab">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="mb-0">Dashboard</h5>
+                                        <h5 class="mb-0">Add New Gaming Page Here</h5>
                                     </div>
                                     <div class="card-body">
                                         <p>From your account dashboard. you can easily check &amp; view your <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a></p>

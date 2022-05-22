@@ -1,6 +1,9 @@
-usersUSE eyadodai;
+CREATE SCHEMA IF NOT EXISTS eyadodai; 
 
-CREATE TABLE `users` (
+USE eyadodai;
+
+
+CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `enabled` bit(1) DEFAULT NULL,
@@ -11,6 +14,47 @@ CREATE TABLE `users` (
   UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `hibernate_sequence` (
+CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT  INTO hibernate_sequence VALUES (4);
+
+CREATE TABLE IF NOT EXISTS `category` (
+  `id` bigint NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_category_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE IF NOT EXISTS `news_page` (
+  `id` bigint NOT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `subject` MEDIUMTEXT,
+  `body` TEXT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `category_newspage_combo` (
+  `id` bigint NOT NULL,
+  `category_id` bigint NULL,
+  `newpage_id` bigint NULL,
+  `body` TEXT,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+   ON UPDATE CASCADE
+   ON DELETE CASCADE,
+  FOREIGN KEY (`newpage_id`) REFERENCES `news_page` (`id`)
+   ON UPDATE CASCADE
+   ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+SELECT * FROM users;
+SELECT * FROM verification;
+DELETE  FROM verification;
+DELETE  FROM users;
+
+
+
+

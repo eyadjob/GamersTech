@@ -1,8 +1,8 @@
 package gamersFun.com.example.gamersFun.contollers;
 
-import gamersFun.com.example.gamersFun.entity.TokenType;
-import gamersFun.com.example.gamersFun.entity.User;
-import gamersFun.com.example.gamersFun.entity.VerificationToken;
+import gamersFun.com.example.gamersFun.entity.TokenTypeEntity;
+import gamersFun.com.example.gamersFun.entity.UserEntity;
+import gamersFun.com.example.gamersFun.entity.VerificationTokenEntity;
 import gamersFun.com.example.gamersFun.service.EmailService;
 import gamersFun.com.example.gamersFun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,25 +34,25 @@ public class RegistrationContoller {
 
     @RequestMapping(value="/signup",method = RequestMethod.GET)
     ModelAndView register(ModelAndView modelAndView){
-        User siteUser = new User();
+        UserEntity siteUserEntity = new UserEntity();
         modelAndView.setViewName("app.signup");
-        modelAndView.getModel().put("user",siteUser);
+        modelAndView.getModel().put("user", siteUserEntity);
         return modelAndView;
     }
 
     @RequestMapping(value="/signup",method = RequestMethod.POST)
-    ModelAndView postRegister(ModelAndView modelAndView, @ModelAttribute(value = "user") @Valid User user, BindingResult bindingResult){
+    ModelAndView postRegister(ModelAndView modelAndView, @ModelAttribute(value = "user") @Valid UserEntity userEntity, BindingResult bindingResult){
         modelAndView.setViewName("app.signup");
         if(!bindingResult.hasErrors()){
 
-            UserDetails userDetails = userService.loadUserByUsername(user.getEmail());
+            UserDetails userDetails = userService.loadUserByUsername(userEntity.getEmail());
             if(userDetails != null){
                 bindingResult.addError(new ObjectError("email","Email already used."));
                 return modelAndView;
             }
-            userService.register(user);
-            String token = userService.createVerificationToken(user, TokenType.REGISTRATION);
-            emailService.sendVerificationEmail(user.getUserName(),user.getEmail(),token,"");
+            userService.register(userEntity);
+            String token = userService.createVerificationToken(userEntity, TokenTypeEntity.REGISTRATION);
+            emailService.sendVerificationEmail(userEntity.getUserName(), userEntity.getEmail(),token,"");
             modelAndView.setViewName("redirect:/verifyEmail");
         }
 
@@ -66,29 +66,29 @@ public class RegistrationContoller {
 
     @RequestMapping(value = "/confirmRegister",method = RequestMethod.GET)
     ModelAndView configrmRegistration(ModelAndView modelAndView, @RequestParam("t") String token){
-        VerificationToken verificationToken = userService.getVerification(token);
-        if(null == verificationToken){
+        VerificationTokenEntity verificationTokenEntity = userService.getVerification(token);
+        if(null == verificationTokenEntity){
             modelAndView.setViewName("redirect:/invalidUser");
             return modelAndView;
         }
 
-        Date exireDate = verificationToken.getExpire();
+        Date exireDate = verificationTokenEntity.getExpire();
         if(exireDate.before(new Date())){
-            userService.deleteToken(verificationToken);
+            userService.deleteToken(verificationTokenEntity);
             modelAndView.setViewName("redirect:/expiredToken");
             return modelAndView;
         }
 
-        User user = verificationToken.getUser();
-        if(user == null){
-            userService.deleteToken(verificationToken);
+        UserEntity userEntity = verificationTokenEntity.getUser();
+        if(userEntity == null){
+            userService.deleteToken(verificationTokenEntity);
             modelAndView.setViewName("redirect:/invalidUser");
             return modelAndView;
         }
 
-        userService.deleteToken(verificationToken);
-        user.setEnabled(Boolean.TRUE);
-        userService.save(user);
+        userService.deleteToken(verificationTokenEntity);
+        userEntity.setEnabled(Boolean.TRUE);
+        userService.save(userEntity);
         modelAndView.getModel().put("message",registrationConfirmMessage);
         modelAndView.setViewName("app.message");
 

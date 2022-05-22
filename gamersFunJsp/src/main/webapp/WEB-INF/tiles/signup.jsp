@@ -222,14 +222,14 @@
                             <div class="login_wrap widget-taber-content p-30 background-white border-radius-5">
                                 <%-- <form:errors path="email"></form:errors>
                                  <form:errors path="password"></form:errors>--%>
-                                <form:errors path="user.*"></form:errors>
+                                <form:errors path="userEntity.*"></form:errors>
                             </div>
                             <div class="login_wrap widget-taber-content p-30 background-white border-radius-5">
                                 <div class="padding_eight_all bg-white">
                                     <div class="heading_s1">
                                         <h3 class="mb-30">Create an Account</h3>
                                     </div>
-                                    <form:form method="post" class="login-form" modelAttribute="user">
+                                    <form:form method="post" class="login-form" modelAttribute="userEntity">
                                         <div class="form-group">
                                           <%--  <input type="text" required="" class="form-control" name="username" placeholder="Username">--%>
                                               <form:input type="text" path="userName" placeholder="Username" class="form-control"/>

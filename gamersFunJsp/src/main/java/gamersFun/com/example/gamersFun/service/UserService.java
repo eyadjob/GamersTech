@@ -1,9 +1,9 @@
 package gamersFun.com.example.gamersFun.service;
 
 
-import gamersFun.com.example.gamersFun.entity.TokenType;
-import gamersFun.com.example.gamersFun.entity.User;
-import gamersFun.com.example.gamersFun.entity.VerificationToken;
+import gamersFun.com.example.gamersFun.entity.TokenTypeEntity;
+import gamersFun.com.example.gamersFun.entity.UserEntity;
+import gamersFun.com.example.gamersFun.entity.VerificationTokenEntity;
 import gamersFun.com.example.gamersFun.repository.UserDao;
 import gamersFun.com.example.gamersFun.repository.VerificationDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,55 +31,49 @@ public class UserService implements UserDetailsService {
     @Autowired
     private VerificationDao tokenDao;
 
-
-    public void register(User siteUser){
+    public void register(UserEntity siteUserEntity){
         //siteUser.setPassword(passwordEncoder.encode(siteUser.getPassword())); no need cause i used plain password and then encryot it in setter
-        siteUser.setRole("ROLE_USER");// DEFAULT TO USER ROLE_USER  for admin use ROLE_ADMIN
-        userDao.save(siteUser);
+        siteUserEntity.setRole("ROLE_USER");// DEFAULT TO USER ROLE_USER  for admin use ROLE_ADMIN
+        userDao.save(siteUserEntity);
     }
-    public void save(User siteUser){
-        userDao.save(siteUser);
+    public void save(UserEntity siteUserEntity){
+        userDao.save(siteUserEntity);
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userDao.findByEmail(email);
-        if(user == null){
+        UserEntity userEntity = userDao.findByEmail(email);
+        if(userEntity == null){
             return null;
         }
 
-        List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole());
+        List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(userEntity.getRole());
 
         //String password = passwordEncoder.encode(user.getPassword());
 
-        return new org.springframework.security.core.userdetails.User(email,user.getPassword(),user.isEnabled(),true,true,true,auth);
+        return new org.springframework.security.core.userdetails.User(email, userEntity.getPassword(), userEntity.isEnabled(),true,true,true,auth);
     }
 
-
-
-    public User getUser(String email) {
+    public UserEntity getUser(String email) {
         return userDao.findByEmail(email);
     }
 
-    public Optional<User> get(Long id) {
+    public Optional<UserEntity> get(Long id) {
         return userDao.findById(id);
     }
 
 
-    public String createVerificationToken(User user, TokenType tokenType){
-        VerificationToken token = new VerificationToken(user,tokenType,UUID.randomUUID().toString());
+    public String createVerificationToken(UserEntity userEntity, TokenTypeEntity tokenType){
+        VerificationTokenEntity token = new VerificationTokenEntity(userEntity,tokenType,UUID.randomUUID().toString());
         tokenDao.save(token);
         return token.getToken();
     }
-
-
-    public VerificationToken getVerification(String token){
+    public VerificationTokenEntity getVerification(String token){
         return tokenDao.findByToken(token);
 
     }
 
-
-    public void deleteToken(VerificationToken token){
+    public void deleteToken(VerificationTokenEntity token){
         tokenDao.delete(token);
     }
 }

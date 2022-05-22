@@ -180,9 +180,9 @@
                                 <li class="list-inline-item"><a class="social-icon instagram-icon text-xs-center" target="_blank" href="#"><i class="ti-instagram"></i></a></li>
                             </ul>
                             <div class="vline-space d-inline-block"></div>
-                            <div class="user-account d-inline-block font-small">
+                            <div class="userEntity-account d-inline-block font-small">
                                 <a class="dropdown-toggle" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="ti-user"></i>
+                                    <i class="ti-userEntity"></i>
                                     <span>Account</span>
                                 </a>
                                 <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">

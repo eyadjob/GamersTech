@@ -187,9 +187,9 @@
                                 <li class="list-inline-item"><a class="social-icon instagram-icon text-xs-center" target="_blank" href="#"><i class="ti-instagram"></i></a></li>
                             </ul>
                             <div class="vline-space d-inline-block"></div>
-                            <div class="user-account d-inline-block font-small">
+                            <div class="userEntity-account d-inline-block font-small">
                                 <a class="dropdown-toggle" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="ti-user"></i>
+                                    <i class="ti-userEntity"></i>
                                     <span>Account</span>
                                 </a>
                                 <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
@@ -1104,7 +1104,7 @@
                                                 <h4 class="mb-30">03 review for this product</h4>
                                                 <div class="comment-list">
                                                     <div class="single-comment justify-content-between d-flex">
-                                                        <div class="user justify-content-between d-flex">
+                                                        <div class="userEntity justify-content-between d-flex">
                                                             <div class="thumb">
                                                                 <img src="http://via.placeholder.com/223x223" alt="">
                                                             </div>
@@ -1126,7 +1126,7 @@
                                                 </div>
                                                 <div class="comment-list">
                                                     <div class="single-comment justify-content-between d-flex">
-                                                        <div class="user justify-content-between d-flex">
+                                                        <div class="userEntity justify-content-between d-flex">
                                                             <div class="thumb">
                                                                 <img src="http://via.placeholder.com/223x223" alt="">
                                                             </div>
@@ -1148,7 +1148,7 @@
                                                 </div>
                                                 <div class="comment-list">
                                                     <div class="single-comment justify-content-between d-flex">
-                                                        <div class="user justify-content-between d-flex">
+                                                        <div class="userEntity justify-content-between d-flex">
                                                             <div class="thumb">
                                                                 <img src="http://via.placeholder.com/223x223" alt="">
                                                             </div>
