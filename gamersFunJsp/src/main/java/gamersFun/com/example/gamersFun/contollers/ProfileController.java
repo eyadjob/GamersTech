@@ -2,7 +2,7 @@ package gamersFun.com.example.gamersFun.contollers;
 
 import gamersFun.com.example.gamersFun.entity.Blogs;
 import gamersFun.com.example.gamersFun.entity.Profile;
-import gamersFun.com.example.gamersFun.entity.User;
+import gamersFun.com.example.gamersFun.entity.UserEntity;
 import gamersFun.com.example.gamersFun.service.ProfileService;
 import gamersFun.com.example.gamersFun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +24,22 @@ public class ProfileController {
 
     @RequestMapping("/profile")
     ModelAndView showProfilePage(){
-        User user = userService.getUser();
-        ModelAndView modelAndView = showProfile(user);
+        UserEntity UserEntity = userService.getUser();
+        ModelAndView modelAndView = showProfile(UserEntity);
         return modelAndView;
     }
 
-    private ModelAndView showProfile(User user){
+    private ModelAndView showProfile(UserEntity UserEntity){
         ModelAndView view = new ModelAndView();
-        if(user == null){
+        if(UserEntity == null){
             view.setViewName("redirect:/");
             return view;
         }
 
-        Profile profileDb = profileService.getUserProfile(user);
+        Profile profileDb = profileService.getUserProfile(UserEntity);
         if(profileDb == null){
             Profile profile = new Profile();
-            profile.setUser(user);
+            profile.setUser(UserEntity);
             profileDb =  profileService.save(profile);
         }
 
@@ -48,8 +48,8 @@ public class ProfileController {
 
         view.setViewName("app.profile");
         view.getModel().put("profile",readOnlyProfile);
-        view.getModel().put("email",user.getEmail());
-        view.getModel().put("userId",user.getId());
+        view.getModel().put("email",UserEntity.getEmail());
+        view.getModel().put("userId",UserEntity.getId());
         view.getModel().put("blog",new Blogs());
         return view;
     }

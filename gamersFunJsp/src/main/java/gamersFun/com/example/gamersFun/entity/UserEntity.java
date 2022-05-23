@@ -1,8 +1,9 @@
 package gamersFun.com.example.gamersFun.entity;
 
-import gamersFun.com.example.gamersFun.validation.PasswordMath;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import gamersFun.com.example.gamersFun.validation.PasswordMath;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,14 +12,14 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
-@PasswordMath(message = "{error.password.mismatch}")
-public class User {
-    public User(){
+//@PasswordMath(message = "{error.password.mismatch}")
+public class UserEntity {
+    public UserEntity(){
 
     }
 
     // for testing purpose
-    public User(String email,String password,String repeatPassword,String firstName){
+    public UserEntity(String email, String password, String repeatPassword, String firstName){
         this.email = email;
         this.setPlainPassword(password);
         this.repeatPassword = repeatPassword;
@@ -26,7 +27,7 @@ public class User {
         this.userName = firstName;
 
     }
-    public User(String email,String password,String repeatPassword,String firstName,String role){
+    public UserEntity(String email, String password, String repeatPassword, String firstName, String role){
         this.email = email;
         this.setPlainPassword(password);
         this.repeatPassword = repeatPassword;

@@ -1,11 +1,11 @@
 package gamersFun.com.example.gamersFun.validation;
 
-import gamersFun.com.example.gamersFun.entity.User;
+import gamersFun.com.example.gamersFun.entity.UserEntity;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class PasswordMatchValidator implements ConstraintValidator<PasswordMath, User> {
+public class PasswordMatchValidator implements ConstraintValidator<PasswordMath, UserEntity> {
 
     @Override
     public void initialize(PasswordMath constraintAnnotation) {
@@ -13,7 +13,7 @@ public class PasswordMatchValidator implements ConstraintValidator<PasswordMath,
     }
 
     @Override
-    public boolean isValid(User user, ConstraintValidatorContext context) {
+    public boolean isValid(UserEntity user, ConstraintValidatorContext context) {
         if(user.getPlainPassword() == null || user.getPlainPassword().length() == 0){
             return true;
         }

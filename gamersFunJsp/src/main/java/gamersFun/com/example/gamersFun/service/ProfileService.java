@@ -2,7 +2,8 @@ package gamersFun.com.example.gamersFun.service;
 
 
 import gamersFun.com.example.gamersFun.entity.Profile;
-import gamersFun.com.example.gamersFun.entity.User;
+import gamersFun.com.example.gamersFun.entity.UserEntity;
+import gamersFun.com.example.gamersFun.entity.UserEntity;
 import gamersFun.com.example.gamersFun.repository.ProfileDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class ProfileService {
         return profile1;
     }
 
-    public Profile getUserProfile(User user){
+    public Profile getUserProfile(UserEntity user){
         return profileDao.findByUser(user);
     }
 }

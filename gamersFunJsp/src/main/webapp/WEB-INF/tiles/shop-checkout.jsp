@@ -187,9 +187,9 @@
                                 <li class="list-inline-item"><a class="social-icon instagram-icon text-xs-center" target="_blank" href="#"><i class="ti-instagram"></i></a></li>
                             </ul>
                             <div class="vline-space d-inline-block"></div>
-                            <div class="user-account d-inline-block font-small">
+                            <div class="userEntity-account d-inline-block font-small">
                                 <a class="dropdown-toggle" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="ti-user"></i>
+                                    <i class="ti-userEntity"></i>
                                     <span>Account</span>
                                 </a>
                                 <div id="userMenuDropdow" class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
@@ -841,7 +841,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="toggle_info">
-                                <span><i class="ti-user mr-5"></i><span class="text-muted">Already have an account?</span> <a href="#loginform" data-toggle="collapse" class="collapsed" aria-expanded="false">Click here to login</a></span>
+                                <span><i class="ti-userEntity mr-5"></i><span class="text-muted">Already have an account?</span> <a href="#loginform" data-toggle="collapse" class="collapsed" aria-expanded="false">Click here to login</a></span>
                             </div>
                             <div class="panel-collapse collapse login_form" id="loginform">
                                 <div class="panel-body">
