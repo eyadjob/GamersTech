@@ -294,8 +294,22 @@
                                                     </core:forEach>
                                                 </table>
                                             </div>
+                                            <form:form action="addCategory" method="post"  modelAttribute="categoryEntity">
+                                                <div class="form-group">
+                                                    <span class="required">*</span></label>
+                                                    <form:input type="text" path="name" placeholder="Enter Category Name Here to Add" class="form-control"/>
+                                                </div>
+                                                <div class="form-group">
+                                                        <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Save</button>
+                                                </div>
+                                            </form:form>
+
                                         </div>
                                     </div>
+
+
+
+
                             <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                 <div class="card">
                                     <div class="card-header">

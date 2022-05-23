@@ -2,6 +2,7 @@ package gamersFun.com.example.gamersFun.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "category")
 @Data
 @EqualsAndHashCode
+@NoArgsConstructor
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,4 +19,8 @@ public class CategoryEntity {
 
     @Column(name = "name")
     private String name;
+
+    public CategoryEntity(String name) {
+        this.name = name;
+    }
 }

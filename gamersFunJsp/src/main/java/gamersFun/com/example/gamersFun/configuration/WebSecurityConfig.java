@@ -36,6 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/verifyEmail",
                         "/confirmRegister",
                         "/adminConsole",
+                        "/deleteCategory**",
+                        "/addCategory**",
                         "/shopAccount"
                 )
                 .permitAll()
