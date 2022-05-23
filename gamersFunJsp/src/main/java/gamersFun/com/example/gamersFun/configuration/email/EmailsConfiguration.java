@@ -57,7 +57,7 @@ public class EmailsConfiguration {
 
         if (attachmentFilePath != null) {
             for (String filePath : attachmentFilePath) {
-                if (!StringUtils.isEmpty(filePath) || !filePath.equals(" ")) {
+                if (!StringUtils.hasText(filePath) || !filePath.equals(" ")) {
                     try {
                         MimeBodyPart messageBodyPart = new MimeBodyPart();
                         DataSource source = new FileDataSource(filePath);

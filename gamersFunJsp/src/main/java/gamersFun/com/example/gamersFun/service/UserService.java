@@ -7,8 +7,10 @@ import gamersFun.com.example.gamersFun.entity.VerificationToken;
 import gamersFun.com.example.gamersFun.repository.UserDao;
 import gamersFun.com.example.gamersFun.repository.VerificationDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -81,5 +83,12 @@ public class UserService implements UserDetailsService {
 
     public void deleteToken(VerificationToken token){
         tokenDao.delete(token);
+    }
+
+    public User getUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return userDao.findByEmail(email);
+
     }
 }
