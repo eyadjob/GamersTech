@@ -1,11 +1,16 @@
 package gamersFun.com.example.gamersFun.entity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
 @Entity
 @Table(name = "verification")
+@Data
+@EqualsAndHashCode
 public class VerificationTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,10 +20,9 @@ public class VerificationTokenEntity {
     @Column(name = "token")
     private String token;
 
-
     @OneToOne(targetEntity = UserEntity.class)
     @JoinColumn(name = "user_id",nullable = false)
-    private UserEntity userEntity;
+    private UserEntity user;
 
     @Column(name = "token_type")
     @Enumerated
@@ -31,47 +35,10 @@ public class VerificationTokenEntity {
     public VerificationTokenEntity(){
 
     }
-
     public VerificationTokenEntity(UserEntity userEntity, TokenTypeEntity tokenType, String token){
-        this.userEntity = userEntity;
+        this.user = userEntity;
         this.tokenType = tokenType;
         this.token = token;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public UserEntity getUser() {
-        return userEntity;
-    }
-
-    public void setUser(UserEntity userEntity) {
-        this.userEntity = userEntity;
-    }
-
-    public TokenTypeEntity getTokenType() {
-        return tokenType;
-    }
-
-    public void setTokenType(TokenTypeEntity tokenType) {
-        this.tokenType = tokenType;
-    }
-
-    public Date getExpire() {
-        return expire;
     }
 
     //TODO: the time should configured
