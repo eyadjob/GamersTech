@@ -227,6 +227,9 @@
                                     <a class="nav-link active" id="add-page-tab" data-toggle="tab" href="#addNewPage" role="tab" aria-controls="dashboard" aria-selected="false"><i class="ti-panel mr-5"></i>Add New Page</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link active" id="manage-categories-page-tab" data-toggle="tab" href="#manageCategories" role="tab" aria-controls="Categories Management" aria-selected="false"><i class="ti-panel mr-5"></i>Manage Categories</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="ti-shopping-cart-full mr-5"></i>Orders</a>
                                 </li>
                                 <li class="nav-item">
@@ -243,43 +246,55 @@
                     </div>
                     <div class="col-lg-9 col-md-8">
                         <div class="tab-content dashboard-content">
-                            <div class="tab-pane fade active show" id="addNewPage" role="tabpanel" aria-labelledby="addNewsPage-tab">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="mb-0">Add New Gaming Page Here</h5>
+<%--                            <div class="tab-pane fade active show" id="addNewPage" role="tabpanel" aria-labelledby="addNewsPage-tab">--%>
+<%--                                <div class="card">--%>
+<%--                                    <div class="card-header">--%>
+<%--                                        <h5 class="mb-0">Add New Gaming Page Here</h5>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="card-body">--%>
+
+<%--                                        <h1>Categories List</h1>--%>
+<%--                                        <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="request"  />--%>
+<%--                                        <table border="1">--%>
+<%--                                            <tr>--%>
+<%--                                                <td>Category Id:</td>--%>
+<%--                                                <td>Category Name:</td>--%>
+<%--                                            </tr>--%>
+<%--                                            <core:forEach items="${allCategories}" var="categoriesVar">--%>
+<%--                                                <tr>--%>
+<%--                                                    <td>${categoriesVar.getId()}</td>--%>
+<%--                                                    <td>${categoriesVar.getName()}</td>--%>
+<%--                                                </tr>--%>
+<%--                                            </core:forEach>--%>
+<%--                                        </table>--%>
+<%--                                        <p>From your account dashboard. you can easily check &amp; view your <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a></p>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+                                    <div class="tab-pane fade active show" id="manageCategories" role="tabpanel" aria-labelledby="manageCategories-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">Manage Categories Here</h5>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <h1>Categories List</h1>
+                                                <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="request"  />
+                                                <table border="1">
+                                                    <tr>
+                                                        <td>Category Id:</td>
+                                                        <td>Category Name:</td>
+                                                    </tr>
+                                                    <core:forEach items="${allCategories}" var="categoriesVar">
+                                                        <tr>
+                                                            <td>${categoriesVar.getId()}</td>
+                                                            <td>${categoriesVar.getName()}</td>
+                                                        </tr>
+                                                    </core:forEach>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-
-                                        <h1>All Festival Information</h1>
-                                        <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="session" />
-                                        <table border="1">
-                                            <tr>
-                                                <td>Festival Name:</td>
-                                                <td>Location:</td>
-                                                <td>Start Date:</td>
-                                                <td>End Date:</td>
-                                                <td>URL:</td>
-                                            </tr>
-                                            <% for(int i = 0; i < allCategories.size(); i+=1) { %>
-                                            <tr>
-                                                <td>${allCategories.get(i).getName()}</td>
-                                            </tr>
-                                            <% } %>
-                                        </table>
-
-
-
-
-
-                                        <core:forEach items="${allCategories}" var="categoriesVar">
-                                            <tr>
-                                                <td>${categoriesVar.name}</td>
-                                            </tr>
-                                        </core:forEach>
-                                        <p>From your account dashboard. you can easily check &amp; view your <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a></p>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                 <div class="card">
                                     <div class="card-header">
