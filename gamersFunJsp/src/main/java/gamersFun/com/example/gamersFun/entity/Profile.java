@@ -20,7 +20,7 @@ public class Profile {
 
     @OneToOne(targetEntity = UserEntity.class)
     @JoinColumn(name = "user_id",nullable = false)
-    private UserEntity UserEntity;
+    private UserEntity user;
 
     @Column(name = "bio",length = 5000)
     @Size(max = 5000,message = "{editProfile.about.size}")
@@ -88,11 +88,11 @@ public class Profile {
     }
 
     public UserEntity getUser() {
-        return UserEntity;
+        return user;
     }
 
     public void setUser(UserEntity UserEntity) {
-        this.UserEntity = UserEntity;
+        this.user = UserEntity;
     }
 
     public String getBio() {
