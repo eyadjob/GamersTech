@@ -289,6 +289,7 @@
                                                         <tr>
                                                             <td>${categoriesVar.getId()}</td>
                                                             <td>${categoriesVar.getName()}</td>
+                                                            <td><a href="/deleteCategory?categoryId=${categoriesVar.getId()}" class="btn btn-fill-out btn-small d-block">Delete</a></td>
                                                         </tr>
                                                     </core:forEach>
                                                 </table>
