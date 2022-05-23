@@ -18,9 +18,9 @@ public class Profile {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(targetEntity = User.class)
+    @OneToOne(targetEntity = UserEntity.class)
     @JoinColumn(name = "user_id",nullable = false)
-    private User user;
+    private UserEntity UserEntity;
 
     @Column(name = "bio",length = 5000)
     @Size(max = 5000,message = "{editProfile.about.size}")
@@ -52,7 +52,7 @@ public class Profile {
 
     }
 
-    public Profile(User user){
+    public Profile(UserEntity UserEntity){
 
     }
 
@@ -87,12 +87,12 @@ public class Profile {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUser() {
+        return UserEntity;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserEntity UserEntity) {
+        this.UserEntity = UserEntity;
     }
 
     public String getBio() {

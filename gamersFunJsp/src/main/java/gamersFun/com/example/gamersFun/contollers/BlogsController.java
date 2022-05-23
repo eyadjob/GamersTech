@@ -3,7 +3,7 @@ package gamersFun.com.example.gamersFun.contollers;
 import gamersFun.com.example.gamersFun.entity.Blogs;
 import gamersFun.com.example.gamersFun.entity.FileInfo;
 import gamersFun.com.example.gamersFun.entity.Profile;
-import gamersFun.com.example.gamersFun.entity.User;
+import gamersFun.com.example.gamersFun.entity.UserEntity;
 import gamersFun.com.example.gamersFun.exception.ImageTooSmallException;
 import gamersFun.com.example.gamersFun.exception.InvalidFileException;
 import gamersFun.com.example.gamersFun.repository.BlogsDao;
@@ -61,7 +61,7 @@ public class BlogsController {
     public ModelAndView singleFileUpload(@RequestParam("file") MultipartFile file,
                                          ModelAndView modelAndView, Blogs blogs) {
         ModelAndView modelAndView1 = new ModelAndView();
-        User user = userService.getUser();
+        UserEntity user = userService.getUser();
         Profile profile =  profileService.getUserProfile(user);
         String cleanedBody = htmlPolicy.sanitize(blogs.getBody());
         Blogs blogs1 = new Blogs(blogs.getSubject(),blogs.getBody());

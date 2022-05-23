@@ -79,7 +79,7 @@ public class UserService implements UserDetailsService {
         tokenDao.delete(token);
     }
 
-    public User getUser(){
+    public UserEntity getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return userDao.findByEmail(email);
