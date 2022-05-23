@@ -71,7 +71,7 @@ public class BlogsController {
 
 
         try {
-            FileInfo fileInfo = fileService.saveImageFile(file,photoUploadDirectory,"photo","p" + user.getId(),100,100);
+            FileInfo fileInfo = fileService.saveImageFile(file,System.getProperty("user.dir"),"photo","p" + user.getId(),100,100);
             profile.setPhotoDetails(fileInfo);
             profileService.save(profile);
 
@@ -89,7 +89,7 @@ public class BlogsController {
 
 
 
-
+        modelAndView1.getModel().put("blog", new Blogs());
         modelAndView1.setViewName("app.profile");
         modelAndView1.getModel().put("message",blogsAdded);
 
