@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.awt.image.ImageObserver;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,8 +30,10 @@ public class AdminPageController {
     ModelAndView getAdminConsole(ModelMap modelMap, ModelAndView modelAndView, @ModelAttribute(value = "newsPage") @Valid NewsPageEntity newsPage, BindingResult bindingResult) {
         Iterable<CategoryEntity> categoryEntities = categoryDao.findAll();
         List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator(categoryEntities);
+        System.out.println(categoryEntityList.toString());
         modelMap.addAttribute("allCategories",categoryEntityList);
         modelAndView.setViewName("app.admin-console");
+        modelAndView.getModel().put("allCategories", categoryEntityList);
         return modelAndView;
     }
 

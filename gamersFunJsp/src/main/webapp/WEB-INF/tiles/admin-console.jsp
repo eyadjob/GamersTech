@@ -250,32 +250,20 @@
                                     </div>
                                     <div class="card-body">
 
-                                        <h1>All Festival Information</h1>
-                                        <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="session" />
+                                        <h1>Categories List</h1>
+                                        <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="request"  />
                                         <table border="1">
                                             <tr>
-                                                <td>Festival Name:</td>
-                                                <td>Location:</td>
-                                                <td>Start Date:</td>
-                                                <td>End Date:</td>
-                                                <td>URL:</td>
+                                                <td>Category Id:</td>
+                                                <td>Category Name:</td>
                                             </tr>
-                                            <% for(int i = 0; i < allCategories.size(); i+=1) { %>
-                                            <tr>
-                                                <td>${allCategories.get(i).getName()}</td>
-                                            </tr>
-                                            <% } %>
+                                            <core:forEach items="${allCategories}" var="categoriesVar">
+                                                <tr>
+                                                    <td>${categoriesVar.getId()}</td>
+                                                    <td>${categoriesVar.getName()}</td>
+                                                </tr>
+                                            </core:forEach>
                                         </table>
-
-
-
-
-
-                                        <core:forEach items="${allCategories}" var="categoriesVar">
-                                            <tr>
-                                                <td>${categoriesVar.name}</td>
-                                            </tr>
-                                        </core:forEach>
                                         <p>From your account dashboard. you can easily check &amp; view your <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a></p>
                                     </div>
                                 </div>
