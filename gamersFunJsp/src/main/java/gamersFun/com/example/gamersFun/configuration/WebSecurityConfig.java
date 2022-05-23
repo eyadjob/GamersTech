@@ -55,6 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .hasRole("ADMIN")//.access("hasRole('ADMIN')")
                 //Accessible links for authenticated to ADMIN users links
+
+                .antMatchers("/addBlogs",
+                        "/viewBlogs")
+                .hasRole("BLOGGER")
                 .antMatchers("/webjars/**",
                         "/profile",
                         "/profile/*",
