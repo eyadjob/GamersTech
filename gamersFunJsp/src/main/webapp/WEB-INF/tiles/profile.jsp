@@ -7,6 +7,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
+<%--@elvariable id="blog" type="gamersFun.com.example.gamersFun.entity.Blogs"--%>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -240,6 +241,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="blogs-detail-tab" data-toggle="tab" href="#add-blogs" role="tab" aria-controls="add-blogs" aria-selected="true"><i class="ti-id-badge mr-5"></i>Add New Blogs</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="blogs-edit-tab" data-toggle="tab" href="#edit-blogs" role="tab" aria-controls="edit-blogs" aria-selected="true"><i class="ti-id-badge mr-5"></i>Edit Blogs</a>
+                                    </li>
                                 </sec:authorize>
                                 <li class="nav-item">
                                     <a class="nav-link" href="javascript:$('#logoutForm').submit()"><i class="ti-lock mr-5"></i>Logout</a>
@@ -378,37 +382,98 @@
                                     </div>
                                 </div>
                             </div>
+                            <sec:authorize access="hasRole('ROLE_BLOGGER')">
+                                <div class="tab-pane fade" id="add-blogs" role="tabpanel" aria-labelledby="blogs-detail-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3>New Blogs</h3>
+                                        </div>
+                                        <div class="card-body">
 
-                            <div class="tab-pane fade" id="add-blogs" role="tabpanel" aria-labelledby="blogs-detail-tab">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3>New Blogs</h3>
-                                    </div>
-                                    <div class="card-body">
+                                            <form:form action="addBlogs"  enctype="multipart/form-data"  modelAttribute="blog">
+                                                <div class="row">
 
-                                        <form:form action="addBlogs"  enctype="multipart/form-data"  modelAttribute="blog">
-                                            <div class="row">
+                                                    <div class="form-group col-md-12">
+                                                        <label>Subject <span class="required">*</span></label>
+                                                        <form:input type="text" path="subject" placeholder="Subject ..." class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label>Body <span class="required">*</span></label>
+                                                        <form:input type="text" path="body" placeholder="Body ..." id="mytextarea" class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label for="formFile" class="form-label">Image for your blog</label>
+                                                        <input class="form-control" type="file"  accept="image/*" name="file" id="formFile">
+                                                    </div>
 
-                                                <div class="form-group col-md-12">
-                                                    <label>Subject <span class="required">*</span></label>
-                                                    <form:input type="text" path="subject" placeholder="Subject ..." class="form-control"/>
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Save</button>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group col-md-12">
-                                                    <label>Body <span class="required">*</span></label>
-                                                    <form:input type="text" path="body" placeholder="Body ..." id="mytextarea" class="form-control"/>
-                                                </div>
-                                                <div class="form-group col-md-12">
-                                                    <input type="file" accept="image/*" name="file" id="pictureNews">
-                                                </div>
-
-                                                <div class="col-md-12">
-                                                    <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Save</button>
-                                                </div>
-                                            </div>
-                                        </form:form>
+                                            </form:form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
+                                <div class="tab-pane fade" id="edit-blogs" role="tabpanel" aria-labelledby="blogs-edit-tabb">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Your Orders</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Blogs Created</th>
+                                                        <th>Subject</th>
+                                                        <th>Body</th>
+                                                        <th>Action</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                    <c:forEach var="blog" items="${blogs}">
+                                                        <tr>
+                                                            <td>${blog.createdDate}</td>
+                                                            <td>${blog.subject}</td>
+                                                            <td>${blog.body}</td>
+                                                            <td><a href="/editBlog?id=${blog.id}&tab=add-blogs" class="btn btn-fill-out btn-small d-block">Edit</a></td>
+                                                            <td><a href="/deleteBlog?id=${blog.id}&tab=status class="btn btn-fill-out btn-small d-block">Delete</a></td>
+                                                        </tr>
+                                                    </c:forEach>
+
+                                                    </tbody>
+                                                <%--    <tbody>
+                                                    <tr>
+                                                        <td>#1357</td>
+                                                        <td>March 45, 2020</td>
+                                                        <td>Processing</td>
+                                                        <td>$125.00 for 2 item</td>
+                                                        <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#2468</td>
+                                                        <td>June 29, 2020</td>
+                                                        <td>Completed</td>
+                                                        <td>$364.00 for 5 item</td>
+                                                        <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#2366</td>
+                                                        <td>August 02, 2020</td>
+                                                        <td>Completed</td>
+                                                        <td>$280.00 for 3 item</td>
+                                                        <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
+                                                    </tr>
+                                                    </tbody>--%>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </sec:authorize>
                         </div>
                     </div>
                 </div>

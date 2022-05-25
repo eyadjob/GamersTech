@@ -2,6 +2,8 @@ package gamersFun.com.example.gamersFun.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -23,6 +25,11 @@ public class Blogs {
     @Column(name = "Subject",length = 200)
     private String subject;
 
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
@@ -112,5 +119,12 @@ public class Blogs {
         photoDirectory = fileInfo.getSubDirectory();
         photoExtension = fileInfo.getExtesion();
         photoName = fileInfo.getBaseName();
+    }
+
+    public Path getPhoto(String baseDiercory){
+        if(photoName == null){
+            return null;
+        }
+        return Paths.get(baseDiercory,photoDirectory,photoName.concat(".").concat(photoExtension));
     }
 }
