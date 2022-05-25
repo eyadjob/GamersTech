@@ -19,6 +19,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public static final String BLOGGER_ROLE = "ROLE_BLOGGER",
+                               ADMIN_ROLE = "ROLE_ADMIN",
+                                USER_ROLE="ROLE_USER";
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -57,7 +61,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Accessible links for authenticated to ADMIN users links
 
                 .antMatchers("/addBlogs",
-                        "/viewBlogs")
+                        "/viewBlogs",
+                        "/editBlog",
+                        "/deleteBlog")
                 .hasRole("BLOGGER")
                 .antMatchers("/webjars/**",
                         "/profile",
