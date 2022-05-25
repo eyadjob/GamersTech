@@ -288,8 +288,24 @@
                                                     <core:forEach items="${allCategories}" var="categoriesVar">
                                                         <tr>
                                                             <td>${categoriesVar.getId()}</td>
-                                                            <td>${categoriesVar.getName()}</td>
+                                                            <td ><div id="updatedCategoryName" contenteditable='true'>${categoriesVar.getName()}</div></td>
                                                             <td><a href="/deleteCategory?categoryId=${categoriesVar.getId()}" class="btn btn-fill-out btn-small d-block">Delete</a></td>
+                                                            <script>var currentCategoryName = document.getElementById("updatedCategoryName").value;
+                                                            </script>
+                                                            <td><a href="/editCategory?categoryId=${categoriesVar.getId()}" class="btn btn-fill-out btn-small d-block">Update</a></td>
+<%--                                                            <td>--%>
+<%--                                                            <script>--%>
+<%--                                                                function generateNew()--%>
+<%--                                                                {--%>
+<%--                                                                    var d=document.getElementById("divId");--%>
+<%--                                                                    d.innerHTML+="<p><input id='newCategoryName' type='text' name='newCategoryName'>";--%>
+<%--                                                                }--%>
+<%--                                                            </script>--%>
+<%--                                                            <form name='abc' method="post" action="">--%>
+<%--                                                                <div id="divId"></div>--%>
+<%--                                                                <input type="button"  value="Edit Category" onclick="generateNew()">--%>
+<%--                                                            </form>--%>
+<%--                                                            </td>--%>
                                                         </tr>
                                                     </core:forEach>
                                                 </table>
