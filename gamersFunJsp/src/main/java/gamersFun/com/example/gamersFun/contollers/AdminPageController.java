@@ -41,21 +41,15 @@ public class AdminPageController {
     }
 
     @RequestMapping("/deleteCategory{categoryId}")
-    ModelAndView deleteCategory(ModelAndView modelAndView, @RequestParam("categoryId") String categoryId) {
+    String deleteCategory(ModelAndView modelAndView, @RequestParam("categoryId") String categoryId) {
         categoryDao.deleteById(Long.parseLong(categoryId));
-        modelAndView.setViewName("app.admin-console");
-        modelAndView.getModel().put("allCategories", getCategoryList());
-        modelAndView.getModel().put("categoryEntity", new CategoryEntity());
-        return modelAndView;
+        return "/adminConsole";
     }
 
     @PostMapping("/addCategory")
-    ModelAndView addCategory(ModelAndView modelAndView, @RequestParam("name") String categoryName) {
+    String addCategory( @RequestParam("name") String categoryName) {
         categoryDao.save(new CategoryEntity(categoryName));
-        modelAndView.setViewName("app.admin-console");
-        modelAndView.getModel().put("allCategories", getCategoryList());
-        modelAndView.getModel().put("categoryEntity", new CategoryEntity());
-        return modelAndView;
+        return "/adminConsole";
     }
 
     @PostMapping("/editCategory")
@@ -71,14 +65,13 @@ public class AdminPageController {
         return CollectionsConverter.getListFromIterator(categoryDao.findAll());
     }
 
-    @RequestMapping("/deleteCategory{newsPageId}")
-    ModelAndView deleletNewsPage(ModelAndView modelAndView, @RequestParam("newsPageId") String newsPageId) {
-        newsPageDao.deleteById(Long.parseLong(newsPageId));
-        modelAndView.setViewName("app.admin-console");
-        modelAndView.getModel().put("allCategories", getCategoryList());
-        modelAndView.getModel().put("categoryEntity", new CategoryEntity());
-        return modelAndView;
-    }
+//    @RequestMapping("/deleteNewsPage{newsPageId}")
+//    ModelAndView deleletNewsPage(ModelAndView modelAndView, @RequestParam("newsPageId") String newsPageId) {
+//        newsPageDao.deleteById(Long.parseLong(newsPageId));
+//        modelAndView.setViewName("app.admin-console");
+//        modelAndView.getModel().put("allCategories", getCategoryList());
+//        return modelAndView;
+//    }
 
     @RequestMapping("/getShopPage")
     ModelAndView getShopPage(ModelAndView modelAndView) {
