@@ -1,5 +1,6 @@
 package gamersFun.com.example.gamersFun.contollers;
 
+import gamersFun.com.example.gamersFun.entity.Blogs;
 import gamersFun.com.example.gamersFun.entity.CategoryEntity;
 import gamersFun.com.example.gamersFun.entity.NewsPageEntity;
 import gamersFun.com.example.gamersFun.repository.CategoryDao;
@@ -37,6 +38,8 @@ public class AdminPageController {
         modelAndView.setViewName("app.admin-console");
         modelAndView.getModel().put("allCategories", categoryEntityList);
         modelAndView.getModel().put("allNewsPages", newsPageEntities);
+        modelAndView.getModel().put("newsPageEntity", new NewsPageEntity());
+        modelAndView.getModel().put("categoryEntity", new CategoryEntity());
         return modelAndView;
     }
 
@@ -53,12 +56,10 @@ public class AdminPageController {
     }
 
     @PostMapping("/editCategory")
-    ModelAndView updatedCategory(ModelAndView modelAndView, @RequestParam("updatedCategoryName") String categoryName,@RequestParam("categoryId") String categoryId) {
-        categoryService.updateCategoryName(new CategoryEntity(Long.parseLong(categoryId), categoryName));
-        modelAndView.setViewName("app.admin-console");
-        modelAndView.getModel().put("allCategories", getCategoryList());
-        modelAndView.getModel().put("categoryEntity", new CategoryEntity());
-        return modelAndView;
+    String updatedCategory(ModelAndView modelAndView, CategoryEntity categoryEntity) {
+//        modelAndView.getModel().
+        categoryService.updateCategoryName(categoryEntity);
+        return "/adminConsole";
     }
 
     public List<CategoryEntity> getCategoryList() {
@@ -77,6 +78,12 @@ public class AdminPageController {
     ModelAndView getShopPage(ModelAndView modelAndView) {
         modelAndView.setViewName("app.shop-account");
         return modelAndView;
+    }
+
+    @PostMapping("/addNewsPage")
+    String addCategory(@RequestParam("newsImageFile") String newsImageFile, @ModelAttribute("newsPageEntity") @Valid NewsPageEntity newsPageEntity) {
+        newsPageDao.save(new NewsPageEntity());
+        return "/adminConsole";
     }
 
 }

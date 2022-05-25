@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--@elvariable id="categoryEntity" type="gamersFun.com.example.gamersFun.entity.CategoryEntity"--%>
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -265,6 +266,8 @@
                                         <div class="card-header">
                                             <h5 class="mb-0">Manage Categories</h5>
                                         </div>
+
+
                                         <div class="card-body">
                                             <div class="table-responsive">
                                                 <table class="table">
@@ -280,10 +283,27 @@
                                                     <core:forEach items="${allCategories}" var="categoriesVar">
                                                         <tr>
                                                             <td>${categoriesVar.getId()}</td>
+<%--                                                            <td>--%>
+<%--                                                                <div id="updatedCategoryName"--%>
+<%--                                                                     contenteditable='true'>${categoriesVar.getName()}</div>--%>
+<%--                                                            </td>--%>
+
                                                             <td>
-                                                                <div id="updatedCategoryName"
-                                                                     contenteditable='true'>${categoriesVar.getName()}</div>
+                                                                    <form:form action="editCategory" method="post" modelAttribute="categoryEntity">
+                                                                    <form:input type="text" path="name"   id="updatedCategoryName"
+                                                                                contenteditable='true' value="${categoriesVar.getName()}"/>
+<%--                                                                    <div id="updatedCategoryName" contenteditable='true'>${categoriesVar.getName()}</div>--%>
+                                                                    <form:hidden path="id" value="${categoriesVar.getId()}"/>
+<%--                                                                    <form:hidden path="name" value="${categoriesVar.getName()}"/>--%>
+                                                            <td>
+                                                                <div class="form-group">
+                                                                        <button type="submit" class="btn btn-fill-out btn-small d-block" name="submit"
+                                                                                value="Submit">Update
+                                                                        </button>
+                                                                </div>
                                                             </td>
+
+                                                            </form:form>
                                                             <td>
                                                                 <a href="/deleteCategory?categoryId=${categoriesVar.getId()}"
                                                                    class="btn btn-fill-out btn-small d-block">Delete</a>
@@ -296,7 +316,7 @@
                                                            modelAttribute="categoryEntity">
                                                     <div class="form-group">
                                                         <br><br>
-                                                        <span class="required">Enter Category Name to Add</span></label>
+                                                        <span class="required" style='font-weight: bold;'>Enter Category Name to Add</span></label>
                                                         <br>
                                                         <form:input type="text" path="name" placeholder=""
                                                                     class="form-control"/>
@@ -343,10 +363,36 @@
                                                                 <a href="/deleteNewsPage?newsPageId={newsPageVar.getId()}"
                                                                    class="btn btn-fill-out btn-small d-block">Delete</a>
                                                             </td>
+
                                                         </tr>
                                                     </core:forEach>
                                                     </tbody>
                                                 </table>
+                                                <form:form action="addNewsPage" method="post"
+                                                           modelAttribute="newsPageEntity">
+                                                    <div class="form-group">
+                                                        <br><br>
+                                                        <span class="required" style='font-weight: bold;'>Enter News Page Information to Add</span></label>
+                                                        <br>
+                                                        <form:input type="text" path="subject" placeholder="subject"
+                                                                    class="form-control"/>
+                                                        <form:input type="text" path="body" placeholder="body"
+                                                                    class="form-control"/>
+                                                        <form:input type="text" path="imageUrl" placeholder="upload image"
+                                                                    class="form-control"/>
+                                                        <div class="form-group col-md-12">
+                                                            <label for="newsImageFile" class="form-label">Image for news page</label>
+                                                            <input class="form-control" type="file"  accept="image/*" name="newsImageFile" id="newsImageFile">
+                                                        </div>
+                                                        <form:input type="text" path="name" placeholder="namecd "
+                                                                    class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-fill-out" name="submit"
+                                                                value="Submit">Save
+                                                        </button>
+                                                    </div>
+                                                </form:form>
                                             </div>
                                         </div>
                                     </div>
