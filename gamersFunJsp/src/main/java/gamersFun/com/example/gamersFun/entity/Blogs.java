@@ -18,6 +18,11 @@ public class Blogs {
     @Column(name = "id")
     private Long id;
 
+
+    @Column(name = "user_id")
+    private Long userId;
+
+
     @Column(name = "bio",length = 1000)
     @Size(max = 1000,message = "{blogs.body.size}")
     private String body;

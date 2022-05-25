@@ -1,21 +1,21 @@
 package gamersFun.com.example.gamersFun.contollers;
 
+import gamersFun.com.example.gamersFun.entity.Blogs;
 import gamersFun.com.example.gamersFun.entity.CategoryEntity;
 import gamersFun.com.example.gamersFun.entity.NewsPageEntity;
 import gamersFun.com.example.gamersFun.repository.CategoryDao;
 import gamersFun.com.example.gamersFun.repository.NewsPageDao;
+import gamersFun.com.example.gamersFun.service.CategoryService;
 import gamersFun.com.example.gamersFun.utility.CollectionsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.awt.image.ImageObserver;
-import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -26,27 +26,64 @@ public class AdminPageController {
     @Autowired
     CategoryDao categoryDao;
 
+    @Autowired
+    CategoryService categoryService;
+
+
     @RequestMapping("/adminConsole")
-    ModelAndView getAdminConsole(ModelMap modelMap, ModelAndView modelAndView, @ModelAttribute(value = "newsPage") @Valid NewsPageEntity newsPage, BindingResult bindingResult) {
+    ModelAndView getAdminConsole(ModelAndView modelAndView, @ModelAttribute(value = "categoryEntity") @Valid CategoryEntity categoryEntity,@ModelAttribute(value = "newsPageId") @Valid NewsPageEntity newsPageId) {
         Iterable<CategoryEntity> categoryEntities = categoryDao.findAll();
+        Iterable<NewsPageEntity> newsPageEntities = newsPageDao.findAll();
         List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator(categoryEntities);
-        System.out.println(categoryEntityList.toString());
-        modelMap.addAttribute("allCategories",categoryEntityList);
         modelAndView.setViewName("app.admin-console");
         modelAndView.getModel().put("allCategories", categoryEntityList);
+        modelAndView.getModel().put("allNewsPages", newsPageEntities);
+        modelAndView.getModel().put("newsPageEntity", new NewsPageEntity());
+        modelAndView.getModel().put("categoryEntity", new CategoryEntity());
         return modelAndView;
     }
 
-//    @RequestMapping("//deleteCategory?categoryId=${categoriesVar.getId()}   ")
-//    ModelAndView getAdminConsole(ModelMap modelMap, ModelAndView modelAndView, @ModelAttribute(value = "newsPage") @Valid NewsPageEntity newsPage, BindingResult bindingResult) {
-//        Iterable<CategoryEntity> categoryEntities = categoryDao.findAll();
-//        List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator(categoryEntities);
-//        System.out.println(categoryEntityList.toString());
-//        modelMap.addAttribute("allCategories",categoryEntityList);
+    @RequestMapping("/deleteCategory{categoryId}")
+    String deleteCategory(ModelAndView modelAndView, @RequestParam("categoryId") String categoryId) {
+        categoryDao.deleteById(Long.parseLong(categoryId));
+        return "/adminConsole";
+    }
+
+    @PostMapping("/addCategory")
+    String addCategory( @RequestParam("name") String categoryName) {
+        categoryDao.save(new CategoryEntity(categoryName));
+        return "/adminConsole";
+    }
+
+    @PostMapping("/editCategory")
+    String updatedCategory(ModelAndView modelAndView, CategoryEntity categoryEntity) {
+//        modelAndView.getModel().
+        categoryService.updateCategoryName(categoryEntity);
+        return "/adminConsole";
+    }
+
+    public List<CategoryEntity> getCategoryList() {
+        return CollectionsConverter.getListFromIterator(categoryDao.findAll());
+    }
+
+//    @RequestMapping("/deleteNewsPage{newsPageId}")
+//    ModelAndView deleletNewsPage(ModelAndView modelAndView, @RequestParam("newsPageId") String newsPageId) {
+//        newsPageDao.deleteById(Long.parseLong(newsPageId));
 //        modelAndView.setViewName("app.admin-console");
-//        modelAndView.getModel().put("allCategories", categoryEntityList);
+//        modelAndView.getModel().put("allCategories", getCategoryList());
 //        return modelAndView;
 //    }
 
+    @RequestMapping("/getShopPage")
+    ModelAndView getShopPage(ModelAndView modelAndView) {
+        modelAndView.setViewName("app.shop-account");
+        return modelAndView;
+    }
+
+    @PostMapping("/addNewsPage")
+    String addCategory(@RequestParam("newsImageFile") String newsImageFile, @ModelAttribute("newsPageEntity") @Valid NewsPageEntity newsPageEntity) {
+        newsPageDao.save(new NewsPageEntity());
+        return "/adminConsole";
+    }
 
 }

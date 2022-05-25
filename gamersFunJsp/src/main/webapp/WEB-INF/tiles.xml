@@ -20,6 +20,14 @@
     </definition>
 
     <definition  name="app.shop-account" template="/WEB-INF/tiles/shop-account.jsp" >
+        <put-attribute name="shop account page page" value="Shop Account Page" />
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+        <put-attribute name="jsScripts" value="/WEB-INF/tiles/includeScripts.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+    </definition>
+
+
+    <definition  name="app.shop-account" template="/WEB-INF/tiles/shop-account.jsp" >
         <put-attribute name="shop account page" value="Shop Account Page" />
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
         <put-attribute name="jsScripts" value="/WEB-INF/tiles/includeScripts.jsp" />

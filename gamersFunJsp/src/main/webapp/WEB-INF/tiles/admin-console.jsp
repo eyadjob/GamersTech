@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--@elvariable id="categoryEntity" type="gamersFun.com.example.gamersFun.entity.CategoryEntity"--%>
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -153,7 +154,8 @@
                 </div>
             </div>
             <div class="sidebar-widget widget-ads mb-30">
-                <a href="http://via.placeholder.com/900x630" class="play-video" data-animate="zoomIn" data-duration="1.5s" data-delay="0.1s">
+                <a href="http://via.placeholder.com/900x630" class="play-video" data-animate="zoomIn"
+                   data-duration="1.5s" data-delay="0.1s">
                     <img src="http://via.placeholder.com/432x336" alt="">
                 </a>
             </div>
@@ -171,7 +173,8 @@
                             <form action="#" method="get" class="search-form position-relative">
                                 <div class=" search-form-icon"><i class="ti-search"></i></div>
                                 <label>
-                                    <input type="text" class="search_field" placeholder="Enter keywords for search..." value="" name="s">
+                                    <input type="text" class="search_field" placeholder="Enter keywords for search..."
+                                           value="" name="s">
                                 </label>
                                 <div class="search-switch">
                                     <ul class="list-inline">
@@ -224,19 +227,29 @@
                         <div class="dashboard-menu ">
                             <ul class="nav flex-column" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="add-page-tab" data-toggle="tab" href="#addNewPage" role="tab" aria-controls="dashboard" aria-selected="false"><i class="ti-panel mr-5"></i>Add New Page</a>
+                                    <a class="nav-link active" id="add-page-tab" data-toggle="tab"
+                                       href="#manageNewsPages" role="tab" aria-controls="dashboard"
+                                       aria-selected="false"><i class="ti-panel mr-5"></i>Add New Page</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="manage-categories-page-tab" data-toggle="tab" href="#manageCategories" role="tab" aria-controls="Categories Management" aria-selected="false"><i class="ti-panel mr-5"></i>Manage Categories</a>
+                                    <a class="nav-link active" id="manage-categories-page-tab" data-toggle="tab"
+                                       href="#manageCategories" role="tab" aria-controls="Categories Management"
+                                       aria-selected="false"><i class="ti-panel mr-5"></i>Manage Categories</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="ti-shopping-cart-full mr-5"></i>Orders</a>
+                                    <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab"
+                                       aria-controls="orders" aria-selected="false"><i
+                                            class="ti-shopping-cart-full mr-5"></i>Orders</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="ti-location-pin mr-5"></i>My Address</a>
+                                    <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab"
+                                       aria-controls="address" aria-selected="true"><i class="ti-location-pin mr-5"></i>My
+                                        Address</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="account-detail-tab" data-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="ti-id-badge mr-5"></i>Account details</a>
+                                    <a class="nav-link" id="account-detail-tab" data-toggle="tab" href="#account-detail"
+                                       role="tab" aria-controls="account-detail" aria-selected="true"><i
+                                            class="ti-id-badge mr-5"></i>Account details</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="login.html"><i class="ti-lock mr-5"></i>Logout</a>
@@ -246,172 +259,227 @@
                     </div>
                     <div class="col-lg-9 col-md-8">
                         <div class="tab-content dashboard-content">
-<%--                            <div class="tab-pane fade active show" id="addNewPage" role="tabpanel" aria-labelledby="addNewsPage-tab">--%>
-<%--                                <div class="card">--%>
-<%--                                    <div class="card-header">--%>
-<%--                                        <h5 class="mb-0">Add New Gaming Page Here</h5>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="card-body">--%>
+                            <div class="tab-content dashboard-content">
+                                <div class="tab-pane fade active show" id="manageCategories" role="tabpanel"
+                                     aria-labelledby="manageCategories-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Manage Categories</h5>
+                                        </div>
 
-<%--                                        <h1>Categories List</h1>--%>
-<%--                                        <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="request"  />--%>
-<%--                                        <table border="1">--%>
-<%--                                            <tr>--%>
-<%--                                                <td>Category Id:</td>--%>
-<%--                                                <td>Category Name:</td>--%>
-<%--                                            </tr>--%>
-<%--                                            <core:forEach items="${allCategories}" var="categoriesVar">--%>
-<%--                                                <tr>--%>
-<%--                                                    <td>${categoriesVar.getId()}</td>--%>
-<%--                                                    <td>${categoriesVar.getName()}</td>--%>
-<%--                                                </tr>--%>
-<%--                                            </core:forEach>--%>
-<%--                                        </table>--%>
-<%--                                        <p>From your account dashboard. you can easily check &amp; view your <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a></p>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-                                    <div class="tab-pane fade active show" id="manageCategories" role="tabpanel" aria-labelledby="manageCategories-tab">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="mb-0">Manage Categories Here</h5>
-                                            </div>
-                                            <div class="card-body">
 
-                                                <h1>Categories List</h1>
-                                                <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="request"  />
-                                                <table border="1">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
                                                     <tr>
-                                                        <td>Category Id:</td>
-                                                        <td>Category Name:</td>
+                                                        <th>Id</th>
+                                                        <th>Name</th>
                                                     </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <jsp:useBean id="allCategories" type="java.util.ArrayList"
+                                                                 scope="request"/>
                                                     <core:forEach items="${allCategories}" var="categoriesVar">
                                                         <tr>
                                                             <td>${categoriesVar.getId()}</td>
-                                                            <td>${categoriesVar.getName()}</td>
-                                                            <td><a href="/deleteCategory?categoryId=${categoriesVar.getId()}" class="btn btn-fill-out btn-small d-block">Delete</a></td>
+<%--                                                            <td>--%>
+<%--                                                                <div id="updatedCategoryName"--%>
+<%--                                                                     contenteditable='true'>${categoriesVar.getName()}</div>--%>
+<%--                                                            </td>--%>
+
+                                                            <td>
+                                                                    <form:form action="editCategory" method="post" modelAttribute="categoryEntity">
+                                                                    <form:input type="text" path="name"   id="updatedCategoryName"
+                                                                                contenteditable='true' value="${categoriesVar.getName()}"/>
+<%--                                                                    <div id="updatedCategoryName" contenteditable='true'>${categoriesVar.getName()}</div>--%>
+                                                                    <form:hidden path="id" value="${categoriesVar.getId()}"/>
+<%--                                                                    <form:hidden path="name" value="${categoriesVar.getName()}"/>--%>
+                                                            <td>
+                                                                <div class="form-group">
+                                                                        <button type="submit" class="btn btn-fill-out btn-small d-block" name="submit"
+                                                                                value="Submit">Update
+                                                                        </button>
+                                                                </div>
+                                                            </td>
+
+                                                            </form:form>
+                                                            <td>
+                                                                <a href="/deleteCategory?categoryId=${categoriesVar.getId()}"
+                                                                   class="btn btn-fill-out btn-small d-block">Delete</a>
+                                                            </td>
                                                         </tr>
                                                     </core:forEach>
+                                                    </tbody>
                                                 </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                            <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="mb-0">Your Orders</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Order</th>
-                                                    <th>Date</th>
-                                                    <th>Status</th>
-                                                    <th>Total</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>#1357</td>
-                                                    <td>March 45, 2020</td>
-                                                    <td>Processing</td>
-                                                    <td>$125.00 for 2 item</td>
-                                                    <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#2468</td>
-                                                    <td>June 29, 2020</td>
-                                                    <td>Completed</td>
-                                                    <td>$364.00 for 5 item</td>
-                                                    <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#2366</td>
-                                                    <td>August 02, 2020</td>
-                                                    <td>Completed</td>
-                                                    <td>$280.00 for 3 item</td>
-                                                    <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="card mb-3 mb-lg-0">
-                                            <div class="card-header">
-                                                <h5 class="mb-0">Billing Address</h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <address>3522 Interstate<br> 75 Business Spur,<br> Sault Ste. <br>Marie, MI 49783</address>
-                                                <p>New York</p>
-                                                <a href="#" class="btn btn-fill-out btn-small">Edit</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="mb-0">Shipping Address</h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <address>4299 Express Lane<br>
-                                                    Sarasota, <br>FL 34249 USA <br>Phone: 1.941.227.4444</address>
-                                                <p>Sarasota</p>
-                                                <a href="#" class="btn btn-fill-out btn-small">Edit</a>
+                                                <form:form action="addCategory" method="post"
+                                                           modelAttribute="categoryEntity">
+                                                    <div class="form-group">
+                                                        <br><br>
+                                                        <span class="required" style='font-weight: bold;'>Enter Category Name to Add</span></label>
+                                                        <br>
+                                                        <form:input type="text" path="name" placeholder=""
+                                                                    class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-fill-out" name="submit"
+                                                                value="Submit">Save
+                                                        </button>
+                                                    </div>
+                                                </form:form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3>Account Details</h3>
+                                <div class="tab-pane fade" id="manageNewsPages" role="tabpanel"
+                                     aria-labelledby="manageNewsPages-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Manage News Pages</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Id</th>
+                                                        <th>Subject</th>
+                                                        <th>Body</th>
+                                                        <th>mage Url</th>
+                                                        <th>Name</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <jsp:useBean id="allNewsPages" type="java.util.ArrayList"
+                                                                 scope="request"/>
+                                                    <core:forEach items="${allNewsPages}" var="newsPageVar">
+                                                        <tr>
+                                                            <td>${newsPageVar.getId()}</td>
+                                                            <td>${newsPageVar.getSubject()}</td>
+                                                            <td>${newsPageVar.getBody()}</td>
+                                                            <td>${newsPageVar.getImageUrl()}</td>
+                                                            <td>${newsPageVar.getName()}</td>
+                                                            <td>
+                                                                <a href="/deleteNewsPage?newsPageId={newsPageVar.getId()}"
+                                                                   class="btn btn-fill-out btn-small d-block">Delete</a>
+                                                            </td>
+
+                                                        </tr>
+                                                    </core:forEach>
+                                                    </tbody>
+                                                </table>
+                                                <form:form action="addNewsPage" method="post"
+                                                           modelAttribute="newsPageEntity">
+                                                    <div class="form-group">
+                                                        <br><br>
+                                                        <span class="required" style='font-weight: bold;'>Enter News Page Information to Add</span></label>
+                                                        <br>
+                                                        <form:input type="text" path="subject" placeholder="subject"
+                                                                    class="form-control"/>
+                                                        <form:input type="text" path="body" placeholder="body"
+                                                                    class="form-control"/>
+                                                        <form:input type="text" path="imageUrl" placeholder="upload image"
+                                                                    class="form-control"/>
+                                                        <div class="form-group col-md-12">
+                                                            <label for="newsImageFile" class="form-label">Image for news page</label>
+                                                            <input class="form-control" type="file"  accept="image/*" name="newsImageFile" id="newsImageFile">
+                                                        </div>
+                                                        <form:input type="text" path="name" placeholder="namecd "
+                                                                    class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-fill-out" name="submit"
+                                                                value="Submit">Save
+                                                        </button>
+                                                    </div>
+                                                </form:form>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <p>Already have an account? <a href="login.html">Log in instead!</a></p>
-                                        <form method="post" name="enq">
-                                            <div class="row">
-                                                <div class="form-group col-md-6">
-                                                    <label>First Name <span class="required">*</span></label>
-                                                    <input required="" class="form-control" name="name" type="text">
+                                </div>
+                                <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="card mb-3 mb-lg-0">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">Billing Address</h5>
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                    <label>Last Name <span class="required">*</span></label>
-                                                    <input required="" class="form-control" name="phone">
-                                                </div>
-                                                <div class="form-group col-md-12">
-                                                    <label>Display Name <span class="required">*</span></label>
-                                                    <input required="" class="form-control" name="dname" type="text">
-                                                </div>
-                                                <div class="form-group col-md-12">
-                                                    <label>Email Address <span class="required">*</span></label>
-                                                    <input required="" class="form-control" name="email" type="email">
-                                                </div>
-                                                <div class="form-group col-md-12">
-                                                    <label>Current Password <span class="required">*</span></label>
-                                                    <input required="" class="form-control" name="password" type="password">
-                                                </div>
-                                                <div class="form-group col-md-12">
-                                                    <label>New Password <span class="required">*</span></label>
-                                                    <input required="" class="form-control" name="npassword" type="password">
-                                                </div>
-                                                <div class="form-group col-md-12">
-                                                    <label>Confirm Password <span class="required">*</span></label>
-                                                    <input required="" class="form-control" name="cpassword" type="password">
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Save</button>
+                                                <div class="card-body">
+                                                    <address>3522 Interstate<br> 75 Business Spur,<br> Sault Ste. <br>Marie,
+                                                        MI 49783
+                                                    </address>
+                                                    <p>New York</p>
+                                                    <a href="#" class="btn btn-fill-out btn-small">Edit</a>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">Shipping Address</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <address>4299 Express Lane<br>
+                                                        Sarasota, <br>FL 34249 USA <br>Phone: 1.941.227.4444
+                                                    </address>
+                                                    <p>Sarasota</p>
+                                                    <a href="#" class="btn btn-fill-out btn-small">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="account-detail" role="tabpanel"
+                                     aria-labelledby="account-detail-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3>Account Details</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>Already have an account? <a href="login.html">Log in instead!</a></p>
+                                            <form method="post" name="enq">
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>First Name <span class="required">*</span></label>
+                                                        <input required="" class="form-control" name="name" type="text">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Last Name <span class="required">*</span></label>
+                                                        <input required="" class="form-control" name="phone">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label>Display Name <span class="required">*</span></label>
+                                                        <input required="" class="form-control" name="dname"
+                                                               type="text">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label>Email Address <span class="required">*</span></label>
+                                                        <input required="" class="form-control" name="email"
+                                                               type="email">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label>Current Password <span class="required">*</span></label>
+                                                        <input required="" class="form-control" name="password"
+                                                               type="password">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label>New Password <span class="required">*</span></label>
+                                                        <input required="" class="form-control" name="npassword"
+                                                               type="password">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label>Confirm Password <span class="required">*</span></label>
+                                                        <input required="" class="form-control" name="cpassword"
+                                                               type="password">
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-fill-out" name="submit"
+                                                                value="Submit">Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -419,9 +487,8 @@
                     </div>
                 </div>
             </div>
-        </div>
     </main>
-<tiles:insertAttribute name="footer" />
+    <tiles:insertAttribute name="footer"/>
 </div>
 <!-- Main Wrap End-->
 <div class="dark-mark"></div>
