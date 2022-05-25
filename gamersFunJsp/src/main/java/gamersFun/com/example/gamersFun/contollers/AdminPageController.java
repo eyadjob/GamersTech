@@ -1,6 +1,7 @@
 package gamersFun.com.example.gamersFun.contollers;
 
 import gamersFun.com.example.gamersFun.entity.CategoryEntity;
+import gamersFun.com.example.gamersFun.entity.NewsPageEntity;
 import gamersFun.com.example.gamersFun.repository.CategoryDao;
 import gamersFun.com.example.gamersFun.repository.NewsPageDao;
 import gamersFun.com.example.gamersFun.service.CategoryService;
@@ -27,12 +28,15 @@ public class AdminPageController {
     @Autowired
     CategoryService categoryService;
 
+
     @RequestMapping("/adminConsole")
-    ModelAndView getAdminConsole(ModelAndView modelAndView, @ModelAttribute(value = "categoryEntity") @Valid CategoryEntity categoryEntity) {
+    ModelAndView getAdminConsole(ModelAndView modelAndView, @ModelAttribute(value = "categoryEntity") @Valid CategoryEntity categoryEntity,@ModelAttribute(value = "newsPageId") @Valid NewsPageEntity newsPageId) {
         Iterable<CategoryEntity> categoryEntities = categoryDao.findAll();
+        Iterable<NewsPageEntity> newsPageEntities = newsPageDao.findAll();
         List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator(categoryEntities);
         modelAndView.setViewName("app.admin-console");
         modelAndView.getModel().put("allCategories", categoryEntityList);
+        modelAndView.getModel().put("allNewsPages", newsPageEntities);
         return modelAndView;
     }
 
@@ -66,5 +70,20 @@ public class AdminPageController {
     public List<CategoryEntity> getCategoryList() {
         return CollectionsConverter.getListFromIterator(categoryDao.findAll());
     }
-    
+
+    @RequestMapping("/deleteCategory{newsPageId}")
+    ModelAndView deleletNewsPage(ModelAndView modelAndView, @RequestParam("newsPageId") String newsPageId) {
+        newsPageDao.deleteById(Long.parseLong(newsPageId));
+        modelAndView.setViewName("app.admin-console");
+        modelAndView.getModel().put("allCategories", getCategoryList());
+        modelAndView.getModel().put("categoryEntity", new CategoryEntity());
+        return modelAndView;
+    }
+
+    @RequestMapping("/getShopPage")
+    ModelAndView getShopPage(ModelAndView modelAndView) {
+        modelAndView.setViewName("app.shop-account");
+        return modelAndView;
+    }
+
 }

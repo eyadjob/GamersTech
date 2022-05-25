@@ -1,15 +1,10 @@
 package gamersFun.com.example.gamersFun.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "category")
-@NoArgsConstructor
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,6 +45,9 @@ public class CategoryEntity {
         if (o == null || getClass() != o.getClass()) return false;
         CategoryEntity that = (CategoryEntity) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+    }
+
+    public CategoryEntity() {
     }
 
     @Override

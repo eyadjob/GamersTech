@@ -862,6 +862,7 @@
                         </div>
                         <div class="col-lg-9 col-md-8">
                             <div class="tab-content dashboard-content">
+                            <div class="tab-content dashboard-content">
                                 <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                     <div class="card">
                                         <div class="card-header">
@@ -917,7 +918,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                                <div class="tab-pane fade active show" id="address" role="tabpanel" aria-labelledby="address-tab">
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="card mb-3 mb-lg-0">

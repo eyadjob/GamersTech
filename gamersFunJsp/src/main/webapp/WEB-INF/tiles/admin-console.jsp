@@ -224,7 +224,7 @@
                         <div class="dashboard-menu ">
                             <ul class="nav flex-column" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="add-page-tab" data-toggle="tab" href="#addNewPage" role="tab" aria-controls="dashboard" aria-selected="false"><i class="ti-panel mr-5"></i>Add New Page</a>
+                                    <a class="nav-link active" id="add-page-tab" data-toggle="tab" href="#manageNewsPages" role="tab" aria-controls="dashboard" aria-selected="false"><i class="ti-panel mr-5"></i>Add New Page</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link active" id="manage-categories-page-tab" data-toggle="tab" href="#manageCategories" role="tab" aria-controls="Categories Management" aria-selected="false"><i class="ti-panel mr-5"></i>Manage Categories</a>
@@ -246,70 +246,45 @@
                     </div>
                     <div class="col-lg-9 col-md-8">
                         <div class="tab-content dashboard-content">
-<%--                            <div class="tab-pane fade active show" id="addNewPage" role="tabpanel" aria-labelledby="addNewsPage-tab">--%>
-<%--                                <div class="card">--%>
-<%--                                    <div class="card-header">--%>
-<%--                                        <h5 class="mb-0">Add New Gaming Page Here</h5>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="card-body">--%>
-
-<%--                                        <h1>Categories List</h1>--%>
-<%--                                        <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="request"  />--%>
-<%--                                        <table border="1">--%>
-<%--                                            <tr>--%>
-<%--                                                <td>Category Id:</td>--%>
-<%--                                                <td>Category Name:</td>--%>
-<%--                                            </tr>--%>
-<%--                                            <core:forEach items="${allCategories}" var="categoriesVar">--%>
-<%--                                                <tr>--%>
-<%--                                                    <td>${categoriesVar.getId()}</td>--%>
-<%--                                                    <td>${categoriesVar.getName()}</td>--%>
-<%--                                                </tr>--%>
-<%--                                            </core:forEach>--%>
-<%--                                        </table>--%>
-<%--                                        <p>From your account dashboard. you can easily check &amp; view your <a href="javascript:void(0);" onclick="$('#orders-tab').trigger('click')">recent orders</a>, manage your <a href="javascript:void(0);" onclick="$('#address-tab').trigger('click')">shipping and billing addresses</a> and <a href="javascript:void(0);" onclick="$('#account-detail-tab').trigger('click')">edit your password and account details.</a></p>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-                                    <div class="tab-pane fade active show" id="manageCategories" role="tabpanel" aria-labelledby="manageCategories-tab">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="mb-0">Manage Categories Here</h5>
-                                            </div>
-                                            <div class="card-body">
-
-                                                <h1>Categories List</h1>
-                                                <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="request"  />
-                                                <table border="1">
-                                                    <tr>
-                                                        <td>Category Id:</td>
-                                                        <td>Category Name:</td>
-                                                    </tr>
-                                                    <core:forEach items="${allCategories}" var="categoriesVar">
-                                                        <tr>
-                                                            <td>${categoriesVar.getId()}</td>
-                                                            <td ><div id="updatedCategoryName" contenteditable='true'>${categoriesVar.getName()}</div></td>
-                                                            <td><a href="/deleteCategory?categoryId=${categoriesVar.getId()}" class="btn btn-fill-out btn-small d-block">Delete</a></td>
-                                                            <script>var currentCategoryName = document.getElementById("updatedCategoryName").value;
-                                                            </script>
-                                                            <td><a href="/editCategory?categoryId=${categoriesVar.getId()}" class="btn btn-fill-out btn-small d-block">Update</a></td>
-<%--                                                            <td>--%>
-<%--                                                            <script>--%>
-<%--                                                                function generateNew()--%>
-<%--                                                                {--%>
-<%--                                                                    var d=document.getElementById("divId");--%>
-<%--                                                                    d.innerHTML+="<p><input id='newCategoryName' type='text' name='newCategoryName'>";--%>
-<%--                                                                }--%>
+                        <div class="tab-content dashboard-content">
+<%--                            <div class="tab-pane fade active show" id="manageCategories" role="tabpanel" aria-labelledby="manageCategories-tab">--%>
+<%--                                        <div class="card">--%>
+<%--                                            <div class="card-header">--%>
+<%--                                                <h5 class="mb-0">Manage Categories Here</h5>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="card-body">--%>
+<%--                                                <h1>Categories List</h1>--%>
+<%--                                                <table border="1">--%>
+<%--                                                    <tr>--%>
+<%--                                                        <td>Category Id:</td>--%>
+<%--                                                        <td>Category Name:</td>--%>
+<%--                                                    </tr>--%>
+<%--                                                    <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="request"  />--%>
+<%--                                                    <core:forEach items="${allCategories}" var="categoriesVar">--%>
+<%--                                                        <tr>--%>
+<%--                                                            <td>${categoriesVar.getId()}</td>--%>
+<%--                                                            <td ><div id="updatedCategoryName" contenteditable='true'>${categoriesVar.getName()}</div></td>--%>
+<%--                                                            <td><a href="/deleteCategory?categoryId=${categoriesVar.getId()}" class="btn btn-fill-out btn-small d-block">Delete</a></td>--%>
+<%--                                                            <script>var currentCategoryName = document.getElementById("updatedCategoryName").value;--%>
 <%--                                                            </script>--%>
-<%--                                                            <form name='abc' method="post" action="">--%>
-<%--                                                                <div id="divId"></div>--%>
-<%--                                                                <input type="button"  value="Edit Category" onclick="generateNew()">--%>
-<%--                                                            </form>--%>
-<%--                                                            </td>--%>
-                                                        </tr>
-                                                    </core:forEach>
-                                                </table>
-                                            </div>
+<%--                                                            <td><a href="/editCategory?categoryId=${categoriesVar.getId()}" class="btn btn-fill-out btn-small d-block">Update</a></td>--%>
+<%--&lt;%&ndash;                                                            <td>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <script>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                function generateNew()&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                {&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                    var d=document.getElementById("divId");&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                    d.innerHTML+="<p><input id='newCategoryName' type='text' name='newCategoryName'>";&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                }&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            </script>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <form name='abc' method="post" action="">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                <div id="divId"></div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                                <input type="button"  value="Edit Category" onclick="generateNew()">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            </form>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            </td>&ndash;%&gt;--%>
+<%--                                                        </tr>--%>
+<%--                                                    </core:forEach>--%>
+<%--                                                </table>--%>
+<%--                                            </div>--%>
                                             <form:form action="addCategory" method="post"  modelAttribute="categoryEntity">
                                                 <div class="form-group">
                                                     <span class="required">*</span></label>
@@ -319,52 +294,78 @@
                                                         <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Save</button>
                                                 </div>
                                             </form:form>
-
-                                        </div>
-                                    </div>
-
-
-
-
-                            <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+                                 <div class="tab-pane fade active show" id="manageCategories" role="tabpanel" aria-labelledby="manageCategories-tab">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="mb-0">Your Orders</h5>
+                                        <h5 class="mb-0">Manage Categories</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
                                                 <tr>
-                                                    <th>Order</th>
-                                                    <th>Date</th>
-                                                    <th>Status</th>
-                                                    <th>Total</th>
-                                                    <th>Actions</th>
+                                                    <th>Id</th>
+                                                    <th>Name</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
+                                                <jsp:useBean id="allCategories" type="java.util.ArrayList" scope="request"  />
+                                                <core:forEach items="${allCategories}" var="categoriesVar">
+                                                    <tr>
+                                                        <td>${categoriesVar.getId()}</td>
+                                                        <td ><div id="updatedCategoryName" contenteditable='true'>${categoriesVar.getName()}</div></td>
+                                                        <td><a href="/deleteCategory?categoryId=${categoriesVar.getId()}" class="btn btn-fill-out btn-small d-block">Delete</a></td>
+                                                    </tr>
+                                                </core:forEach>
+                                                </tbody>
+                                            </table>
+                                            <form:form action="addCategory" method="post"  modelAttribute="categoryEntity">
+                                                <div class="form-group">
+                                                    <br><br>
+                                                    <span class="required">Enter Category Name to Add</span></label>
+                                                    <form:input type="text" path="name" placeholder="Enter Category Name Here to Add" class="form-control"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Save</button>
+                                                </div>
+                                            </form:form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="tab-pane fade" id="manageNewsPages" role="tabpanel" aria-labelledby="manageNewsPages-tab">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Manage News Pages</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
                                                 <tr>
-                                                    <td>#1357</td>
-                                                    <td>March 45, 2020</td>
-                                                    <td>Processing</td>
-                                                    <td>$125.00 for 2 item</td>
-                                                    <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
+                                                    <th>Id</th>
+                                                    <th>Subject</th>
+                                                    <th>Body</th>
+                                                    <th>mage Url</th>
+                                                    <th>Name</th>
                                                 </tr>
-                                                <tr>
-                                                    <td>#2468</td>
-                                                    <td>June 29, 2020</td>
-                                                    <td>Completed</td>
-                                                    <td>$364.00 for 5 item</td>
-                                                    <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#2366</td>
-                                                    <td>August 02, 2020</td>
-                                                    <td>Completed</td>
-                                                    <td>$280.00 for 3 item</td>
-                                                    <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
-                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <jsp:useBean id="allNewsPages" type="java.util.ArrayList" scope="request"  />
+                                                <core:forEach items="${allNewsPages}" var="newsPageVar">
+                                                    <tr>
+                                                        <td>${newsPageVar.getId()}</td>
+                                                        <td>${newsPageVar.getSubject()}</td>
+                                                        <td>${newsPageVar.getBody()}</td>
+                                                        <td>${newsPageVar.getImageUrl()}</td>
+                                                        <td>${newsPageVar.getName()}</td>
+                                                        <td><a href="/deleteNewsPage?newsPageId={newsPageVar.getId()}" class="btn btn-fill-out btn-small d-block">Delete</a></td>
+                                                    </tr>
+                                                </core:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
