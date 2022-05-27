@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/adminConsole**",
                         "/getShopPage**",
                         "/enableUser**",
+                        "/updateUser**",
                         "/shopAccount"
                 )
                 .permitAll()
