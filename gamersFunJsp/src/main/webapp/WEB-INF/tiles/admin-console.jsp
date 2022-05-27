@@ -351,58 +351,56 @@
                                                         <tr>
                                                             <td>${usersVar.getId()}</td>
                                                                 <form:form action="editUser" method="post" modelAttribute="userEntity">
-                                                            <td>
-                                                                    <form:input type="text" path="email" contenteditable='true' value="${usersVar.getEmail()}"/>
+                                                            </td>
+                                                                 ${usersVar.getEmail()}
                                                             </td>
                                                             <td>
-                                                                    <form:input type="text" path="enabled" contenteditable='true' value="${usersVar.isEnabled()}"  style='width: 50px;' />
+                                                                 <form:input type="text" path="enabled" contenteditable='true' value="${usersVar.isEnabled()}"  style='width: 50px;' />
                                                             </td>
                                                             <td>
-                                                                    <form:input type="text" path="password" value="${usersVar.getPassword()}"/>
+                                                                 ${usersVar.getPassword()}
                                                             </td>
                                                             <td>
-                                                                    <form:input type="text" path="role" contenteditable='true' value="${usersVar.getRole()}"/>
+                                                                 <form:input type="text" path="role" contenteditable='true' value="${usersVar.getRole()}"/>
                                                             </td>
                                                             <td>
-                                                                    <form:input type="text" path="userName" contenteditable='true' value="${usersVar.getUserName()}"  style='width: 100px;'/>
+                                                                <form:input type="text" path="userName" contenteditable='true' value="${usersVar.getUserName()}"  style='width: 100px;'/>
                                                             </td>
-
+                                                                </form:form>
                                                             <td>
-                                                                <div class="form-group">
-                                                                    <button type="submit" class="btn btn-fill-out btn-small d-block" name="submit"
-                                                                            value="Submit">Update
-                                                                    </button>
-                                                                </div>
+                                                                <a href="/enableUser?userId=${usersVar.getId()}&userEnabled=true" class="btn btn-fill-out btn-small d-block">Enable User</a>
                                                             </td>
-                                                            </form:form>
+                                                            <td>
+                                                                <a href="/enableUser?userId=${usersVar.getId()}&userEnabled=false" class="btn btn-fill-out btn-small d-block">Disable User</a>
+                                                            </td>
                                                         </tr>
                                                     </core:forEach>
                                                     </tbody>
                                                 </table>
-                                                <form:form action="addUser" method="post"
-                                                           modelAttribute="userEntity">
-                                                    <div class="form-group">
-                                                        <br><br>
-                                                        <span class="required" style='font-weight: bold;'>Enter User Information to Add</span></label>
-                                                        <br><br>
-                                                        <form:input type="text" path="email"  placeholder="user email"/>
-                                                        <br><br>
-                                                        <form:input type="text" path="enabled" placeholder="user enabled (true or false)"/>
-                                                        <br><br>
-                                                        <form:input type="text" path="password"  placeholder="user password"/>
-                                                        <br><br>
-                                                        <form:input type="text" path="role" placeholder="user role"/>
-                                                        <br><br>
-                                                        <form:input type="text" path="userName"  placeholder="user name"/>
-
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <button type="submit" class="btn btn-fill-out" name="submit"
-                                                                value="Submit">Save
-                                                        </button>
-                                                    </div>
-                                                </form:form>
                                             </div>
+                                            <form:form action="addUser" method="post"
+                                                       modelAttribute="userEntity">
+                                                <div class="form-group">
+                                                    <br><br>
+                                                    <span class="required" style='font-weight: bold;'>Enter User Information to Add</span></label>
+                                                    <br><br>
+                                                    <form:input type="text" path="email"  placeholder="user email"/>
+                                                    <br><br>
+                                                    <form:input type="text" path="enabled" placeholder="user enabled (true or false)"/>
+                                                    <br><br>
+                                                    <form:input type="text" path="password"  placeholder="user password"/>
+                                                    <br><br>
+                                                    <form:input type="text" path="role" placeholder="user role"/>
+                                                    <br><br>
+                                                    <form:input type="text" path="userName"  placeholder="user name"/>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-fill-out" name="submit"
+                                                            value="Submit">Save
+                                                    </button>
+                                                </div>
+                                            </form:form>
                                         </div>
                                     </div>
                                 </div>

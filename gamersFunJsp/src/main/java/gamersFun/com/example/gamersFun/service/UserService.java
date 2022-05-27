@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,26 +26,25 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserDao userDao;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private VerificationDao tokenDao;
 
-    public void register(UserEntity siteUserEntity){
+    public void register(UserEntity siteUserEntity) {
         //siteUser.setPassword(passwordEncoder.encode(siteUser.getPassword())); no need cause i used plain password and then encryot it in setter
         siteUserEntity.setRole("ROLE_USER");// DEFAULT TO USER ROLE_USER  for admin use ROLE_ADMIN
         userDao.save(siteUserEntity);
     }
-    public void save(UserEntity siteUserEntity){
+
+    public void save(UserEntity siteUserEntity) {
         userDao.save(siteUserEntity);
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity userEntity = userDao.findByEmail(email);
-        if(userEntity == null){
+        if (userEntity == null) {
             return null;
         }
 
@@ -54,10 +52,12 @@ public class UserService implements UserDetailsService {
 
         //String password = passwordEncoder.encode(user.getPassword());
 
-        return new org.springframework.security.core.userdetails.User(email, userEntity.getPassword(), userEntity.isEnabled(),true,true,true,auth);
+        return new org.springframework.security.core.userdetails.User(email, userEntity.getPassword(), userEntity.isEnabled(), true, true, true, auth);
     }
 
-    public UserEntity getUser(String email) {
+    public UserEntity getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
         return userDao.findByEmail(email);
     }
 
@@ -65,25 +65,25 @@ public class UserService implements UserDetailsService {
         return userDao.findById(id);
     }
 
-
-    public String createVerificationToken(UserEntity userEntity, TokenTypeEntity tokenType){
-        VerificationTokenEntity token = new VerificationTokenEntity(userEntity,tokenType,UUID.randomUUID().toString());
+    public String createVerificationToken(UserEntity userEntity, TokenTypeEntity tokenType) {
+        VerificationTokenEntity token = new VerificationTokenEntity(userEntity, tokenType, UUID.randomUUID().toString());
         tokenDao.save(token);
         return token.getToken();
     }
-    public VerificationTokenEntity getVerification(String token){
+
+    public VerificationTokenEntity getVerification(String token) {
         return tokenDao.findByToken(token);
 
     }
 
-    public void deleteToken(VerificationTokenEntity token){
+    public void deleteToken(VerificationTokenEntity token) {
         tokenDao.delete(token);
     }
 
-    public UserEntity getUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        return userDao.findByEmail(email);
-
+    public void enableUser(Long userId, boolean enableUser) {
+        Optional<UserEntity> userEntityOptional = userDao.findById(userId);
+        if (enableUser) userEntityOptional.orElseThrow().setEnabled(true);
+        else userEntityOptional.orElseThrow().setEnabled(false);
+        userDao.save(userEntityOptional.orElseThrow());
     }
 }

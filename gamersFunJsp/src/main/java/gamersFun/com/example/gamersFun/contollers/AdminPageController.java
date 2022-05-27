@@ -8,6 +8,7 @@ import gamersFun.com.example.gamersFun.repository.CategoryDao;
 import gamersFun.com.example.gamersFun.repository.NewsPageDao;
 import gamersFun.com.example.gamersFun.repository.UserDao;
 import gamersFun.com.example.gamersFun.service.CategoryService;
+import gamersFun.com.example.gamersFun.service.UserService;
 import gamersFun.com.example.gamersFun.utility.CollectionsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +33,9 @@ public class AdminPageController {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     CategoryService categoryService;
@@ -91,5 +95,13 @@ public class AdminPageController {
         newsPageDao.save(new NewsPageEntity());
         return "/adminConsole";
     }
+
+
+    @RequestMapping("/enableUser")
+    String enableUser(@RequestParam("userId") String userId,@RequestParam("userEnabled") boolean enableUser) {
+        userService.enableUser(Long.parseLong(userId),enableUser);
+        return "/adminConsole";
+    }
+
 
 }
