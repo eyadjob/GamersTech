@@ -22,4 +22,6 @@
 <script src="${contextRoot}/js/vendor/jquery.counterup.min.js"></script>
 <script src="${contextRoot}/js/vendor/jquery.theia.sticky.js"></script>
         <!-- UltraNews JS -->
+
 <script src="${contextRoot}/js/main.js"></script>
+<script src="${contextRoot}/js/Blogs.js"></script>

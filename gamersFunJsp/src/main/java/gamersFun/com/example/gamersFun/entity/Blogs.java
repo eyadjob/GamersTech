@@ -1,5 +1,8 @@
 package gamersFun.com.example.gamersFun.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.nio.file.Path;
@@ -38,6 +41,8 @@ public class Blogs {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
+
+
     public String getPhotoDirectory() {
         return photoDirectory;
     }
@@ -72,10 +77,25 @@ public class Blogs {
     public Blogs(){
 
     }
-    public Blogs(String subject,String body){
+    public Blogs(String subject,String body,Profile profile){
         this.subject = subject;
         this.body = body;
+        this.profile=profile;
+
     }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "profile_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Profile profile;
 
     @PrePersist
     private void setCreatedDate(){

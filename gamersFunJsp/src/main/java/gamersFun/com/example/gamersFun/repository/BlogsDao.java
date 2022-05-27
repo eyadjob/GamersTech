@@ -9,6 +9,6 @@ import org.springframework.security.core.userdetails.User;
 import java.util.List;
 
 public interface BlogsDao extends CrudRepository<Blogs,Long> {
-    @Query("FROM Profile  p join p.blogs blog where p.id = blog.id and blog.id=:blogId")
-    public Blogs findBlogByProfile(Long blogId);
+
+    public List<Blogs> findAllByProfile(Profile profile);
 }

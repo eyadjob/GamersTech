@@ -1,8 +1,10 @@
 package gamersFun.com.example.gamersFun.exception;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -27,6 +30,11 @@ import java.util.Locale;
 @ControllerAdvice
 public class GlopalExceptionHandler {
 
+    @Value("${message.error.exception}")
+    private String exceptionMessage;
+
+    @Value("${message.error.duplicateRecord}")
+    private String duplicateRecord;
 
 
     private MessageSource messageSource;
@@ -45,7 +53,9 @@ public class GlopalExceptionHandler {
         return new ResponseEntity<String>(e.getMessage(), status);
     }
 
-    @ExceptionHandler(InvalidFileException.class)
+  /*
+   For rest Api handke exception
+  @ExceptionHandler(InvalidFileException.class)
     @ResponseBody
     ResponseEntity<?> handleInvalidFileException(HttpServletRequest request, Throwable e) {
         HttpStatus status = getStatus(request);
@@ -57,7 +67,7 @@ public class GlopalExceptionHandler {
     ResponseEntity<?> handleSmallImages(HttpServletRequest request, Throwable e) {
         HttpStatus status = getStatus(request);
         return new ResponseEntity<String>(e.getMessage(), status);
-    }
+    }*/
 
     private HttpStatus getStatus(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
@@ -118,6 +128,27 @@ public class GlopalExceptionHandler {
             fieldValidationError.setMessage(msg);
         }
         return fieldValidationError;
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ModelAndView defaultErrorHandler(HttpServletRequest request, Exception exception){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.getModel().put("message",exception.getMessage());
+        modelAndView.getModel().put("status",getStatus(request));
+        modelAndView.getModel().put("url",request.getRequestURL());
+        modelAndView.getModel().put("exception",exception);
+        modelAndView.setViewName("app.exception");
+        return modelAndView;
+    }
+
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    public ModelAndView integrityViolation(HttpServletRequest request, Exception exception){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.getModel().put("message",duplicateRecord);
+        modelAndView.getModel().put("url",request.getRequestURL());
+        modelAndView.getModel().put("exception",exception);
+        modelAndView.setViewName("app.exception");
+        return modelAndView;
     }
 
 }
