@@ -4,6 +4,7 @@ import gamersFun.com.example.gamersFun.entity.Blogs;
 import gamersFun.com.example.gamersFun.entity.CategoryEntity;
 import gamersFun.com.example.gamersFun.entity.NewsPageEntity;
 import gamersFun.com.example.gamersFun.entity.UserEntity;
+import gamersFun.com.example.gamersFun.enums.UserRole;
 import gamersFun.com.example.gamersFun.repository.CategoryDao;
 import gamersFun.com.example.gamersFun.repository.NewsPageDao;
 import gamersFun.com.example.gamersFun.repository.UserDao;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -52,9 +54,11 @@ public class AdminPageController {
         modelAndView.getModel().put("allCategories", categoryEntityList);
         modelAndView.getModel().put("allNewsPages", newsPageEntities);
         modelAndView.getModel().put("allUsers", userEntities);
+        modelAndView.getModel().put("allRoles", UserRole.getRoleNames());
         modelAndView.getModel().put("newsPageEntity", new NewsPageEntity());
         modelAndView.getModel().put("categoryEntity", new CategoryEntity());
         modelAndView.getModel().put("userEntity", new UserEntity());
+
         return modelAndView;
     }
 
@@ -103,5 +107,9 @@ public class AdminPageController {
         return "/adminConsole";
     }
 
-
+    @PostMapping("/updateUser")
+    String updatedCategory(UserEntity userEntity) {
+        userService.updateUser(userEntity);
+        return "/adminConsole";
+    }
 }

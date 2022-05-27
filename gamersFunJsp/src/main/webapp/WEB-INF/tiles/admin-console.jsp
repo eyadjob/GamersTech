@@ -345,34 +345,46 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <jsp:useBean id="allUsers" type="java.util.ArrayList"
-                                                                 scope="request"/>
+                                                    <jsp:useBean id="allUsers" type="java.util.ArrayList" scope="request"/>
                                                     <core:forEach items="${allUsers}" var="usersVar">
                                                         <tr>
-                                                            <td>${usersVar.getId()}</td>
-                                                                <form:form action="editUser" method="post" modelAttribute="userEntity">
-                                                            </td>
-                                                                 ${usersVar.getEmail()}
-                                                            </td>
-                                                            <td>
-                                                                 <form:input type="text" path="enabled" contenteditable='true' value="${usersVar.isEnabled()}"  style='width: 50px;' />
-                                                            </td>
-                                                            <td>
-                                                                 ${usersVar.getPassword()}
-                                                            </td>
-                                                            <td>
-                                                                 <form:input type="text" path="role" contenteditable='true' value="${usersVar.getRole()}"/>
-                                                            </td>
-                                                            <td>
-                                                                <form:input type="text" path="userName" contenteditable='true' value="${usersVar.getUserName()}"  style='width: 100px;'/>
-                                                            </td>
-                                                                </form:form>
-                                                            <td>
-                                                                <a href="/enableUser?userId=${usersVar.getId()}&userEnabled=true" class="btn btn-fill-out btn-small d-block">Enable User</a>
-                                                            </td>
-                                                            <td>
-                                                                <a href="/enableUser?userId=${usersVar.getId()}&userEnabled=false" class="btn btn-fill-out btn-small d-block">Disable User</a>
-                                                            </td>
+                                                            <form:form action="updateUser" method="post" modelAttribute="userEntity">
+                                                                <td>
+                                                                    <form:input type="text" path="id" value="${usersVar.getId()}" style='width: 30px;' readonly="true"/>
+                                                                </td>
+                                                                <td>
+                                                                    <form:input type="text" path="email" value="${usersVar.getEmail()}" readonly="true"/>
+                                                                </td>
+                                                                <td>
+                                                                     <form:input type="text" path="enabled" contenteditable='true' value="${usersVar.isEnabled()}"  style='width: 50px;' />
+                                                                </td>
+                                                                <td>
+                                                                    <form:input type="text" path="password"  value="${usersVar.getPassword()}"  style='width: 100px;' readonly="true"/>
+                                                                </td>
+                                                                <td>
+                                                                <select name="role" id="role">
+                                                                    <core:forEach items="${allRoles}" var="rolesVar">
+                                                                    <option value="${rolesVar}">${rolesVar}</option>
+                                                                    </core:forEach>
+                                                                </select>
+                                                                </td>
+                                                                <td>
+                                                                    <form:input type="text" path="userName" contenteditable='true' value="${usersVar.getUserName()}"  style='width: 100px;'/>
+                                                                </td>
+                                                            </form:form>
+                                                                <td>
+                                                                    <a href="/enableUser?userId=${usersVar.getId()}&userEnabled=true" class="btn btn-fill-out btn-small d-block">Enable User</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="/enableUser?userId=${usersVar.getId()}&userEnabled=false" class="btn btn-fill-out btn-small d-block">Disable User</a>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group">
+                                                                        <button type="submit" class="btn btn-fill-out btn-small d-block" name="submit"
+                                                                                value="Submit">Update User
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
                                                         </tr>
                                                     </core:forEach>
                                                     </tbody>

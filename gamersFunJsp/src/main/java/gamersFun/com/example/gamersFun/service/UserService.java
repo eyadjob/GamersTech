@@ -86,4 +86,8 @@ public class UserService implements UserDetailsService {
         else userEntityOptional.orElseThrow().setEnabled(false);
         userDao.save(userEntityOptional.orElseThrow());
     }
+
+    public void updateUser(UserEntity userEntity) {
+        userDao.save(userEntity);
+    }
 }
