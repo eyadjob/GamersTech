@@ -1,10 +1,18 @@
 package gamersFun.com.example.gamersFun.entity;
 
+import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 import javax.persistence.*;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
+@Data
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,6 +21,28 @@ public class CategoryEntity {
 
     @Column(name = "name")
     private String name;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "created_date")
+    @Generated(GenerationTime.INSERT)
+    private Date created_date;
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "category_newspage",
+            joinColumns = { @JoinColumn(name = "category_id") },
+            inverseJoinColumns = { @JoinColumn(name = "newspage_id") }
+    )
+    @OrderColumn(name="created_date")
+    Set<NewsPageEntity> newsPages = new HashSet<>();
+
+    public Date getCreated_date() {
+        return created_date;
+    }
+
+    public void setCreated_date(Date created_date) {
+        this.created_date = created_date;
+    }
 
     public CategoryEntity(String name) {
         this.name = name;

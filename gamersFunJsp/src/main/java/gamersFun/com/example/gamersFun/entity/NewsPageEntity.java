@@ -2,17 +2,21 @@ package gamersFun.com.example.gamersFun.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "news_page")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class NewsPageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,16 +26,27 @@ public class NewsPageEntity {
     @Column(name = "image_url")
     private String imageUrl;
 
-//    @NotBlank(message = "{news.page.subject.empty}")
+    //    @NotBlank(message = "{news.page.subject.empty}")
     @Column(name = "subject")
     private String subject;
 
-//    @NotBlank(message = "{news.page.body.empty}")
+    //    @NotBlank(message = "{news.page.body.empty}")
     @Column(name = "body")
     private String body;
 
-    @Column(name = "name")
-    private String name;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "created_date")
+    @Generated(GenerationTime.INSERT)
+    private Date created_date;
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "category_newspage",
+                joinColumns = { @JoinColumn(name = "newspage_id") },
+            inverseJoinColumns = { @JoinColumn(name = "category_id") }
+    )
+    @OrderColumn(name="created_date")
+    Set<CategoryEntity> categories = new HashSet<>();
 
 
     public Long getId() {
@@ -40,14 +55,6 @@ public class NewsPageEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getImageUrl() {
@@ -80,6 +87,14 @@ public class NewsPageEntity {
         if (o == null || getClass() != o.getClass()) return false;
         NewsPageEntity that = (NewsPageEntity) o;
         return Objects.equals(id, that.id) && Objects.equals(imageUrl, that.imageUrl) && Objects.equals(subject, that.subject) && Objects.equals(body, that.body);
+    }
+
+    public Date getCreated_date() {
+        return created_date;
+    }
+
+    public void setCreated_date(Date created_date) {
+        this.created_date = created_date;
     }
 
     @Override

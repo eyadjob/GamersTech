@@ -6,6 +6,8 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--@elvariable id="categoryEntity" type="gamersFun.com.example.gamersFun.entity.CategoryEntity"--%>
+<%--@elvariable id="categoryEntity" type="gamersFun.com.example.gamersFun.entity.NewsPageEntity"--%>
+<%--@elvariable id="categoryEntity" type="gamersFun.com.example.gamersFun.entity.UserEntity"--%>
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -232,9 +234,14 @@
                                        aria-selected="false"><i class="ti-panel mr-5"></i>Add New Page</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="manage-categories-page-tab" data-toggle="tab"
+                                    <a class="nav-link" id="manage-categories-page-tab" data-toggle="tab"
                                        href="#manageCategories" role="tab" aria-controls="Categories Management"
                                        aria-selected="false"><i class="ti-panel mr-5"></i>Manage Categories</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="manage-users-page-tab" data-toggle="tab"
+                                       href="#manageUsers" role="tab" aria-controls="Users Management"
+                                       aria-selected="false"><i class="ti-panel mr-5"></i>Manage Users</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab"
@@ -259,15 +266,12 @@
                     </div>
                     <div class="col-lg-9 col-md-8">
                         <div class="tab-content dashboard-content">
-                            <div class="tab-content dashboard-content">
                                 <div class="tab-pane fade active show" id="manageCategories" role="tabpanel"
                                      aria-labelledby="manageCategories-tab">
                                     <div class="card">
                                         <div class="card-header">
                                             <h5 class="mb-0">Manage Categories</h5>
                                         </div>
-
-
                                         <div class="card-body">
                                             <div class="table-responsive">
                                                 <table class="table">
@@ -283,18 +287,10 @@
                                                     <core:forEach items="${allCategories}" var="categoriesVar">
                                                         <tr>
                                                             <td>${categoriesVar.getId()}</td>
-<%--                                                            <td>--%>
-<%--                                                                <div id="updatedCategoryName"--%>
-<%--                                                                     contenteditable='true'>${categoriesVar.getName()}</div>--%>
-<%--                                                            </td>--%>
-
                                                             <td>
                                                                     <form:form action="editCategory" method="post" modelAttribute="categoryEntity">
-                                                                    <form:input type="text" path="name"   id="updatedCategoryName"
-                                                                                contenteditable='true' value="${categoriesVar.getName()}"/>
-<%--                                                                    <div id="updatedCategoryName" contenteditable='true'>${categoriesVar.getName()}</div>--%>
+                                                                    <form:input type="text" path="name"   id="updatedCategoryName"  contenteditable='true' value="${categoriesVar.getName()}"/>
                                                                     <form:hidden path="id" value="${categoriesVar.getId()}"/>
-<%--                                                                    <form:hidden path="name" value="${categoriesVar.getName()}"/>--%>
                                                             <td>
                                                                 <div class="form-group">
                                                                         <button type="submit" class="btn btn-fill-out btn-small d-block" name="submit"
@@ -302,7 +298,6 @@
                                                                         </button>
                                                                 </div>
                                                             </td>
-
                                                             </form:form>
                                                             <td>
                                                                 <a href="/deleteCategory?categoryId=${categoriesVar.getId()}"
@@ -331,8 +326,87 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="manageNewsPages" role="tabpanel"
-                                     aria-labelledby="manageNewsPages-tab">
+                                <div class="tab-pane fade" id="manageUsers" role="tabpanel" aria-labelledby="manageUsers-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Manage Users</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Id</th>
+                                                        <th>Email</th>
+                                                        <th>Enabled</th>
+                                                        <th>Password</th>
+                                                        <th>Role</th>
+                                                        <th>User Name</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <jsp:useBean id="allUsers" type="java.util.ArrayList"
+                                                                 scope="request"/>
+                                                    <core:forEach items="${allUsers}" var="usersVar">
+                                                        <tr>
+                                                            <td>${usersVar.getId()}</td>
+                                                                <form:form action="editUser" method="post" modelAttribute="userEntity">
+                                                            <td>
+                                                                    <form:input type="text" path="email" contenteditable='true' value="${usersVar.getEmail()}"/>
+                                                            </td>
+                                                            <td>
+                                                                    <form:input type="text" path="enabled" contenteditable='true' value="${usersVar.isEnabled()}"  style='width: 50px;' />
+                                                            </td>
+                                                            <td>
+                                                                    <form:input type="text" path="password" value="${usersVar.getPassword()}"/>
+                                                            </td>
+                                                            <td>
+                                                                    <form:input type="text" path="role" contenteditable='true' value="${usersVar.getRole()}"/>
+                                                            </td>
+                                                            <td>
+                                                                    <form:input type="text" path="userName" contenteditable='true' value="${usersVar.getUserName()}"  style='width: 100px;'/>
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="form-group">
+                                                                    <button type="submit" class="btn btn-fill-out btn-small d-block" name="submit"
+                                                                            value="Submit">Update
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            </form:form>
+                                                        </tr>
+                                                    </core:forEach>
+                                                    </tbody>
+                                                </table>
+                                                <form:form action="addUser" method="post"
+                                                           modelAttribute="userEntity">
+                                                    <div class="form-group">
+                                                        <br><br>
+                                                        <span class="required" style='font-weight: bold;'>Enter User Information to Add</span></label>
+                                                        <br><br>
+                                                        <form:input type="text" path="email"  placeholder="user email"/>
+                                                        <br><br>
+                                                        <form:input type="text" path="enabled" placeholder="user enabled (true or false)"/>
+                                                        <br><br>
+                                                        <form:input type="text" path="password"  placeholder="user password"/>
+                                                        <br><br>
+                                                        <form:input type="text" path="role" placeholder="user role"/>
+                                                        <br><br>
+                                                        <form:input type="text" path="userName"  placeholder="user name"/>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-fill-out" name="submit"
+                                                                value="Submit">Save
+                                                        </button>
+                                                    </div>
+                                                </form:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="manageNewsPages" role="tabpanel" aria-labelledby="manageNewsPages-tab">
                                     <div class="card">
                                         <div class="card-header">
                                             <h5 class="mb-0">Manage News Pages</h5>
@@ -358,36 +432,32 @@
                                                             <td>${newsPageVar.getSubject()}</td>
                                                             <td>${newsPageVar.getBody()}</td>
                                                             <td>${newsPageVar.getImageUrl()}</td>
-                                                            <td>${newsPageVar.getName()}</td>
+<%--                                                            <td>${newsPageVar.getCategoryNewsPageEntities()}</td>--%>
                                                             <td>
                                                                 <a href="/deleteNewsPage?newsPageId={newsPageVar.getId()}"
                                                                    class="btn btn-fill-out btn-small d-block">Delete</a>
                                                             </td>
-
                                                         </tr>
                                                     </core:forEach>
                                                     </tbody>
                                                 </table>
-                                                <form:form action="addNewsPage" method="post"
-                                                           modelAttribute="newsPageEntity">
+                                                <form:form action="addNewsPage" method="post"  modelAttribute="newsPageEntity">
                                                     <div class="form-group">
                                                         <br><br>
                                                         <span class="required" style='font-weight: bold;'>Enter News Page Information to Add</span></label>
                                                         <br>
                                                         <form:input type="text" path="subject" placeholder="subject"
                                                                     class="form-control"/>
+                                                        <br>
                                                         <form:input type="text" path="body" placeholder="body"
                                                                     class="form-control"/>
+                                                        <br>
                                                         <form:input type="text" path="imageUrl" placeholder="upload image"
                                                                     class="form-control"/>
-                                                        <div class="form-group col-md-12">
                                                             <label for="newsImageFile" class="form-label">Image for news page</label>
                                                             <input class="form-control" type="file"  accept="image/*" name="newsImageFile" id="newsImageFile">
-                                                        </div>
-                                                        <form:input type="text" path="name" placeholder="namecd "
-                                                                    class="form-control"/>
-                                                    </div>
-                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <br>
                                                         <button type="submit" class="btn btn-fill-out" name="submit"
                                                                 value="Submit">Save
                                                         </button>
@@ -397,38 +467,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="card mb-3 mb-lg-0">
-                                                <div class="card-header">
-                                                    <h5 class="mb-0">Billing Address</h5>
-                                                </div>
-                                                <div class="card-body">
-                                                    <address>3522 Interstate<br> 75 Business Spur,<br> Sault Ste. <br>Marie,
-                                                        MI 49783
-                                                    </address>
-                                                    <p>New York</p>
-                                                    <a href="#" class="btn btn-fill-out btn-small">Edit</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h5 class="mb-0">Shipping Address</h5>
-                                                </div>
-                                                <div class="card-body">
-                                                    <address>4299 Express Lane<br>
-                                                        Sarasota, <br>FL 34249 USA <br>Phone: 1.941.227.4444
-                                                    </address>
-                                                    <p>Sarasota</p>
-                                                    <a href="#" class="btn btn-fill-out btn-small">Edit</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="tab-pane fade" id="account-detail" role="tabpanel"
                                      aria-labelledby="account-detail-tab">
                                     <div class="card">
