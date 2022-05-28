@@ -3,9 +3,14 @@ package gamersFun.com.example.gamersFun.service;
 import gamersFun.com.example.gamersFun.entity.Blogs;
 import gamersFun.com.example.gamersFun.entity.Profile;
 import gamersFun.com.example.gamersFun.repository.BlogsDao;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,9 +34,13 @@ public class BlogsService {
         return null;
     }
 
-    public Blogs findBlogByProfile(Profile profile){
-        return blogsDao.findBlogByProfile(profile.getId());
+
+
+
+    public List<Blogs>  findAllByProfile(Profile profile){
+       return blogsDao.findAllByProfile(profile);
     }
+
     public List<Blogs> findAll(){
         Iterable itr = blogsDao.findAll();
         Iterator iterator = itr.iterator();
@@ -40,6 +49,10 @@ public class BlogsService {
             blogs.add((Blogs) iterator.next());
         }
         return blogs;
+    }
+
+    public void deleteBlog(Blogs blog){
+        blogsDao.delete(blog);
     }
 
 }

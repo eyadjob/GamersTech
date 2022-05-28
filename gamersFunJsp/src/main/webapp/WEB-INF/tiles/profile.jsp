@@ -6,7 +6,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-
+<c:set var="contextRoot" value="${pageContext.request.contextPath}"/>
 <%--@elvariable id="blog" type="gamersFun.com.example.gamersFun.entity.Blogs"--%>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -15,6 +15,8 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>My Account - UltraNews - Bootstrap 4 Magazine Template</title>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="${contextRoot}/imgs/favicon.png">
@@ -163,7 +165,7 @@
     </aside>
     <!-- Main Wrap Start -->
     <tiles:insertAttribute name="header"/>
-    <main class="position-relative">
+    <main class="position-relative profilePage">
         <!--Search Form-->
         <div class="main-search-form transition-02s">
             <div class="container">
@@ -239,10 +241,22 @@
                                 </li>
                                 <sec:authorize access="hasRole('ROLE_BLOGGER')">
                                     <li class="nav-item">
-                                        <a class="nav-link" id="blogs-detail-tab" data-toggle="tab" href="#add-blogs" role="tab" aria-controls="add-blogs" aria-selected="true"><i class="ti-id-badge mr-5"></i>Add New Blogs</a>
+                                        <a class="nav-link" id="add-new-blog-tab" data-toggle="tab" href="#add-blogs" role="tab" aria-controls="add-blogs" aria-selected="true"><i class="ti-id-badge mr-5"></i>
+                                                    Add New Blogs
+                                        </a>
                                     </li>
+                                    <c:choose>
+                                        <c:when test="${param.tab eq 'edit-blog'}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="edit-blog-tab" data-toggle="tab" href="#edit-blog" role="tab" aria-controls="add-blogs" aria-selected="true"><i class="ti-id-badge mr-5"></i>
+                                                    Edit Blog
+                                                </a>
+                                            </li>
+                                        </c:when>
+                                    </c:choose>
+
                                     <li class="nav-item">
-                                        <a class="nav-link" id="blogs-edit-tab" data-toggle="tab" href="#edit-blogs" role="tab" aria-controls="edit-blogs" aria-selected="true"><i class="ti-id-badge mr-5"></i>Edit Blogs</a>
+                                        <a class="nav-link" id="show-my-blogs-tab" data-toggle="tab" href="#show-my-blogs" role="tab" aria-controls="edit-blogs" aria-selected="true"><i class="ti-id-badge mr-5"></i>Show My Blogs</a>
                                     </li>
                                 </sec:authorize>
                                 <li class="nav-item">
@@ -383,10 +397,10 @@
                                 </div>
                             </div>
                             <sec:authorize access="hasRole('ROLE_BLOGGER')">
-                                <div class="tab-pane fade" id="add-blogs" role="tabpanel" aria-labelledby="blogs-detail-tab">
+                                <div class="tab-pane fade" id="add-blogs" role="tabpanel" aria-labelledby="add-new-blog">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3>New Blogs</h3>
+                                            <h3>New Blog</h3>
                                         </div>
                                         <div class="card-body">
 
@@ -394,12 +408,25 @@
                                                 <div class="row">
 
                                                     <div class="form-group col-md-12">
+                                                        <p>
+                                                            <c:if test="${!empty message}">
+                                                                <div class="alert alert-success" role="alert">
+                                                                    Blog Added successfully ...
+                                                                </div>
+                                                            </c:if>
+                                                            <c:if test="${!empty tab}">
+                                                                <input type="hidden" name="addBlogtab" value="${tab}">
+                                                            </c:if>
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="form-group col-md-12">
                                                         <label>Subject <span class="required">*</span></label>
                                                         <form:input type="text" path="subject" placeholder="Subject ..." class="form-control"/>
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label>Body <span class="required">*</span></label>
-                                                        <form:input type="text" path="body" placeholder="Body ..." id="mytextarea" class="form-control"/>
+                                                        <form:input type="text" path="body" placeholder="Body ..." id="myBlogBody" class="form-control"/>
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label for="formFile" class="form-label">Image for your blog</label>
@@ -411,14 +438,67 @@
                                                     </div>
                                                 </div>
                                             </form:form>
+
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="edit-blogs" role="tabpanel" aria-labelledby="blogs-edit-tabb">
+                               <c:if test="${param.tab eq 'edit-blog'}">
+                                    <div class="tab-pane fade" id="edit-blog" role="tabpanel" aria-labelledby="edit-new-blog">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                        <h3>Edit Blog</h3>
+                                            </div>
+                                            <div class="card-body">
+
+                                                        <form:form action="editBlog"  enctype="multipart/form-data"  modelAttribute="blog">
+                                                            <form:hidden path="id" value="${blog.getId()}"/>
+                                                            <div class="row">
+                                                                <div class="form-group col-md-12">
+                                                                    <p>
+                                                                        <c:if test="${!empty param.message}">
+                                                                    <div class="alert alert-success" role="alert">
+                                                                        Blog updated successfuly ...
+                                                                    </div>
+                                                                    </c:if>
+
+                                                                    </p>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Subject <span class="required">*</span></label>
+                                                                    <form:input type="text" path="subject" placeholder="Subject ..." class="form-control"/>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Body <span class="required">*</span></label>
+                                                                    <form:input type="text" path="body" placeholder="Body ..." id="myBlogBody" class="form-control"/>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label for="formFile" class="form-label">Image for your blog</label>
+                                                                    <input class="form-control" type="file"  accept="image/*" name="file" id="formFile">
+                                                                </div>
+
+                                                                <div class="col-md-12">
+                                                                    <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Save</button>
+                                                                </div>
+                                                            </div>
+                                                        </form:form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                               </c:if>
+                                <div class="tab-pane fade" id="show-my-blogs" role="tabpanel" aria-labelledby="show-my-blogs-tab">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0">Your Orders</h5>
+                                            <h5 class="mb-0">Your Blogs</h5>
+                                            <c:if test="${!empty message && message eq 'deleted'}">
+                                                <div class="alert alert-success delete-alert-success" role="alert">
+                                                    Blog deleted successfully ...
+                                                </div>
+                                            </c:if>
+                                            <div class="alert alert-danger delete-alert-error" style="display: none" role="alert">
+                                                Blog updated successfully ...
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -433,41 +513,20 @@
                                                     </tr>
                                                     </thead>
 
+                                                    <c:url value="${contextRoot}/upload-profile-photo" var="uploadPhotoLink"/>
                                                     <tbody>
                                                     <c:forEach var="blog" items="${blogs}">
                                                         <tr>
                                                             <td>${blog.createdDate}</td>
                                                             <td>${blog.subject}</td>
                                                             <td>${blog.body}</td>
-                                                            <td><a href="/editBlog?id=${blog.id}&tab=add-blogs" class="btn btn-fill-out btn-small d-block">Edit</a></td>
-                                                            <td><a href="/deleteBlog?id=${blog.id}&tab=status class="btn btn-fill-out btn-small d-block">Delete</a></td>
+                                                            <td><a href="/editBlog?id=${blog.id}&tab=edit-blog" class="btn btn-fill-out btn-small d-block">Edit</a></td>
+                                                            <td><a href="/deleteBlog?id=${blog.id}" class="btn btn-fill-out btn-small d-block delete-blog">Delete</a></td>
                                                         </tr>
                                                     </c:forEach>
 
                                                     </tbody>
-                                                <%--    <tbody>
-                                                    <tr>
-                                                        <td>#1357</td>
-                                                        <td>March 45, 2020</td>
-                                                        <td>Processing</td>
-                                                        <td>$125.00 for 2 item</td>
-                                                        <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>#2468</td>
-                                                        <td>June 29, 2020</td>
-                                                        <td>Completed</td>
-                                                        <td>$364.00 for 5 item</td>
-                                                        <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>#2366</td>
-                                                        <td>August 02, 2020</td>
-                                                        <td>Completed</td>
-                                                        <td>$280.00 for 3 item</td>
-                                                        <td><a href="#" class="btn btn-fill-out btn-small d-block">View</a></td>
-                                                    </tr>
-                                                    </tbody>--%>
+
                                                 </table>
                                             </div>
                                         </div>
@@ -491,7 +550,7 @@
 
 <script>
     tinymce.init({
-        selector: '#mytextarea',
+        selector: '#myBlogBody',
         plugins: "link"
     });
 </script>

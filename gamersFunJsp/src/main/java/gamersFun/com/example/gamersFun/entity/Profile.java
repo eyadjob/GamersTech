@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,24 +34,24 @@ public class Profile {
     @Column(name = "photo_Extension",length = 10)
     private String photoExtension;
 
-    public Set<Blogs> getBlogs() {
-        return blogs;
+
+    //Bidirectional Relationship
+    @OneToMany(mappedBy = "profile")
+    private List<Blogs> blogsList;
+
+    public List<Blogs> getBlogsList() {
+        return blogsList;
     }
 
-    public void setBlogs(Set<Blogs> blogs) {
-        this.blogs = blogs;
+    public void setBlogsList(List<Blogs> blogsList) {
+        this.blogsList = blogsList;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "profile_blogs",
-            joinColumns = {@JoinColumn(name="profile_id")},
-            inverseJoinColumns = {@JoinColumn(name="blogs_id")})
-    @OrderColumn(name="display_order")
-    private Set<Blogs> blogs;
 
     public Profile(){
 
     }
+
 
     public Profile(UserEntity UserEntity){
 
@@ -137,11 +138,4 @@ public class Profile {
 
     }
 
-    public  void addBlog(Blogs blog){
-        blogs.add(blog);
-    }
-
-    public void removeInterest(Blogs blog) {
-        blogs.remove(blog);
-    }
 }

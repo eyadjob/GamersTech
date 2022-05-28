@@ -39,7 +39,7 @@ public class ProfileController {
         ModelAndView modelAndView = showProfile(UserEntity);
         if(requestWrapper.isUserInRole(WebSecurityConfig.BLOGGER_ROLE)){
             Profile profile = profileService.getUserProfile(UserEntity);
-            modelAndView.getModel().put("blogs",profile.getBlogs());
+            modelAndView.getModel().put("blogs",blogsService.findAllByProfile(profile));
         }
 
         return modelAndView;
