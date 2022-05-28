@@ -408,8 +408,14 @@
                                                     <br><br>
                                                     <form:input type="text" path="password"  placeholder="user password"/>
                                                     <br><br>
-                                                    <form:input type="text" path="role" placeholder="user role"/>
-                                                    <br><br>
+                                                    <select name="role" id="role">
+                                                        <core:forEach items="${allRoles}" var="rolesVar">
+                                                            <c:set var="currentUserRole" value="${usersVar.getRole()}"/>
+                                                            <c:set var="loopUserRole" value="${rolesVar}"/>
+                                                            <option path="role"  value="${rolesVar}">${rolesVar}</option>
+                                                        </core:forEach>
+                                                    </select>
+                                                    <br><br><br>
                                                     <form:input type="text" path="userName"  placeholder="user name"/>
 
                                                 </div>
