@@ -347,10 +347,10 @@
                                                     <tbody>
                                                     <jsp:useBean id="allUsers" type="java.util.ArrayList" scope="request"/>
                                                     <core:forEach items="${allUsers}" var="usersVar">
-                                                        <tr>
+                                                        <tr >
                                                             <form:form action="updateUser" method="post" modelAttribute="userEntity">
                                                                 <td>
-                                                                    <form:input type="text" path="id" value="${usersVar.getId()}" style='width: 30px;' readonly="true"/>
+                                                                    <form:input  type="text" path="id" value="${usersVar.getId()}" style='width: 30px;' readonly="true"/>
                                                                 </td>
                                                                 <td>
                                                                     <form:input type="text" path="email" value="${usersVar.getEmail()}" readonly="true"/>
@@ -406,21 +406,21 @@
                                                     <br><br>
                                                     <span class="required" style='font-weight: bold;'>Enter User Information to Add</span></label>
                                                     <br><br>
-                                                    <form:input type="text" path="email"  placeholder="user email"/>
+                                                    <form:input type="text" path="email"  placeholder="user email" required="required"/>
                                                     <br><br>
-                                                    <form:input type="text" path="enabled" placeholder="user enabled (true or false)"/>
+                                                    <form:input type="text" path="enabled" placeholder="user enabled (true or false)" required="required"/>
                                                     <br><br>
-                                                    <form:input type="text" path="password"  placeholder="user password"/>
+                                                    <form:input type="text" path="password"  placeholder="user password" required="required"/>
                                                     <br><br>
                                                     <select name="role" id="role">
                                                         <core:forEach items="${allRoles}" var="rolesVar">
                                                             <c:set var="currentUserRole" value="${usersVar.getRole()}"/>
                                                             <c:set var="loopUserRole" value="${rolesVar}"/>
-                                                            <option path="role"  value="${rolesVar}">${rolesVar}</option>
+                                                            <option path="role"  value="${rolesVar}" >${rolesVar}</option>
                                                         </core:forEach>
                                                     </select>
                                                     <br><br><br>
-                                                    <form:input type="text" path="userName"  placeholder="user name"/>
+                                                    <form:input type="text" path="userName"  placeholder="user name" required="required"/>
 
                                                 </div>
                                                 <div class="form-group">
