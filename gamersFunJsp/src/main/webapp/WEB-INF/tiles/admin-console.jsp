@@ -366,10 +366,14 @@
                                                                     <core:forEach items="${allRoles}" var="rolesVar">
                                                                         <c:set var="currentUserRole" value="${usersVar.getRole()}"/>
                                                                         <c:set var="loopUserRole" value="${rolesVar}"/>
-                                                                        <c:if test="${currentUserRole == loopUserRole}">
-                                                                            <option path="role" selected="${usersVar.getRole()}" value="${rolesVar}">${rolesVar}</option>
-                                                                        </c:if>
-                                                                    <option path="role"  value="${rolesVar}">${rolesVar}</option>
+                                                                        <c:choose>
+                                                                            <c:when test="${currentUserRole == loopUserRole}">
+                                                                                <option path="role" selected="${usersVar.getRole()}" value="${rolesVar}">${rolesVar}</option>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <option path="role" value="${rolesVar}">${rolesVar}</option>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </core:forEach>
                                                                 </select>
                                                                 </td>
