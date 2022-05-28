@@ -6,13 +6,24 @@ USE eyadodai;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint NOT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `enabled` bit(1) DEFAULT NULL,
+  `enabled` int(1) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
   `user_name` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `verifications` (
+  `id` bigint NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `user` int(1) DEFAULT NULL,
+  `expire` varchar(255) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `user_name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLnews_pageATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
   `next_val` bigint DEFAULT NULL
@@ -36,25 +47,49 @@ CREATE TABLE IF NOT EXISTS `news_page` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE IF NOT EXISTS `category_newspage_combo` (
+CREATE TABLE IF NOT EXISTS `category_newspage` (
   `id` bigint NOT NULL,
-  `category_id` bigint NULL,
-  `newpage_id` bigint NULL,
-  `body` TEXT,
-  PRIMARY KEY (`id`),
+  `category_id` bigint NOT NULL,
+  `newspage_id` bigint NOT NULL,
+  PRIMARY KEY (`category_id`,`newspage_id`),
   FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
    ON UPDATE CASCADE
    ON DELETE CASCADE,
-  FOREIGN KEY (`newpage_id`) REFERENCES `news_page` (`id`)
+  FOREIGN KEY (`newspage_id`) REFERENCES `news_page` (`id`)
    ON UPDATE CASCADE
    ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+INSERT  INTO category VALUES
+("E"),
+(1,"PC"),
+(2,"PS5"),
+(3,"XBOX Series X"),
+(4,"Switch");
+
+
+INSERT  INTO news_page VALUES
+('2','sniper elite 5','Sniper elite 5 is released','<p>Sniper elite 5 is released and graphics is amazing</p>'),
+('3','Resident evil vilage','Resident evil vilage is released','<p>Resident evil vilage is amazing</p>'),
+('1','image_news_page_1024','First Gaming News Page','<p>this si eyad blog</p>');
+
+
+SELECT * FROM category;
+SELECT * FROM news_page;
 SELECT * FROM users;
+
+SELECT * FROM category_newspage_combo;
+SELECT * FROM blogs;
+SELECT * FROM profile;
+SELECT * FROM profile_blogs;
 SELECT * FROM verification;
 DELETE  FROM verification;
 DELETE  FROM users;
 
+DROP TABLE profile_blogs; 
+DROP TABLE profile; 
 
-
-
+DROP TABLE verification; 
+DROP TABLE category_newspage
+DROP TABLE news_page; 

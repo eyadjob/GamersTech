@@ -2,8 +2,7 @@ package gamersFun.com.example.gamersFun.entity;
 
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import gamersFun.com.example.gamersFun.validation.PasswordMath;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,15 +10,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user_role")
 //@PasswordMath(message = "{error.password.mismatch}")
-public class UserEntity {
-    public UserEntity(){
+public class UserRole {
+    public UserRole(){
 
     }
 
     // for testing purpose
-    public UserEntity(String email, String password, String repeatPassword, String firstName){
+    public UserRole(String email, String password, String repeatPassword, String firstName){
         this.email = email;
         this.setPlainPassword(password);
         this.repeatPassword = repeatPassword;
@@ -27,7 +26,7 @@ public class UserEntity {
         this.userName = firstName;
 
     }
-    public UserEntity(String email, String password, String repeatPassword, String firstName, String role){
+    public UserRole(String email, String password, String repeatPassword, String firstName, String role){
         this.email = email;
         this.setPlainPassword(password);
         this.repeatPassword = repeatPassword;
@@ -35,29 +34,7 @@ public class UserEntity {
         this.userName = firstName;
         this.role = role;
     }
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

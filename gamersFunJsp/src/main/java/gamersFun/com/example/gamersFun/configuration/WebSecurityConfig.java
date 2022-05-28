@@ -45,6 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/editCategory**",
                         "/adminConsole**",
                         "/getShopPage**",
+                        "/enableUser**",
+                        "/updateUser**",
                         "/shopAccount"
                 )
                 .permitAll()
@@ -58,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/imgs/*")
                 .permitAll()
                 .antMatchers("/addCategory",
+
                         "/addNews",
                         "/admin/*"
 

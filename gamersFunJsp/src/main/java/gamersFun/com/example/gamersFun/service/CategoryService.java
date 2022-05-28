@@ -15,9 +15,6 @@ public class CategoryService {
     CategoryDao categoryDao;
 
     public void updateCategoryName(CategoryEntity newCategoryEntity) {
-        Optional<CategoryEntity> category = categoryDao.findById(newCategoryEntity.getId());
-        CategoryEntity currentCategoryEntity =  category.get();
-        currentCategoryEntity.setName(newCategoryEntity.getName());
-        categoryDao.save(currentCategoryEntity);
+        categoryDao.save(newCategoryEntity);
     }
 }
