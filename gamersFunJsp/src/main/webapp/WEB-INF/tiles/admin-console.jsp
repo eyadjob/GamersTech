@@ -498,15 +498,15 @@
                                                         <br>
                                                         <form:input type="text" path="body" placeholder="body"
                                                                     class="form-control"/>
+                                                        <label for="categoryName" class="form-label">select related category</label>
                                                         <br>
-                                                        <br>
-                                                        <select name="categoryName" id="categoryName">
+                                                        <select name="categoryName" id="categoryName" multiple size = 5>
                                                             <core:forEach items="${allCategories}" var="categoryVar">
                                                                 <c:set var="currentCategoryValue" value="${categoryVar.getName()}"/>
-                                                                <option path="role"  value="${categoryVar}" >${categoryVar.getName()}</option>
+                                                                <option path="categories"  value="${categoryVar}" >${categoryVar.getName()}</option>
                                                             </core:forEach>
                                                         </select>
-                                                        <br>
+                                                        <br><br>
                                                         <form:input type="text" path="imageUrl" placeholder="upload image"
                                                                     class="form-control"/>
                                                             <label for="newsImageFile" class="form-label">Image for news page</label>
