@@ -283,9 +283,6 @@
                                                     ${categoryAdditionSuccessMessage}
                                             </div>
                                             </c:if>
-                                            <c:if test="${!empty tab}">
-                                                <input type="hidden" name="addCategoryTab" value="${tab}">
-                                            </c:if>
                                             </c:if>
                                             </p>
                                         </div>
@@ -501,6 +498,14 @@
                                                         <br>
                                                         <form:input type="text" path="body" placeholder="body"
                                                                     class="form-control"/>
+                                                        <br>
+                                                        <br>
+                                                        <select name="categoryName" id="categoryName">
+                                                            <core:forEach items="${allCategories}" var="categoryVar">
+                                                                <c:set var="currentCategoryValue" value="${categoryVar.getName()}"/>
+                                                                <option path="role"  value="${categoryVar}" >${categoryVar.getName()}</option>
+                                                            </core:forEach>
+                                                        </select>
                                                         <br>
                                                         <form:input type="text" path="imageUrl" placeholder="upload image"
                                                                     class="form-control"/>
