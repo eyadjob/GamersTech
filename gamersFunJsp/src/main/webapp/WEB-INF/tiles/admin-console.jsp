@@ -271,6 +271,23 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <h5 class="mb-0">Manage Categories</h5>
+                                            <jsp:useBean id="categoryAdditionSuccessStatus" type="java.lang.String" scope="request"/>
+                                            <jsp:useBean id="categoryAdditionSuccessMessage" type="java.lang.String" scope="request"/>
+<%--                                          <jsp:useBean id="messages" class="java.util.HashMap" type="java.util.Map" scope="request"/>&ndash;%&gt;--%>
+<%--                                            <c:set target="${messages}" var="categoryAdditionSucessStatus2" value="${messages.['categoryAdditionSucessStatus']}"/>--%>
+<%--                                            &lt;%&ndash;  <c:set  var="categoryMessage"  value="${categoryMessage}"/>&ndash;%&gt;--%>
+                                            <p>
+                                                <c:if test="${categoryAdditionSuccessStatus == true}">
+                                                <c:if test="${!empty categoryAdditionSuccessMessage}">
+                                            <div class="alert alert-success" role="alert">
+                                                    ${categoryAdditionSuccessMessage}
+                                            </div>
+                                            </c:if>
+                                            <c:if test="${!empty tab}">
+                                                <input type="hidden" name="addCategoryTab" value="${tab}">
+                                            </c:if>
+                                            </c:if>
+                                            </p>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -310,6 +327,7 @@
                                                 <form:form action="addCategory" method="post"
                                                            modelAttribute="categoryEntity">
                                                     <div class="form-group">
+
                                                         <br><br>
                                                         <span class="required" style='font-weight: bold;'>Enter Category Name to Add</span></label>
                                                         <br>
