@@ -408,7 +408,12 @@
                                                     <br><br>
                                                     <form:input type="text" path="email"  placeholder="user email" required="required"/>
                                                     <br><br>
-                                                    <form:input type="text" path="enabled" placeholder="user enabled (true or false)" required="required"/>
+                                                    <label for="userRole">User Enabled</label>
+                                                    <br>
+                                                    <select id="userRole" name="role" id="role" >
+                                                    <option path="role" selected="selected" value="true">true</option>
+                                                    <option path="role"  value="false">false</option>
+                                                    </select>
                                                     <br><br>
                                                     <form:input type="text" path="password"  placeholder="user password" required="required"/>
                                                     <br><br>
@@ -445,6 +450,7 @@
                                                         <th>Id</th>
                                                         <th>Subject</th>
                                                         <th>Body</th>
+                                                        <th>Category Name</th>
                                                         <th>mage Url</th>
                                                         <th>Name</th>
                                                     </tr>
@@ -457,8 +463,9 @@
                                                             <td>${newsPageVar.getId()}</td>
                                                             <td>${newsPageVar.getSubject()}</td>
                                                             <td>${newsPageVar.getBody()}</td>
+                                                            <td>${newsPageVar.getCategories().getName()}</td>
                                                             <td>${newsPageVar.getImageUrl()}</td>
-<%--                                                            <td>${newsPageVar.getCategoryNewsPageEntities()}</td>--%>
+<%--
                                                             <td>
                                                                 <a href="/deleteNewsPage?newsPageId={newsPageVar.getId()}"
                                                                    class="btn btn-fill-out btn-small d-block">Delete</a>

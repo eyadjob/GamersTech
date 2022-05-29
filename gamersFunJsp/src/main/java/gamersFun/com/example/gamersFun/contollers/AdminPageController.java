@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,9 @@ public class AdminPageController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    RegistrationContoller registrationContoller;
+
     @RequestMapping("/adminConsole")
     ModelAndView getAdminConsole(ModelAndView modelAndView, @ModelAttribute(value = "categoryEntity") @Valid CategoryEntity categoryEntity,@ModelAttribute(value = "newsPageId") @Valid NewsPageEntity newsPageId) {
         Iterable<CategoryEntity> categoryEntities = categoryDao.findAll();
@@ -54,7 +58,7 @@ public class AdminPageController {
         modelAndView.getModel().put("allCategories", categoryEntityList);
         modelAndView.getModel().put("allNewsPages", newsPageEntities);
         modelAndView.getModel().put("allUsers", userEntities);
-        modelAndView.getModel().put("allRoles", UserRole.getRoleNames());
+        modelAndView.getModel().put("allRoles", UserRole.getRoleNamesWithExcludeValue("admin"));
         modelAndView.getModel().put("newsPageEntity", new NewsPageEntity());
         modelAndView.getModel().put("categoryEntity", new CategoryEntity());
         modelAndView.getModel().put("userEntity", new UserEntity());
@@ -112,4 +116,11 @@ public class AdminPageController {
         userService.updateUser(userEntity);
         return "/adminConsole";
     }
+
+    @PostMapping("/addUser")
+    String addNewUser(UserEntity userEntity) {
+        userService.save(userEntity);
+        return "/adminConsole";
+    }
+
 }
