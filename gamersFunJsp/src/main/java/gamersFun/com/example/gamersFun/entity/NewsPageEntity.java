@@ -7,10 +7,8 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "news_page")
@@ -48,6 +46,16 @@ public class NewsPageEntity {
     @OrderColumn(name="created_date")
     Set<CategoryEntity> categories = new HashSet<>();
 
+    @Transient
+    List<String> categoryNames;
+
+    public void setCategoriesName() {
+        this.categoryNames = categories.stream().map(d -> d.getName()).collect(Collectors.toList());
+    }
+
+    public List<String> getCategoriesName() {
+       return categories.stream().map(CategoryEntity::getName).collect(Collectors.toList());
+    }
 
     public Long getId() {
         return id;

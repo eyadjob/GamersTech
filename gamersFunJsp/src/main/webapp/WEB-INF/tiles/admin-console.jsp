@@ -450,7 +450,7 @@
                                                         <th>Id</th>
                                                         <th>Subject</th>
                                                         <th>Body</th>
-                                                        <th>Category Name</th>
+                                                        <th>Category Names</th>
                                                         <th>mage Url</th>
                                                         <th>Name</th>
                                                     </tr>
@@ -463,9 +463,8 @@
                                                             <td>${newsPageVar.getId()}</td>
                                                             <td>${newsPageVar.getSubject()}</td>
                                                             <td>${newsPageVar.getBody()}</td>
-                                                            <td>${newsPageVar.getCategories().getName()}</td>
+                                                            <td>${newsPageVar.getCategoriesName()}</td>
                                                             <td>${newsPageVar.getImageUrl()}</td>
-<%--
                                                             <td>
                                                                 <a href="/deleteNewsPage?newsPageId={newsPageVar.getId()}"
                                                                    class="btn btn-fill-out btn-small d-block">Delete</a>
