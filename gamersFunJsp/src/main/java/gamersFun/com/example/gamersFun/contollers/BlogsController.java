@@ -91,7 +91,7 @@ public class BlogsController {
 
         try {
 
-            FileInfo fileInfo = fileService.saveImageFile(file,System.getProperty("user.dir"),"photo","p" + user.getId(),100,100);
+            FileInfo fileInfo = fileService.saveImageFile(file,System.getProperty("user.dir") +"/blog images/","photo","p" + user.getId(),100,100);
             blogs1.setPhotoDetails(fileInfo);
             blogsService.save(blogs1);
 
