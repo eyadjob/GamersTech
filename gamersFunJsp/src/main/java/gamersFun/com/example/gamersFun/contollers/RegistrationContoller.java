@@ -41,7 +41,7 @@ public class RegistrationContoller {
     }
 
     @RequestMapping(value="/signup",method = RequestMethod.POST)
-    ModelAndView postRegister(ModelAndView modelAndView, @ModelAttribute(value = "user") @Valid UserEntity userEntity, BindingResult bindingResult){
+    ModelAndView signupNewUser(ModelAndView modelAndView, @ModelAttribute(value = "user") @Valid UserEntity userEntity, BindingResult bindingResult){
         modelAndView.setViewName("app.signup");
         if(!bindingResult.hasErrors()){
 
@@ -55,7 +55,6 @@ public class RegistrationContoller {
             emailService.sendVerificationEmail(userEntity.getUserName(), userEntity.getEmail(),token,"");
             modelAndView.setViewName("redirect:/verifyEmail");
         }
-
         return modelAndView;
     }
 

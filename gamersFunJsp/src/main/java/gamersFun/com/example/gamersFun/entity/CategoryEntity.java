@@ -27,14 +27,14 @@ public class CategoryEntity {
     @Generated(GenerationTime.INSERT)
     private Date created_date;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "category_newspage",
-            joinColumns = { @JoinColumn(name = "category_id") },
-            inverseJoinColumns = { @JoinColumn(name = "newspage_id") }
-    )
-    @OrderColumn(name="created_date")
-    Set<NewsPageEntity> newsPages = new HashSet<>();
+//    @ManyToMany(cascade = { CascadeType.ALL })
+//    @JoinTable(
+//            name = "category_newspage",
+//            joinColumns = { @JoinColumn(name = "category_id") },
+//            inverseJoinColumns = { @JoinColumn(name = "newspage_id") }
+//    )
+//    @OrderColumn(name="created_date")
+//    Set<NewsPageEntity> newsPages = new HashSet<>();
 
     public Date getCreated_date() {
         return created_date;

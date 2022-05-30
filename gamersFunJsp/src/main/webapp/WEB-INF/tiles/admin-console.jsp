@@ -271,6 +271,20 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <h5 class="mb-0">Manage Categories</h5>
+                                            <jsp:useBean id="categoryAdditionSuccessStatus" type="java.lang.String" scope="request"/>
+                                            <jsp:useBean id="categoryAdditionSuccessMessage" type="java.lang.String" scope="request"/>
+<%--                                          <jsp:useBean id="messages" class="java.util.HashMap" type="java.util.Map" scope="request"/>&ndash;%&gt;--%>
+<%--                                            <c:set target="${messages}" var="categoryAdditionSucessStatus2" value="${messages.['categoryAdditionSucessStatus']}"/>--%>
+<%--                                            &lt;%&ndash;  <c:set  var="categoryMessage"  value="${categoryMessage}"/>&ndash;%&gt;--%>
+                                            <p>
+                                                <c:if test="${categoryAdditionSuccessStatus == true}">
+                                                <c:if test="${!empty categoryAdditionSuccessMessage}">
+                                            <div class="alert alert-success" role="alert">
+                                                    ${categoryAdditionSuccessMessage}
+                                            </div>
+                                            </c:if>
+                                            </c:if>
+                                            </p>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -310,6 +324,7 @@
                                                 <form:form action="addCategory" method="post"
                                                            modelAttribute="categoryEntity">
                                                     <div class="form-group">
+
                                                         <br><br>
                                                         <span class="required" style='font-weight: bold;'>Enter Category Name to Add</span></label>
                                                         <br>
@@ -347,10 +362,10 @@
                                                     <tbody>
                                                     <jsp:useBean id="allUsers" type="java.util.ArrayList" scope="request"/>
                                                     <core:forEach items="${allUsers}" var="usersVar">
-                                                        <tr>
+                                                        <tr >
                                                             <form:form action="updateUser" method="post" modelAttribute="userEntity">
                                                                 <td>
-                                                                    <form:input type="text" path="id" value="${usersVar.getId()}" style='width: 30px;' readonly="true"/>
+                                                                    <form:input  type="text" path="id" value="${usersVar.getId()}" style='width: 30px;' readonly="true"/>
                                                                 </td>
                                                                 <td>
                                                                     <form:input type="text" path="email" value="${usersVar.getEmail()}" readonly="true"/>
@@ -366,10 +381,14 @@
                                                                     <core:forEach items="${allRoles}" var="rolesVar">
                                                                         <c:set var="currentUserRole" value="${usersVar.getRole()}"/>
                                                                         <c:set var="loopUserRole" value="${rolesVar}"/>
-                                                                        <c:if test="${currentUserRole == loopUserRole}">
-                                                                            <option path="role" selected="${usersVar.getRole()}" value="${rolesVar}">${rolesVar}</option>
-                                                                        </c:if>
-                                                                    <option path="role"  value="${rolesVar}">${rolesVar}</option>
+                                                                        <c:choose>
+                                                                            <c:when test="${currentUserRole == loopUserRole}">
+                                                                                <option path="role" selected="${usersVar.getRole()}" value="${rolesVar}">${rolesVar}</option>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <option path="role" value="${rolesVar}">${rolesVar}</option>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </core:forEach>
                                                                 </select>
                                                                 </td>
@@ -402,21 +421,26 @@
                                                     <br><br>
                                                     <span class="required" style='font-weight: bold;'>Enter User Information to Add</span></label>
                                                     <br><br>
-                                                    <form:input type="text" path="email"  placeholder="user email"/>
+                                                    <form:input type="text" path="email"  placeholder="user email" required="required"/>
                                                     <br><br>
-                                                    <form:input type="text" path="enabled" placeholder="user enabled (true or false)"/>
+                                                    <label for="userRole">User Enabled</label>
+                                                    <br>
+                                                    <select id="userRole" name="role" id="role" >
+                                                    <option path="role" selected="selected" value="true">true</option>
+                                                    <option path="role"  value="false">false</option>
+                                                    </select>
                                                     <br><br>
-                                                    <form:input type="text" path="password"  placeholder="user password"/>
+                                                    <form:input type="text" path="password"  placeholder="user password" required="required"/>
                                                     <br><br>
                                                     <select name="role" id="role">
                                                         <core:forEach items="${allRoles}" var="rolesVar">
                                                             <c:set var="currentUserRole" value="${usersVar.getRole()}"/>
                                                             <c:set var="loopUserRole" value="${rolesVar}"/>
-                                                            <option path="role"  value="${rolesVar}">${rolesVar}</option>
+                                                            <option path="role"  value="${rolesVar}" >${rolesVar}</option>
                                                         </core:forEach>
                                                     </select>
                                                     <br><br><br>
-                                                    <form:input type="text" path="userName"  placeholder="user name"/>
+                                                    <form:input type="text" path="userName"  placeholder="user name" required="required"/>
 
                                                 </div>
                                                 <div class="form-group">
@@ -441,6 +465,7 @@
                                                         <th>Id</th>
                                                         <th>Subject</th>
                                                         <th>Body</th>
+                                                        <th>Category Names</th>
                                                         <th>mage Url</th>
                                                         <th>Name</th>
                                                     </tr>
@@ -453,8 +478,8 @@
                                                             <td>${newsPageVar.getId()}</td>
                                                             <td>${newsPageVar.getSubject()}</td>
                                                             <td>${newsPageVar.getBody()}</td>
+                                                            <td>${newsPageVar.getCategoriesName()}</td>
                                                             <td>${newsPageVar.getImageUrl()}</td>
-<%--                                                            <td>${newsPageVar.getCategoryNewsPageEntities()}</td>--%>
                                                             <td>
                                                                 <a href="/deleteNewsPage?newsPageId={newsPageVar.getId()}"
                                                                    class="btn btn-fill-out btn-small d-block">Delete</a>
@@ -473,7 +498,15 @@
                                                         <br>
                                                         <form:input type="text" path="body" placeholder="body"
                                                                     class="form-control"/>
+                                                        <label for="categoryName" class="form-label">select related category</label>
                                                         <br>
+                                                        <select name="categoryName" id="categoryName" multiple size = 5>
+                                                            <core:forEach items="${allCategories}" var="categoryVar">
+                                                                <c:set var="currentCategoryValue" value="${categoryVar.getName()}"/>
+                                                                <option path="categories"  value="${categoryVar}" >${categoryVar.getName()}</option>
+                                                            </core:forEach>
+                                                        </select>
+                                                        <br><br>
                                                         <form:input type="text" path="imageUrl" placeholder="upload image"
                                                                     class="form-control"/>
                                                             <label for="newsImageFile" class="form-label">Image for news page</label>

@@ -26,6 +26,9 @@ public enum UserRole {
         return Arrays.stream(UserRole.values()).map(Enum::name).collect(Collectors.toList());
     }
 
+    public static List<String> getRoleNamesWithExcludeValue(String valueString) {
+        return Arrays.stream(UserRole.values()).map(Enum::name).filter(d -> !d.toLowerCase().contains(valueString.toLowerCase())).collect(Collectors.toList());
+    }
     public String getRoleName() {
         return roleName;
     }
