@@ -15,7 +15,7 @@
 <script src="${contextRoot}/js/vendor/jquery.ticker.js"></script>
 <script src="${contextRoot}/js/vendor/jquery.vticker-min.js"></script>
 <script src="${contextRoot}/js/vendor/jquery.scrollUp.min.js"></script>
-<script src="${contextRoot}/js/vendor/jquery.nice-select.min.js"></script>
+<%--<script src="${contextRoot}/js/vendor/jquery.nice-select.min.js"></script>--%>
 <script src="${contextRoot}/js/vendor/jquery.sticky.js"></script>
 <script src="${contextRoot}/js/vendor/perfect-scrollbar.js"></script>
 <script src="${contextRoot}/js/vendor/waypoints.min.js"></script>
