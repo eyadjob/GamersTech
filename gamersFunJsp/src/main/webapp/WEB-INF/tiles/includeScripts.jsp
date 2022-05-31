@@ -25,3 +25,6 @@
 
 <script src="${contextRoot}/js/main.js"></script>
 <script src="${contextRoot}/js/Blogs.js"></script>
+<!--This is only for javascript tagging on the profile -->
+<script src="${contextRoot}/js/jquery-ui.min.js"></script>
+<script src="${contextRoot}/js/tag-it.min.js"></script>

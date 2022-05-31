@@ -67,6 +67,7 @@ public class ProfileController {
         view.getModel().put("email", UserEntity.getEmail());
         view.getModel().put("userId", UserEntity.getId());
         view.getModel().put("blog", new Blogs());
+        view.getModel().put("ownProfile",true);
         return view;
     }
 
