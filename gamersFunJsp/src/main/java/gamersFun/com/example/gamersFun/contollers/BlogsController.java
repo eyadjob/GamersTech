@@ -16,7 +16,9 @@ import org.checkerframework.checker.units.qual.A;
 import org.owasp.html.PolicyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
@@ -28,8 +30,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -94,20 +101,20 @@ public class BlogsController {
             FileInfo fileInfo = fileService.saveImageFile(file,System.getProperty("user.dir"),"photo","p" + user.getId(),100,100);
             blogs1.setPhotoDetails(fileInfo);
             blogsService.save(blogs1);
-
             profileService.save(profile);
+            modelAndView1.getModel().put("message",blogsAdded);
             System.out.println(fileInfo);
         } catch (InvalidFileException e) {
             e.printStackTrace();
-            blogsAdded = uploadImageError;
+            modelAndView1.getModel().put("error",uploadImageError);
             //photoUploadStatus.setMessage(photoInvalid);
         } catch (IOException e) {
             e.printStackTrace();
-            blogsAdded = uploadImageError;
+            modelAndView1.getModel().put("error",uploadImageError);
             //photoUploadStatus.setMessage(photoIOExceptioon);
         } catch (ImageTooSmallException e) {
             e.printStackTrace();
-            blogsAdded = uploadImageError;
+            modelAndView1.getModel().put("error",uploadImageError);
            // photoUploadStatus.setMessage(photoTooSmall);
         }
 
@@ -115,9 +122,7 @@ public class BlogsController {
 
         modelAndView1.getModel().put("blog", new Blogs());
         modelAndView1.getModel().put("blogs",blogsService.findAllByProfile(profile));
-
         modelAndView1.setViewName("app.profile");
-        modelAndView1.getModel().put("message",blogsAdded);
         modelAndView1.getModel().put("tab","add-new-blog");
         return modelAndView1;
 
@@ -178,5 +183,45 @@ public class BlogsController {
 
        model.setViewName("redirect:/profile");
        return model;
+    }
+
+    @RequestMapping(value = "/save-tag",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> saveInterest(@RequestParam("name") String tagName){
+        UserEntity user = userService.getUser();
+        Profile profile = profileService.getUserProfile(user);
+        String cleanedIntrestName =  htmlPolicy.sanitize(tagName);
+        /*Interest interest = interestService.createIfNotExists(cleanedIntrestName);
+        profile.addInterest(interest);*/
+        profileService.save(profile);
+
+        return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/delete-tag",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<?> deleteInterest(@RequestParam("name") String tagName){
+        UserEntity user = userService.getUser();
+        Profile profile = profileService.getUserProfile(user);
+       /* String cleanedIntrestName =  htmlPolicy.sanitize(interestName);
+        profile.removeInterest(interestName);*/
+        profileService.save(profile);
+
+        return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/blogPhoto/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    ResponseEntity<InputStreamResource> profilePhoto(@PathVariable("id") Long id, ModelAndView modelAndView) throws IOException {
+        Blogs blog = blogsService.findById(id);
+        Path photoPath = Paths.get(System.getProperty("user.dir"),"default","avatar.jpg");
+
+        if(blog != null && blog.getPhoto(photoUploadDirectory) != null){
+            photoPath = blog.getPhoto(photoUploadDirectory);
+        }
+        return ResponseEntity.ok().contentLength(Files.size(photoPath)).
+                contentType(MediaType.parseMediaType(URLConnection.guessContentTypeFromName(photoPath.toString()))).
+                body(new InputStreamResource(Files.newInputStream(photoPath, StandardOpenOption.READ)));
+
     }
 }

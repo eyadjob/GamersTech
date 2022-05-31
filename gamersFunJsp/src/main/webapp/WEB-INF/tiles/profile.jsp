@@ -6,6 +6,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="st"%>
 <c:set var="contextRoot" value="${pageContext.request.contextPath}"/>
 <%--@elvariable id="blog" type="gamersFun.com.example.gamersFun.entity.Blogs"--%>
 <!DOCTYPE html>
@@ -26,6 +27,7 @@
     <link rel="stylesheet" href="${contextRoot}/css/widgets.css">
     <link rel="stylesheet" href="${contextRoot}/css/color.css">
     <link rel="stylesheet" href="${contextRoot}/css/responsive.css">
+    <link rel="stylesheet" href="${contextRoot}/css/jquery.tagit.css">
 </head>
 
 <body class="category archive js">
@@ -400,10 +402,11 @@
                                 <div class="tab-pane fade" id="add-blogs" role="tabpanel" aria-labelledby="add-new-blog">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3>New Blog</h3>
+                                            <h3><st:message code="blog.header.new.blog"/></h3>
                                         </div>
                                         <div class="card-body">
-
+                                            <c:set var="saveTag" value="${contextRoot}/save-tag"/>
+                                            <c:set var="deleteTag" value="${contextRoot}/delete-tag"/>
                                             <form:form action="addBlogs"  enctype="multipart/form-data"  modelAttribute="blog">
                                                 <div class="row">
 
@@ -411,7 +414,7 @@
                                                         <p>
                                                             <c:if test="${!empty message}">
                                                                 <div class="alert alert-success" role="alert">
-                                                                    Blog Added successfully ...
+                                                                    <st:message code="blog.save.message"/>
                                                                 </div>
                                                             </c:if>
                                                             <c:if test="${!empty tab}">
@@ -431,6 +434,26 @@
                                                     <div class="form-group col-md-12">
                                                         <label for="formFile" class="form-label">Image for your blog</label>
                                                         <input class="form-control" type="file"  accept="image/*" name="file" id="formFile">
+                                                    </div>
+
+                                                    <div class="form-group col-md-12">
+                                                        <input type="hidden" name="saveInterest" value="${saveInterest}"/>
+                                                        <input type="hidden" name="deleteInterest" value="${deleteInterest}"/>
+                                                        <input type="hidden" name="ownProfile" value="${ownProfile}">
+                                                        <div class="tagsDiv">
+                                                            <ul id="blogTaging">
+                                                                    <c:choose>
+                                                                        <c:when test="${empty profile.tags}">
+                                                                            <li>Add Tag for your Blog (example: XBox)</li>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <c:forEach var="item" items="${profile.tags}">
+                                                                                <li>${item.name}</li>
+                                                                            </c:forEach>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                            </ul>
+                                                        </div>
                                                     </div>
 
                                                     <div class="col-md-12">
@@ -457,10 +480,15 @@
                                                                 <div class="form-group col-md-12">
                                                                     <p>
                                                                         <c:if test="${!empty param.message}">
-                                                                    <div class="alert alert-success" role="alert">
-                                                                        Blog updated successfuly ...
-                                                                    </div>
-                                                                    </c:if>
+                                                                            <div class="alert alert-success" role="alert">
+                                                                                <st:message code="blog.updated.message"/>
+                                                                            </div>
+                                                                         </c:if>
+                                                                        <c:if test="${!empty param.error}">
+                                                                            <div class="alert alert-danger" role="alert">
+                                                                                This is a danger alert—check it out!
+                                                                            </div>
+                                                                        </c:if>
 
                                                                     </p>
                                                                 </div>
@@ -508,6 +536,7 @@
                                                         <th>Blogs Created</th>
                                                         <th>Subject</th>
                                                         <th>Body</th>
+                                                        <th>Image</th>
                                                         <th>Action</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -520,6 +549,8 @@
                                                             <td>${blog.createdDate}</td>
                                                             <td>${blog.subject}</td>
                                                             <td>${blog.body}</td>
+                                                            <c:set var="profilePhoto" value="/blogPhoto/${blog.id}"/>
+                                                            <td><img src="${blogPhoto}" id="blogPhotoImg" width="100px" height="100px"/></td>
                                                             <td><a href="/editBlog?id=${blog.id}&tab=edit-blog" class="btn btn-fill-out btn-small d-block">Edit</a></td>
                                                             <td><a href="/deleteBlog?id=${blog.id}" class="btn btn-fill-out btn-small d-block delete-blog">Delete</a></td>
                                                         </tr>

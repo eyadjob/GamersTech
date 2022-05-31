@@ -1,5 +1,7 @@
 package gamersFun.com.example.gamersFun.entity;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -39,7 +41,25 @@ public class Blogs {
 
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @Generated(GenerationTime.ALWAYS)
     private Date createdDate;
+
+    @Column(name = "updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Generated(GenerationTime.ALWAYS)
+    private Date updatedDate;
+
+
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+
 
 
 
@@ -97,11 +117,6 @@ public class Blogs {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Profile profile;
 
-    @PrePersist
-    private void setCreatedDate(){
-        Calendar calendar = Calendar.getInstance();
-        this.createdDate = calendar.getTime();
-    }
 
     public Long getId() {
         return id;

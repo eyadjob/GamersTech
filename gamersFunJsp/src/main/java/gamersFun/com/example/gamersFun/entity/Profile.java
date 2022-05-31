@@ -39,6 +39,17 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     private List<Blogs> blogsList;
 
+    public List<Tags> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tags> tags) {
+        this.tags = tags;
+    }
+
+    @Transient
+    private List<Tags> tags;
+
     public List<Blogs> getBlogsList() {
         return blogsList;
     }
