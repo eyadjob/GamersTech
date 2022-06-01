@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @Table(name = "news_page")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class NewsPageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

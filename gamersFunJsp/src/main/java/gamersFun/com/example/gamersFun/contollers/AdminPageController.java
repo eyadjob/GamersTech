@@ -109,7 +109,7 @@ public class AdminPageController {
 
     @PostMapping("/addNewsPage")
     String addCategory(@RequestParam("newsImageFile") String newsImageFile, @ModelAttribute("newsPageEntity") @Valid NewsPageEntity newsPageEntity) {
-        newsPageDao.save(new NewsPageEntity());
+        newsPageDao.save(newsPageEntity);
         return "/adminConsole";
     }
 
