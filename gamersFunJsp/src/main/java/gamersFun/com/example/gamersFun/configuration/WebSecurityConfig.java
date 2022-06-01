@@ -50,7 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/addNewsPage**",
                         "/deleteNewsPage**",
                         "/addUser**",
-                        "/shopAccount"
+                        "/shopAccount",
+                        "/blogPhoto/*"
                 )
                 .permitAll()
                 .antMatchers(
