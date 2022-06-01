@@ -117,8 +117,12 @@ public class AdminPageController {
 
     @PostMapping("/addNewsPage")
     String addCategory(@RequestParam("newsImageFile") MultipartFile newsImageFile, @ModelAttribute("newsPageEntity") @Valid NewsPageEntity newsPageEntity) {
-        FileInfo fileInfo = fileService.saveImageFile(newsImageFile,System.getProperty("user.dir") +"/"  + newsPageImagesDirectory + "/"+  DateHelper.getCurrentDatePlusDays(0, "YYYY-MM-dd HH-mm"),String.valueOf(Calendar.getInstance().getTimeInMillis())  , String.valueOf(newsPageEntity.getId()),100,100);
-        newsPageDao.save(newsPageEntity);
+        try {
+            FileInfo fileInfo = fileService.saveImageFile(newsImageFile, System.getProperty("user.dir") + "/" + newsPageImagesDirectory + "/" + DateHelper.getCurrentDatePlusDays(0, "YYYY-MM-dd HH-mm"), String.valueOf(Calendar.getInstance().getTimeInMillis()), String.valueOf(newsPageEntity.getId()), 100, 100);
+            newsPageDao.save(newsPageEntity);
+        } catch (Exception exception) {
+
+        }
         return "/adminConsole";
     }
 
