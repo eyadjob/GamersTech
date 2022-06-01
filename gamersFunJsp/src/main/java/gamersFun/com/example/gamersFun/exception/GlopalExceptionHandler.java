@@ -144,7 +144,7 @@ public class GlopalExceptionHandler {
     @ExceptionHandler(value = DataIntegrityViolationException.class)
     public ModelAndView integrityViolation(HttpServletRequest request, Exception exception){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.getModel().put("message",duplicateRecord);
+        modelAndView.getModel().put("message",exception.getMessage());
         modelAndView.getModel().put("url",request.getRequestURL());
         modelAndView.getModel().put("exception",exception);
         modelAndView.setViewName("app.exception");

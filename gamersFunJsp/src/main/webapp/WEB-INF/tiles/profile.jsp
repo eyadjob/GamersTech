@@ -537,8 +537,8 @@
                                                         <th>Subject</th>
                                                         <th>Body</th>
                                                         <th>Image</th>
-                                                        <th>Action</th>
-                                                        <th>Action</th>
+                                                        <th></th>
+                                                        <th></th>
                                                     </tr>
                                                     </thead>
 
@@ -549,8 +549,9 @@
                                                             <td>${blog.createdDate}</td>
                                                             <td>${blog.subject}</td>
                                                             <td>${blog.body}</td>
-                                                            <c:set var="profilePhoto" value="/blogPhoto/${blog.id}"/>
-                                                            <td><img src="${blogPhoto}" id="blogPhotoImg" width="100px" height="100px"/></td>
+                                                            <c:set var="blogPhoto" value="/blogPhoto/${blog.id}"/>
+                                                            <td>
+                                                                <img src="${blogPhoto}" id="blogPhotoImg" width="100px" height="100px"/></td>
                                                             <td><a href="/editBlog?id=${blog.id}&tab=edit-blog" class="btn btn-fill-out btn-small d-block">Edit</a></td>
                                                             <td><a href="/deleteBlog?id=${blog.id}" class="btn btn-fill-out btn-small d-block delete-blog">Delete</a></td>
                                                         </tr>

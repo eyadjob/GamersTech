@@ -69,8 +69,8 @@ public class BlogsController {
     @Value("${blogs.delete.message}")
     private String okUpdateBlogMessage;
 
-    @Value("${photo.upload.directoy}")
-    private String photoUploadDirectory;
+    @Value("${blog.photo.upload.directory}")
+    private String blogImagesDirectory;
 
     @Value("${photo.upload.ok}")
     private String photoOk;
@@ -98,7 +98,7 @@ public class BlogsController {
 
         try {
 
-            FileInfo fileInfo = fileService.saveImageFile(file,System.getProperty("user.dir") +"/blog images/","photo","p" + user.getId(),100,100);
+            FileInfo fileInfo = fileService.saveImageFile(file,System.getProperty("user.dir") +"/" + blogImagesDirectory + "/","photo","p" + user.getId(),100,100);
             blogs1.setPhotoDetails(fileInfo);
             blogsService.save(blogs1);
             profileService.save(profile);
@@ -216,8 +216,8 @@ public class BlogsController {
         Blogs blog = blogsService.findById(id);
         Path photoPath = Paths.get(System.getProperty("user.dir"),"default","avatar.jpg");
 
-        if(blog != null && blog.getPhoto(photoUploadDirectory) != null){
-            photoPath = blog.getPhoto(photoUploadDirectory);
+        if(blog != null && blog.getPhoto(System.getProperty("user.dir")) != null){
+            photoPath = blog.getPhoto(System.getProperty("user.dir"));
         }
         return ResponseEntity.ok().contentLength(Files.size(photoPath)).
                 contentType(MediaType.parseMediaType(URLConnection.guessContentTypeFromName(photoPath.toString()))).

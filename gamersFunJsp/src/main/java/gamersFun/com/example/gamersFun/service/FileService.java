@@ -49,11 +49,9 @@ public class FileService {
         return false;
     }
 
-    //photo093
-    private File makeSubdirectory(String basePath,String prefix){
-        int nDirectory =random.nextInt(1000);
-        String sDirectory = String.format("%s%03d",prefix,nDirectory);
-        File directory = new File(basePath,sDirectory);
+
+    private File makedirectory(String basePath){
+        File directory = new File(basePath);
         if(!directory.exists()){
             directory.mkdir();
         }
@@ -74,8 +72,8 @@ public class FileService {
             throw new InvalidFileException("Not image file  ... ");
         }
 
-        File subDirectory= makeSubdirectory(baseDirectory,subDirPrefix);
-        Path filePath =Paths.get(subDirectory.getCanonicalPath(),fileName+"."+extension);
+        File directory= makedirectory(baseDirectory);
+        Path filePath =Paths.get(directory.getCanonicalPath(),fileName+"."+extension);
 
         BufferedImage resizeImage = resizedImage(file,width,height);
 
@@ -86,7 +84,7 @@ public class FileService {
 
         System.out.println("File saved here " + filePath);
 
-        return new FileInfo(fileName,extension,subDirectory.getName(),baseDirectory);
+        return new FileInfo(fileName,extension,directory.getName(),baseDirectory);
 
     }
 
