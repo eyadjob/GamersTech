@@ -510,9 +510,10 @@
                                                             </core:forEach>
                                                         </select>
                                                         <br><br>
-                                                        <form:input type="text" path="imageUrl" placeholder="upload image"
-                                                                    class="form-control"/>
-                                                            <label for="newsImageFile" class="form-label">Image for news page</label>
+<%--                                                        <form:input type="text" path="imageUrl" placeholder="upload image"--%>
+<%--                                                                    class="form-control"/>--%>
+<%--                                                            <label for="newsImageFile" class="form-label">Image for news page</label>--%>
+                                                             <label for="newsImageFile" class="form-label">Image for your news page</label>
                                                             <input class="form-control" type="file"  accept="image/*" name="newsImageFile" id="newsImageFile">
                                                         <div class="form-group">
                                                             <br>
