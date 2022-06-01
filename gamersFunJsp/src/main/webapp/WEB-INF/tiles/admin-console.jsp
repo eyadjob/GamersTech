@@ -466,8 +466,9 @@
                                                         <th>Subject</th>
                                                         <th>Body</th>
                                                         <th>Category Names</th>
-                                                        <th>mage Url</th>
-                                                        <th>Name</th>
+                                                        <th>Image Url</th>
+                                                        <th>Last Updated Date</th>
+                                                        <th>Created Date</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -480,8 +481,10 @@
                                                             <td>${newsPageVar.getBody()}</td>
                                                             <td>${newsPageVar.getCategoriesName()}</td>
                                                             <td>${newsPageVar.getImageUrl()}</td>
+                                                            <td>${newsPageVar.getLastUpdatedDate()}</td>
+                                                            <td>${newsPageVar.getCreatedDate()}</td>
                                                             <td>
-                                                                <a href="/deleteNewsPage?newsPageId={newsPageVar.getId()}"
+                                                                <a href="/deleteNewsPage?newsPageId=${newsPageVar.getId()}"
                                                                    class="btn btn-fill-out btn-small d-block">Delete</a>
                                                             </td>
                                                         </tr>
@@ -500,19 +503,27 @@
                                                                     class="form-control"/>
                                                         <label for="categoryName" class="form-label">select related category</label>
                                                         <br>
-                                                        <select name="categoryName" id="categoryName" multiple size = 5>
+                                                        <select name="categories[]" id="categoryName" multiple size = 5>
                                                             <core:forEach items="${allCategories}" var="categoryVar">
-                                                                <c:set var="currentCategoryValue" value="${categoryVar.getName()}"/>
-                                                                <option path="categories"  value="${categoryVar}" >${categoryVar.getName()}</option>
+                                                                <c:set var="currentCategoryValue" value="${categoryVar.getId()}"/>
+                                                                <option path="categories"  value="${categoryVar.getId()}" >${categoryVar.getName()}</option>
                                                             </core:forEach>
                                                         </select>
                                                         <br><br>
-                                                        <form:input type="text" path="imageUrl" placeholder="upload image"
-                                                                    class="form-control"/>
-                                                            <label for="newsImageFile" class="form-label">Image for news page</label>
+<%--                                                        <form:input type="text" path="imageUrl" placeholder="upload image"--%>
+<%--                                                                    class="form-control"/>--%>
+<%--                                                            <label for="newsImageFile" class="form-label">Image for news page</label>--%>
+                                                             <label for="newsImageFile" class="form-label">Image for your news page</label>
                                                             <input class="form-control" type="file"  accept="image/*" name="newsImageFile" id="newsImageFile">
                                                         <div class="form-group">
                                                             <br>
+<%--                                                            <br>--%>
+<%--                                                            <form:input type="text" path="createdDate" placeholder="created date"--%>
+<%--                                                                        class="form-control"/>--%>
+<%--                                                            <br>--%>
+<%--                                                            <form:input type="text" path="lastUpdatedDate" placeholder="last updated date"--%>
+<%--                                                                        class="form-control"/>--%>
+<%--                                                            <br>--%>
                                                         <button type="submit" class="btn btn-fill-out" name="submit"
                                                                 value="Submit">Save
                                                         </button>

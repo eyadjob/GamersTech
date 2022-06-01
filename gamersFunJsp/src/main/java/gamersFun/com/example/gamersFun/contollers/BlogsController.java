@@ -97,7 +97,6 @@ public class BlogsController {
         Blogs blogs1 = new Blogs(blogs.getSubject(),cleanedBody,profile);
 
         try {
-
             FileInfo fileInfo = fileService.saveImageFile(file,System.getProperty("user.dir") +"/" + blogImagesDirectory + "/","photo","p" + user.getId(),100,100);
             blogs1.setPhotoDetails(fileInfo);
             blogsService.save(blogs1);

@@ -1,6 +1,7 @@
 package gamersFun.com.example.gamersFun.contollers;
 
 import gamersFun.com.example.gamersFun.entity.CategoryEntity;
+import gamersFun.com.example.gamersFun.entity.FileInfo;
 import gamersFun.com.example.gamersFun.entity.NewsPageEntity;
 import gamersFun.com.example.gamersFun.entity.UserEntity;
 import gamersFun.com.example.gamersFun.enums.UserRole;
@@ -9,9 +10,12 @@ import gamersFun.com.example.gamersFun.repository.NewsPageDao;
 import gamersFun.com.example.gamersFun.repository.UserDao;
 import gamersFun.com.example.gamersFun.service.AdminService;
 import gamersFun.com.example.gamersFun.service.CategoryService;
+import gamersFun.com.example.gamersFun.service.FileService;
 import gamersFun.com.example.gamersFun.service.UserService;
 import gamersFun.com.example.gamersFun.utility.CollectionsConverter;
+import gamersFun.com.example.gamersFun.utility.DateHelper;
 import gamersFun.com.example.gamersFun.utility.PropManager;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,12 +24,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class AdminPageController {
@@ -50,6 +53,12 @@ public class AdminPageController {
 
     @Autowired
     RegistrationContoller registrationContoller;
+
+    @Autowired
+    FileService fileService;
+
+    final String newsPageImagesDirectory= "news page images";
+
 
     @RequestMapping("/adminConsole")
     ModelAndView getAdminConsole(ModelAndView modelAndView, @ModelAttribute(value = "categoryEntity") @Valid CategoryEntity categoryEntity, @ModelAttribute(value = "newsPageId") @Valid NewsPageEntity newsPageId, @RequestParam(name = "message", required = false) String message) {
@@ -76,7 +85,7 @@ public class AdminPageController {
         return modelAndView;
     }
 
-    @RequestMapping("/deleteCategory{categoryId}")
+    @RequestMapping("/deleteCategory")
     String deleteCategory(@RequestParam("categoryId") String categoryId) {
         categoryDao.deleteById(Long.parseLong(categoryId));
         return "/adminConsole";
@@ -94,13 +103,11 @@ public class AdminPageController {
         return "/adminConsole";
     }
 
-//    @RequestMapping("/deleteNewsPage{newsPageId}")
-//    ModelAndView deleletNewsPage(ModelAndView modelAndView, @RequestParam("newsPageId") String newsPageId) {
-//        newsPageDao.deleteById(Long.parseLong(newsPageId));
-//        modelAndView.setViewName("app.admin-console");
-//        modelAndView.getModel().put("allCategories", getCategoryList());
-//        return modelAndView;
-//    }
+    @RequestMapping("/deleteNewsPage")
+    String deleletNewsPage(ModelAndView modelAndView, @RequestParam("newsPageId") String newsPageId) {
+        newsPageDao.deleteById(Long.parseLong(newsPageId));
+        return "/adminConsole";
+    }
 
     @RequestMapping("/getShopPage")
     ModelAndView getShopPage(ModelAndView modelAndView) {
@@ -109,8 +116,13 @@ public class AdminPageController {
     }
 
     @PostMapping("/addNewsPage")
-    String addCategory(@RequestParam("newsImageFile") String newsImageFile, @ModelAttribute("newsPageEntity") @Valid NewsPageEntity newsPageEntity) {
-        newsPageDao.save(new NewsPageEntity());
+    String addCategory(@RequestParam("newsImageFile") MultipartFile newsImageFile, @ModelAttribute("newsPageEntity") @Valid NewsPageEntity newsPageEntity) {
+        try {
+            FileInfo fileInfo = fileService.saveImageFile(newsImageFile, System.getProperty("user.dir") + "/" + newsPageImagesDirectory + "/" + DateHelper.getCurrentDatePlusDays(0, "YYYY-MM-dd HH-mm"), String.valueOf(Calendar.getInstance().getTimeInMillis()), String.valueOf(newsPageEntity.getId()), 100, 100);
+            newsPageDao.save(newsPageEntity);
+        } catch (Exception exception) {
+
+        }
         return "/adminConsole";
     }
 
@@ -129,6 +141,7 @@ public class AdminPageController {
 
     @PostMapping("/addUser")
     String addNewUser(UserEntity userEntity) {
+        CategoryEntity categoryEntity = new CategoryEntity();
         userService.save(userEntity);
         return "/adminConsole";
     }
