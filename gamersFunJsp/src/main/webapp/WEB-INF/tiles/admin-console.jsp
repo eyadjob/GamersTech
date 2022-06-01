@@ -503,10 +503,10 @@
                                                                     class="form-control"/>
                                                         <label for="categoryName" class="form-label">select related category</label>
                                                         <br>
-                                                        <select name="categoryName" id="categoryName" multiple size = 5>
+                                                        <select name="categories[]" id="categoryName" multiple size = 5>
                                                             <core:forEach items="${allCategories}" var="categoryVar">
-                                                                <c:set var="currentCategoryValue" value="${categoryVar.getName()}"/>
-                                                                <option path="categories"  value="${categoryVar}" >${categoryVar.getName()}</option>
+                                                                <c:set var="currentCategoryValue" value="${categoryVar.getId()}"/>
+                                                                <option path="categories"  value="${categoryVar.getId()}" >${categoryVar.getName()}</option>
                                                             </core:forEach>
                                                         </select>
                                                         <br><br>

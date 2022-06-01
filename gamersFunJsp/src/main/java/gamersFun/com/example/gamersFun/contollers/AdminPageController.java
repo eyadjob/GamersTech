@@ -12,6 +12,7 @@ import gamersFun.com.example.gamersFun.service.CategoryService;
 import gamersFun.com.example.gamersFun.service.UserService;
 import gamersFun.com.example.gamersFun.utility.CollectionsConverter;
 import gamersFun.com.example.gamersFun.utility.PropManager;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -127,6 +128,7 @@ public class AdminPageController {
 
     @PostMapping("/addUser")
     String addNewUser(UserEntity userEntity) {
+        CategoryEntity categoryEntity = new CategoryEntity();
         userService.save(userEntity);
         return "/adminConsole";
     }

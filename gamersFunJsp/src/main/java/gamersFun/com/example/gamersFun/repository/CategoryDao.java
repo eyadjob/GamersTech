@@ -13,8 +13,4 @@ import org.springframework.transaction.annotation.Transactional;
 public interface CategoryDao extends CrudRepository<CategoryEntity, Long> {
     CategoryEntity findByNameAfter(String name);
 
-//    @Query(value = "INSERT INTO category VALUES (:categoryName)",nativeQuery = true)
-//    @Modifying
-//    @Transactional
-//    void addCategory(@Param("categoryName") String categoryName);
 }
