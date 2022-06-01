@@ -38,7 +38,7 @@ public class NewsPageEntity {
     private Date createdDate;
 
     @Temporal(javax.persistence.TemporalType.DATE)
-    @Column(name = "lastupdated_date_")
+    @Column(name = "lastupdated_date")
     @Generated(GenerationTime.ALWAYS)
     private Date lastUpdatedDate;
 

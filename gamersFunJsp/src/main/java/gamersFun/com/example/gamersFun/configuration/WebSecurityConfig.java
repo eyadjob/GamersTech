@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/enableUser**",
                         "/updateUser**",
                         "/addNewsPage**",
+                        "/deleteNewsPage**",
                         "/addUser**",
                         "/shopAccount"
                 )
