@@ -48,7 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/enableUser**",
                         "/updateUser**",
                         "/addUser**",
-                        "/shopAccount"
+                        "/shopAccount",
+                        "/blogPhoto/*"
                 )
                 .permitAll()
                 .antMatchers(

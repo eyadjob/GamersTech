@@ -28,8 +28,8 @@ public class Blogs {
     private Long userId;
 
 
-    @Column(name = "bio",length = 1000)
-    @Size(max = 1000,message = "{blogs.body.size}")
+    @Column(name = "bio",length = 200000)
+    @Size(max = 200000,message = "{blogs.body.size}")
     private String body;
 
     @Column(name = "Subject",length = 200)
@@ -39,14 +39,14 @@ public class Blogs {
         return createdDate;
     }
 
-    @Column(name = "created_date")
+    @Column(name = "created_date",updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
-    @Generated(GenerationTime.ALWAYS)
+  /*  @Generated(GenerationTime.ALWAYS)*/
     private Date createdDate;
 
-    @Column(name = "updated_date")
+    @Column(name = "updated_date",updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
-    @Generated(GenerationTime.ALWAYS)
+    /*@Generated(GenerationTime.ALWAYS)*/
     private Date updatedDate;
 
 
@@ -87,12 +87,21 @@ public class Blogs {
         this.photoExtension = photoExtension;
     }
 
-    @Column(name = "photo_Directory",length = 10)
+    @Column(name = "photo_Directory",length = 100)
     private String photoDirectory;
-    @Column(name = "photo_Name",length = 10)
+    @Column(name = "photo_Name",length = 20)
     private String photoName;
     @Column(name = "photo_Extension",length = 10)
     private String photoExtension;
+
+    @PreUpdate
+    @PrePersist
+    public void updateTimeStamps() {
+        this.updatedDate = new Date();
+        if (this.createdDate==null) {
+            this.createdDate = new Date();
+        }
+    }
 
     public Blogs(){
 
@@ -167,4 +176,6 @@ public class Blogs {
         }
         return Paths.get(baseDiercory,photoDirectory,photoName.concat(".").concat(photoExtension));
     }
+
+
 }
