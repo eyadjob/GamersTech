@@ -466,8 +466,9 @@
                                                         <th>Subject</th>
                                                         <th>Body</th>
                                                         <th>Category Names</th>
-                                                        <th>mage Url</th>
-                                                        <th>Name</th>
+                                                        <th>Image Url</th>
+                                                        <th>Last Updated Date</th>
+                                                        <th>Created Date</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -480,8 +481,10 @@
                                                             <td>${newsPageVar.getBody()}</td>
                                                             <td>${newsPageVar.getCategoriesName()}</td>
                                                             <td>${newsPageVar.getImageUrl()}</td>
+                                                            <td>${newsPageVar.getLastUpdatedDate()}</td>
+                                                            <td>${newsPageVar.getCreatedDate()}</td>
                                                             <td>
-                                                                <a href="/deleteNewsPage?newsPageId={newsPageVar.getId()}"
+                                                                <a href="/deleteNewsPage?newsPageId=${newsPageVar.getId()}"
                                                                    class="btn btn-fill-out btn-small d-block">Delete</a>
                                                             </td>
                                                         </tr>
@@ -513,6 +516,13 @@
                                                             <input class="form-control" type="file"  accept="image/*" name="newsImageFile" id="newsImageFile">
                                                         <div class="form-group">
                                                             <br>
+<%--                                                            <br>--%>
+<%--                                                            <form:input type="text" path="createdDate" placeholder="created date"--%>
+<%--                                                                        class="form-control"/>--%>
+<%--                                                            <br>--%>
+<%--                                                            <form:input type="text" path="lastUpdatedDate" placeholder="last updated date"--%>
+<%--                                                                        class="form-control"/>--%>
+<%--                                                            <br>--%>
                                                         <button type="submit" class="btn btn-fill-out" name="submit"
                                                                 value="Submit">Save
                                                         </button>

@@ -35,16 +35,47 @@ public class NewsPageEntity {
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "created_date")
     @Generated(GenerationTime.INSERT)
-    private Date created_date;
+    private Date createdDate;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "lastupdated_date_")
+    @Generated(GenerationTime.ALWAYS)
+    private Date lastUpdatedDate;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "category_newspage",
-                joinColumns = { @JoinColumn(name = "newspage_id") },
+            joinColumns = { @JoinColumn(name = "newspage_id") },
             inverseJoinColumns = { @JoinColumn(name = "category_id") }
     )
     @OrderColumn(name="created_date")
     Set<CategoryEntity> categories = new HashSet<>();
+
+
+    public Date getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    public void setLastUpdatedDate(Date lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+
+    public Set<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategoryEntity> categories) {
+        this.categories = categories;
+    }
+
+    public List<String> getCategoryNames() {
+        return categoryNames;
+    }
+
+    public void setCategoryNames(List<String> categoryNames) {
+        this.categoryNames = categoryNames;
+    }
 
     @Transient
     List<String> categoryNames;
@@ -97,12 +128,12 @@ public class NewsPageEntity {
         return Objects.equals(id, that.id) && Objects.equals(imageUrl, that.imageUrl) && Objects.equals(subject, that.subject) && Objects.equals(body, that.body);
     }
 
-    public Date getCreated_date() {
-        return created_date;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreated_date(Date created_date) {
-        this.created_date = created_date;
+    public void setCreatedDate(Date created_date) {
+        this.createdDate = created_date;
     }
 
     @Override

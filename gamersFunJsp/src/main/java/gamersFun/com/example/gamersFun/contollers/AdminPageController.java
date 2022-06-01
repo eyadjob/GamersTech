@@ -76,7 +76,7 @@ public class AdminPageController {
         return modelAndView;
     }
 
-    @RequestMapping("/deleteCategory{categoryId}")
+    @RequestMapping("/deleteCategory")
     String deleteCategory(@RequestParam("categoryId") String categoryId) {
         categoryDao.deleteById(Long.parseLong(categoryId));
         return "/adminConsole";
@@ -94,13 +94,11 @@ public class AdminPageController {
         return "/adminConsole";
     }
 
-//    @RequestMapping("/deleteNewsPage{newsPageId}")
-//    ModelAndView deleletNewsPage(ModelAndView modelAndView, @RequestParam("newsPageId") String newsPageId) {
-//        newsPageDao.deleteById(Long.parseLong(newsPageId));
-//        modelAndView.setViewName("app.admin-console");
-//        modelAndView.getModel().put("allCategories", getCategoryList());
-//        return modelAndView;
-//    }
+    @RequestMapping("/deleteNewsPage")
+    String deleletNewsPage(ModelAndView modelAndView, @RequestParam("newsPageId") String newsPageId) {
+        newsPageDao.deleteById(Long.parseLong(newsPageId));
+        return "/adminConsole";
+    }
 
     @RequestMapping("/getShopPage")
     ModelAndView getShopPage(ModelAndView modelAndView) {
