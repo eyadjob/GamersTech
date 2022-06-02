@@ -118,7 +118,9 @@ public class AdminPageController {
     @PostMapping("/addNewsPage")
     String addCategory(@RequestParam("newsImageFile") MultipartFile newsImageFile, @ModelAttribute("newsPageEntity") @Valid NewsPageEntity newsPageEntity) {
         try {
-            FileInfo fileInfo = fileService.saveImageFile(newsImageFile, System.getProperty("user.dir") + "/" + newsPageImagesDirectory + "/" + DateHelper.getCurrentDatePlusDays(0, "YYYY-MM-dd HH-mm"), String.valueOf(Calendar.getInstance().getTimeInMillis()), String.valueOf(newsPageEntity.getId()), 100, 100);
+            StringBuilder imageUrl =  new StringBuilder().append(System.getProperty("user.dir") ).append( "/" ).append( newsPageImagesDirectory ).append( "/" ).append( DateHelper.getCurrentDatePlusDays(0, "YYYY-MM-dd HH-mm")).append( Calendar.getInstance().getTimeInMillis()).append( newsPageEntity.getId());
+            fileService.saveImageFile(newsImageFile,  imageUrl.toString(), 100, 100);
+            newsPageEntity.setImageUrl(imageUrl.toString());
             newsPageDao.save(newsPageEntity);
         } catch (Exception exception) {
 

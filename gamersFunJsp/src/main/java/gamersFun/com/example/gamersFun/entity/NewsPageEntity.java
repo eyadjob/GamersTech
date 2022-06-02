@@ -41,7 +41,7 @@ public class NewsPageEntity {
     @Generated(GenerationTime.ALWAYS)
     private Date lastUpdatedDate;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany()
     @JoinTable(
             name = "category_newspage",
             joinColumns = { @JoinColumn(name = "newspage_id") },

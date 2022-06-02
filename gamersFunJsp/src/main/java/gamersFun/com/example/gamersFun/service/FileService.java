@@ -112,4 +112,24 @@ public class FileService {
         return scaledImage.getSubimage(0,0,width,height);
 
     }
+
+
+    public void saveImageFile(MultipartFile file, String imagePath, int width, int height) throws InvalidFileException, IOException, ImageTooSmallException {
+        String extension = imagePath;
+        if(extension == null){
+            throw new InvalidFileException("No file extension ... ");
+        }
+        if(!isImageExtension(extension)){
+            throw new InvalidFileException("Not image file  ... ");
+        }
+        File directory= makedirectory(imagePath);
+        Path filePath =Paths.get(directory.getCanonicalPath(),imagePath);
+        BufferedImage resizeImage = resizedImage(file,width,height);
+        ImageIO.write(resizeImage,extension,filePath.toFile());
+        Files.deleteIfExists(filePath);
+        Files.copy(file.getInputStream(),filePath);
+
+    }
+
+
 }
