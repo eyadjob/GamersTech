@@ -99,8 +99,12 @@ public class NewsPageEntity {
         return imageUrl;
     }
 
+    public String getImageUrlWithSystemDirectory() {
+        return System.getProperty("user.dir")+"/"+imageUrl;
+    }
+
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        this.imageUrl = imageUrl.replace(System.getProperty("user.dir"),"");
     }
 
     public String getSubject() {

@@ -116,9 +116,9 @@ public class AdminPageController {
             int currentPageId = Integer.parseInt(String.valueOf(((Object[]) newsPageDao.getLatestId())[4]))+1;
             String imageExtension =RegxHelper.getRegxMatch("[0-9a-z]+$", 0, newsImageFile.getOriginalFilename());
             String imageDirectory =new StringBuilder().append(System.getProperty("user.dir")).append("/").append(newsPageImagesDirectory).append("/").append(DateHelper.getCurrentDatePlusDays(0, "YYYY-MM-dd")).toString();
-            String imageName = new StringBuilder().append("/").append(Calendar.getInstance().getTimeInMillis()).append("-").append(currentPageId).append(".").append(imageExtension).toString();
+            String imageName = new StringBuilder().append(Calendar.getInstance().getTimeInMillis()).append("-").append(currentPageId).append(".").append(imageExtension).toString();
             FileInfo fileInfo = fileService.saveImageFileWithName(newsImageFile, imageDirectory,imageName,imageExtension, 100, 100);
-            newsPageEntity.setImageUrl(fileInfo.get().toString());
+            newsPageEntity.setImageUrl(fileInfo.getCompleteFilePath());
             newsPageDao.save(newsPageEntity);
         } catch (Exception exception) {
 

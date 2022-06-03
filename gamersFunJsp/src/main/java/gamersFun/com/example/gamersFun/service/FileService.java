@@ -131,7 +131,7 @@ public class FileService {
             throw new InvalidFileException("Not image file  ... ");
         }
         File directory= makedirectory(imageDirectory);
-        Path filePath =Paths.get(directory.getAbsolutePath());
+        Path filePath =Paths.get(directory.getAbsolutePath(),imageName);
         BufferedImage resizeImage = resizedImage(file,width,height);
         ImageIO.write(resizeImage,imageExtension,filePath.toFile());
         Files.deleteIfExists(filePath);
