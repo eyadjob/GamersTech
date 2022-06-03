@@ -14,8 +14,7 @@ import gamersFun.com.example.gamersFun.service.FileService;
 import gamersFun.com.example.gamersFun.service.UserService;
 import gamersFun.com.example.gamersFun.utility.CollectionsConverter;
 import gamersFun.com.example.gamersFun.utility.DateHelper;
-import gamersFun.com.example.gamersFun.utility.PropManager;
-import org.checkerframework.checker.units.qual.C;
+import gamersFun.com.example.gamersFun.utility.RegxHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,37 +27,31 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AdminPageController {
 
+    final String newsPageImagesDirectory = "newsPageImages";
     @Autowired
     NewsPageDao newsPageDao;
-
     @Autowired
     AdminService adminService;
-
     @Autowired
     CategoryDao categoryDao;
-
     @Autowired
     UserDao userDao;
-
     @Autowired
     UserService userService;
-
     @Autowired
     CategoryService categoryService;
-
     @Autowired
     RegistrationContoller registrationContoller;
-
     @Autowired
     FileService fileService;
-
-    final String newsPageImagesDirectory= "news page images";
-
 
     @RequestMapping("/adminConsole")
     ModelAndView getAdminConsole(ModelAndView modelAndView, @ModelAttribute(value = "categoryEntity") @Valid CategoryEntity categoryEntity, @ModelAttribute(value = "newsPageId") @Valid NewsPageEntity newsPageId, @RequestParam(name = "message", required = false) String message) {
@@ -76,10 +69,12 @@ public class AdminPageController {
         modelAndView.getModel().put("newsPageEntity", new NewsPageEntity());
         modelAndView.getModel().put("categoryEntity", new CategoryEntity());
         modelAndView.getModel().put("messages", adminService.populateAdminModelViewMessages(modelAndView));
-        if ( message !=  null) {
-            Map<String,String> mapNewValue = new HashMap<>() {{put(message.split(",")[0],message.split(",")[1]);}};
-            modelAndView.addObject("messages",adminService.populateAdminModelViewMessages(modelAndView,mapNewValue));
-            modelAndView.getModel().put(message.split(",")[0],message.split(",")[1]);
+        if (message != null) {
+            Map<String, String> mapNewValue = new HashMap<>() {{
+                put(message.split(",")[0], message.split(",")[1]);
+            }};
+            modelAndView.addObject("messages", adminService.populateAdminModelViewMessages(modelAndView, mapNewValue));
+            modelAndView.getModel().put(message.split(",")[0], message.split(",")[1]);
         }
         modelAndView.getModel().put("userEntity", new UserEntity());
         return modelAndView;
@@ -118,9 +113,12 @@ public class AdminPageController {
     @PostMapping("/addNewsPage")
     String addCategory(@RequestParam("newsImageFile") MultipartFile newsImageFile, @ModelAttribute("newsPageEntity") @Valid NewsPageEntity newsPageEntity) {
         try {
-            StringBuilder imageUrl =  new StringBuilder().append(System.getProperty("user.dir") ).append( "/" ).append( newsPageImagesDirectory ).append( "/" ).append( DateHelper.getCurrentDatePlusDays(0, "YYYY-MM-dd HH-mm")).append( Calendar.getInstance().getTimeInMillis()).append( newsPageEntity.getId());
-            fileService.saveImageFile(newsImageFile,  imageUrl.toString(), 100, 100);
-            newsPageEntity.setImageUrl(imageUrl.toString());
+            int currentPageId = Integer.parseInt(String.valueOf(((Object[]) newsPageDao.getLatestId())[4]))+1;
+            String imageExtension =RegxHelper.getRegxMatch("[0-9a-z]+$", 0, newsImageFile.getOriginalFilename());
+            String imageDirectory =new StringBuilder().append(System.getProperty("user.dir")).append("/").append(newsPageImagesDirectory).append("/").append(DateHelper.getCurrentDatePlusDays(0, "YYYY-MM-dd")).toString();
+            String imageName = new StringBuilder().append("/").append(Calendar.getInstance().getTimeInMillis()).append("-").append(currentPageId).append(".").append(imageExtension).toString();
+            FileInfo fileInfo = fileService.saveImageFileWithName(newsImageFile, imageDirectory,imageName,imageExtension, 100, 100);
+            newsPageEntity.setImageUrl(fileInfo.get().toString());
             newsPageDao.save(newsPageEntity);
         } catch (Exception exception) {
 

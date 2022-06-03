@@ -49,6 +49,15 @@ public class FileService {
         return false;
     }
 
+    private boolean isImageExtensionWithString(String extensio){
+
+        for(String validEx : imageExtrension.split(",")){
+            if(extensio.equalsIgnoreCase(validEx)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     private File makedirectory(String basePath){
         File directory = new File(basePath);
@@ -114,20 +123,20 @@ public class FileService {
     }
 
 
-    public void saveImageFile(MultipartFile file, String imagePath, int width, int height) throws InvalidFileException, IOException, ImageTooSmallException {
-        String extension = imagePath;
-        if(extension == null){
+    public FileInfo saveImageFileWithName(MultipartFile file, String imageDirectory, String imageName, String imageExtension,int width, int height) throws InvalidFileException, IOException, ImageTooSmallException {
+        if(imageExtension == null){
             throw new InvalidFileException("No file extension ... ");
         }
-        if(!isImageExtension(extension)){
+        if(!isImageExtension(imageExtension)){
             throw new InvalidFileException("Not image file  ... ");
         }
-        File directory= makedirectory(imagePath);
-        Path filePath =Paths.get(directory.getCanonicalPath(),imagePath);
+        File directory= makedirectory(imageDirectory);
+        Path filePath =Paths.get(directory.getAbsolutePath());
         BufferedImage resizeImage = resizedImage(file,width,height);
-        ImageIO.write(resizeImage,extension,filePath.toFile());
+        ImageIO.write(resizeImage,imageExtension,filePath.toFile());
         Files.deleteIfExists(filePath);
         Files.copy(file.getInputStream(),filePath);
+        return new FileInfo(imageName,imageExtension,directory.getName(),imageDirectory);
 
     }
 
