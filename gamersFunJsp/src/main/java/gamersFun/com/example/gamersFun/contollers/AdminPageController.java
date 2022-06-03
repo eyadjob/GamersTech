@@ -59,10 +59,10 @@ public class AdminPageController {
     ModelAndView getAdminConsole(ModelAndView modelAndView, @ModelAttribute(value = "categoryEntity") @Valid CategoryEntity categoryEntity, @ModelAttribute(value = "newsPageId") @Valid NewsPageEntity newsPageId, @RequestParam(name = "message", required = false) String message) {
         Iterable<CategoryEntity> categoryEntities = categoryDao.findAll();
         Iterable<UserEntity> userEntities = userDao.findAll();
-        List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator(categoryEntities);
+//        List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator(categoryEntities);
 
         modelAndView.setViewName("app.admin-console");
-        modelAndView.getModel().put("allCategories", categoryEntityList);
+        modelAndView.getModel().put("allCategories", categoryService.getListOfCategoriesWithRecordsSizeAndSorting2(0,10,"ascending"));
         modelAndView.getModel().put("allNewsPages", adminService.getListOfNewsPageWithRecordsSizeAndSorting2(0,3,"descending"));
         modelAndView.getModel().put("allUsers", userEntities);
         modelAndView.getModel().put("allRoles", UserRole.getRoleNamesWithExcludeValue("admin"));

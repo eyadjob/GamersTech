@@ -53,9 +53,6 @@ public class AdminService {
         Iterable<NewsPageEntity> newsPageEntities = newsPageDao.findAll(paginationSize).getContent();
         return CollectionsConverter.getListFromIterator(newsPageEntities);
     }
-    public List getListOfNewsPageWithRecordsSizeAndSorting2(int pageIndex, int recordsSize, String sortingType) {
-        return genericDaoService.getListRecordsWithRecordsSizeAndSorting(pageIndex,recordsSize,sortingType,newsPageDao);
-    }
-
+  c
 
 }
