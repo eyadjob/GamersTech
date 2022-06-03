@@ -16,6 +16,7 @@ import gamersFun.com.example.gamersFun.utility.CollectionsConverter;
 import gamersFun.com.example.gamersFun.utility.DateHelper;
 import gamersFun.com.example.gamersFun.utility.RegxHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -55,15 +56,15 @@ public class AdminPageController {
 
     @RequestMapping("/adminConsole")
     ModelAndView getAdminConsole(ModelAndView modelAndView, @ModelAttribute(value = "categoryEntity") @Valid CategoryEntity categoryEntity, @ModelAttribute(value = "newsPageId") @Valid NewsPageEntity newsPageId, @RequestParam(name = "message", required = false) String message) {
+        Pageable paginationSize = PageRequest.of(0, 2);
         Iterable<CategoryEntity> categoryEntities = categoryDao.findAll();
-        Pageable newsPageEntityFirstPage = PageRequest.of(0, 1);
-        Iterable<NewsPageEntity> newsPageEntities = newsPageDao.findAll();
+        Iterable<NewsPageEntity> newsPageEntities = newsPageDao.findAll(paginationSize).getContent();
         Iterable<UserEntity> userEntities = userDao.findAll();
-
         List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator(categoryEntities);
+        List<NewsPageEntity> newsPageEntityList = CollectionsConverter.getListFromIterator(newsPageEntities);
         modelAndView.setViewName("app.admin-console");
         modelAndView.getModel().put("allCategories", categoryEntityList);
-        modelAndView.getModel().put("allNewsPages", newsPageEntities);
+        modelAndView.getModel().put("allNewsPages", newsPageEntityList);
         modelAndView.getModel().put("allUsers", userEntities);
         modelAndView.getModel().put("allRoles", UserRole.getRoleNamesWithExcludeValue("admin"));
         modelAndView.getModel().put("newsPageEntity", new NewsPageEntity());
