@@ -12,7 +12,7 @@ import java.lang.annotation.Native;
 import java.util.List;
 
 @Repository
-public interface NewsPageDao extends PagingAndSortingRepository<NewsPageEntity, Long> {
+public interface NewsPageDao extends PagingAndSortingRepository<NewsPageEntity, Long>, NewsPageDaoInterface {
     NewsPageEntity findById(int id);
 
 
