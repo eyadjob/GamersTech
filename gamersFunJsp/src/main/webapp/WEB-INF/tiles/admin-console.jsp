@@ -491,7 +491,7 @@
                                                     </core:forEach>
                                                     </tbody>
                                                 </table>
-                                                <form:form action="addNewsPage" method="post"  modelAttribute="newsPageEntity">
+                                                <form:form action="addNewsPage" method="post" enctype="multipart/form-data" modelAttribute="newsPageEntity">
                                                     <div class="form-group">
                                                         <br><br>
                                                         <span class="required" style='font-weight: bold;'>Enter News Page Information to Add</span></label>

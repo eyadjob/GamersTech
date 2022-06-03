@@ -41,7 +41,7 @@ public class NewsPageEntity {
     @Generated(GenerationTime.ALWAYS)
     private Date lastUpdatedDate;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany()
     @JoinTable(
             name = "category_newspage",
             joinColumns = { @JoinColumn(name = "newspage_id") },
@@ -99,8 +99,12 @@ public class NewsPageEntity {
         return imageUrl;
     }
 
+    public String getImageUrlWithSystemDirectory() {
+        return System.getProperty("user.dir")+"/"+imageUrl;
+    }
+
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        this.imageUrl = imageUrl.replace(System.getProperty("user.dir"),"");
     }
 
     public String getSubject() {

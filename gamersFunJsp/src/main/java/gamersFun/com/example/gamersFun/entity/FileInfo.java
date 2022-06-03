@@ -6,11 +6,14 @@ public class FileInfo {
     private String subDirectory;
     private String baseDirectory;// we can get it from message.properties
 
+    private String completeFilePath;
+
     public FileInfo(String fileName, String extension, String name, String baseDirectory) {
         this.extesion=extension;
         this.baseDirectory=baseDirectory;
         this.baseName=fileName;
         this.subDirectory=name;
+        this.completeFilePath = baseDirectory+baseName;
     }
 
     public String getBaseName() {
@@ -45,6 +48,13 @@ public class FileInfo {
         this.baseDirectory = baseDirectory;
     }
 
+    public String getCompleteFilePath() {
+        return completeFilePath;
+    }
+
+    public void setCompleteFilePath(String completeFilePath) {
+        this.completeFilePath = completeFilePath;
+    }
 
     @Override
     public String toString() {
