@@ -489,8 +489,13 @@
                                                             </td>
                                                         </tr>
                                                     </core:forEach>
+                                                    <br/>
+                                                    <a href="/adminConsole?pageId=">1</a>
+                                                    <a href="/SpringMVCPaginationExample/viewemp/2">2</a>
+                                                    <a href="/SpringMVCPaginationExample/viewemp/3">3</a>
                                                     </tbody>
                                                 </table>
+                                            </div>
                                                 <form:form action="addNewsPage" method="post" enctype="multipart/form-data" modelAttribute="newsPageEntity">
                                                     <div class="form-group">
                                                         <br><br>
@@ -510,26 +515,16 @@
                                                             </core:forEach>
                                                         </select>
                                                         <br><br>
-<%--                                                        <form:input type="text" path="imageUrl" placeholder="upload image"--%>
-<%--                                                                    class="form-control"/>--%>
-<%--                                                            <label for="newsImageFile" class="form-label">Image for news page</label>--%>
                                                              <label for="newsImageFile" class="form-label">Image for your news page</label>
                                                             <input class="form-control" type="file"  accept="image/*" name="newsImageFile" id="newsImageFile">
                                                         <div class="form-group">
                                                             <br>
-<%--                                                            <br>--%>
-<%--                                                            <form:input type="text" path="createdDate" placeholder="created date"--%>
-<%--                                                                        class="form-control"/>--%>
-<%--                                                            <br>--%>
-<%--                                                            <form:input type="text" path="lastUpdatedDate" placeholder="last updated date"--%>
-<%--                                                                        class="form-control"/>--%>
-<%--                                                            <br>--%>
+
                                                         <button type="submit" class="btn btn-fill-out" name="submit"
                                                                 value="Submit">Save
                                                         </button>
                                                     </div>
                                                 </form:form>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
