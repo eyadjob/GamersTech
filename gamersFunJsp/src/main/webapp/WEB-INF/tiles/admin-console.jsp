@@ -490,7 +490,7 @@
                                                         </tr>
                                                     </core:forEach>
                                                     <br/>
-                                                    <a href="/adminPage/viewemp/1">1</a>
+                                                    <a href="/adminConsole?pageId=">1</a>
                                                     <a href="/SpringMVCPaginationExample/viewemp/2">2</a>
                                                     <a href="/SpringMVCPaginationExample/viewemp/3">3</a>
                                                     </tbody>

@@ -43,16 +43,9 @@ public class AdminService {
         return modelAndView;
     }
 
-    public List<NewsPageEntity> getListOfNewsPageWithRecordsSizeAndSorting(int pageIndex, int recordsSize, String sortingType) {
-        Pageable paginationSize;
-        if ( sortingType.equals("descending")) {
-             paginationSize = PageRequest.of(pageIndex, recordsSize, Sort.by("id").descending());
-        } else  {
-             paginationSize = PageRequest.of(pageIndex, recordsSize, Sort.by("id").ascending());
-        }
-        Iterable<NewsPageEntity> newsPageEntities = newsPageDao.findAll(paginationSize).getContent();
-        return CollectionsConverter.getListFromIterator(newsPageEntities);
+    public List getListOfNewsPageWithRecordsSizeAndSorting2(int pageIndex, int recordsSize, String sortingType) {
+        return genericDaoService.getListRecordsWithRecordsSizeAndSorting(pageIndex,recordsSize,sortingType,newsPageDao);
     }
-  c
+
 
 }
