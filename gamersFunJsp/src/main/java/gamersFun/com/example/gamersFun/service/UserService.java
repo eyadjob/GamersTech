@@ -31,6 +31,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private VerificationDao tokenDao;
 
+    @Autowired
+    GenericDaoService genericDaoService;
+
     public void register(UserEntity siteUserEntity) {
         //siteUser.setPassword(passwordEncoder.encode(siteUser.getPassword())); no need cause i used plain password and then encryot it in setter
         siteUserEntity.setRole("ROLE_USER");// DEFAULT TO USER ROLE_USER  for admin use ROLE_ADMIN
@@ -90,4 +93,9 @@ public class UserService implements UserDetailsService {
     public void updateUser(UserEntity userEntity) {
         userDao.save(userEntity);
     }
+
+    public List getListOfUsersWithRecordsSizeAndSorting2(int pageIndex, int recordsSize, String sortingType) {
+        return genericDaoService.getListRecordsWithRecordsSizeAndSorting(pageIndex,recordsSize,sortingType,userDao);
+    }
+
 }
