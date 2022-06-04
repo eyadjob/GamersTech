@@ -211,6 +211,12 @@
                         <p class="">
                             Sorry An error occurred due : ${message}.<br> visit the <a href="${contextRoot}/">Homepage</a> or <a href="${contextRoot}/contactUs">Contact us</a> about the problem
                         </p>
+
+                        <div class="error-explain mfp-hide">
+                            <c:forEach var="line" items="${exception.stackTrace}">
+                                <c:out value="${line}"/>
+                            </c:forEach>
+                        </div>
                        <%-- Show technical details for admin only no need to show it for bloggers and users--%>
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
                             <c:forEach var="line" items="${exception.stackTrace}">

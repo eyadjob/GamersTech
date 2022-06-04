@@ -17,4 +17,8 @@ public class CategoryService {
     public void updateCategoryName(CategoryEntity newCategoryEntity) {
         categoryDao.save(newCategoryEntity);
     }
+
+    public  Iterable<CategoryEntity> findAll(){
+        return categoryDao.findAll();
+    }
 }

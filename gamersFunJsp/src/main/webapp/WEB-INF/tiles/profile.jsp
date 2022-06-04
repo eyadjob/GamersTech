@@ -417,6 +417,11 @@
                                                                     <st:message code="blog.save.message"/>
                                                                 </div>
                                                             </c:if>
+                                                            <c:if test="${!empty error}">
+                                                                <div class="alert alert-danger" role="alert">
+                                                                    <st:message code="blog.error.message"/>
+                                                                </div>
+                                                            </c:if>
                                                             <c:if test="${!empty tab}">
                                                                 <input type="hidden" name="addBlogtab" value="${tab}">
                                                             </c:if>
@@ -437,23 +442,18 @@
                                                     </div>
 
                                                     <div class="form-group col-md-12">
-                                                        <input type="hidden" name="saveInterest" value="${saveInterest}"/>
-                                                        <input type="hidden" name="deleteInterest" value="${deleteInterest}"/>
-                                                        <input type="hidden" name="ownProfile" value="${ownProfile}">
-                                                        <div class="tagsDiv">
-                                                            <ul id="blogTaging">
-                                                                    <c:choose>
-                                                                        <c:when test="${empty profile.tags}">
-                                                                            <li>Add Tag for your Blog (example: XBox)</li>
-                                                                        </c:when>
-                                                                        <c:otherwise>
-                                                                            <c:forEach var="item" items="${profile.tags}">
-                                                                                <li>${item.name}</li>
-                                                                            </c:forEach>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                            </ul>
-                                                        </div>
+                                                        <label>Tags: </label>
+
+                                                    </div>
+
+                                                    <div class="form-group col-md-12">
+                                                        <select name="categories[]" id="categoryName" multiple size = 5>
+                                                            <c:forEach items="${allCategories}" var="categoryVar">
+                                                                <c:set var="currentCategoryValue" value="${categoryVar.getId()}"/>
+                                                                <option path="categories"  value="${categoryVar.getId()}" >${categoryVar.getName()}</option>
+                                                            </c:forEach>
+
+                                                        </select>
                                                     </div>
 
                                                     <div class="col-md-12">
@@ -505,6 +505,15 @@
                                                                     <input class="form-control" type="file"  accept="image/*" name="file" id="formFile">
                                                                 </div>
 
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Tags: </label>
+
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <form:select path="categories" multiple="multiple" size="5">
+                                                                        <form:options items="${allCategories}" itemValue="id"  itemLabel="name" />
+                                                                    </form:select>
+                                                                </div>
                                                                 <div class="col-md-12">
                                                                     <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Save</button>
                                                                 </div>
