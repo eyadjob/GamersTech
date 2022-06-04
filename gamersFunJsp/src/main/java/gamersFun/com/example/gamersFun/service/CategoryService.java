@@ -22,7 +22,13 @@ public class CategoryService {
         categoryDao.save(newCategoryEntity);
     }
 
+
+    public  Iterable<CategoryEntity> findAll(){
+        return categoryDao.findAll();
+    }
+  
     public List getListOfCategoriesWithRecordsSizeAndSorting2(int pageIndex, int recordsSize, String sortingType) {
         return genericDaoService.getListRecordsWithRecordsSizeAndSorting(pageIndex,recordsSize,sortingType,categoryDao);
+
     }
 }

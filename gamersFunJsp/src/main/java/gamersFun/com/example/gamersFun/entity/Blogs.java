@@ -9,9 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "Blogs")
@@ -93,6 +92,35 @@ public class Blogs {
     private String photoName;
     @Column(name = "photo_Extension",length = 10)
     private String photoExtension;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "category_blogs",
+            joinColumns = { @JoinColumn(name = "blog_id") },
+            inverseJoinColumns = { @JoinColumn(name = "category_id") }
+    )
+    @OrderColumn(name="created_date")
+    Set<CategoryEntity> categories = new HashSet<>();
+
+    @Transient
+    List<String> categoryNames;
+
+    public void setCategoriesName() {
+        this.categoryNames = categories.stream().map(d -> d.getName()).collect(Collectors.toList());
+    }
+
+    public List<String> getCategoriesName() {
+        return categories.stream().map(CategoryEntity::getName).collect(Collectors.toList());
+    }
+
+    public Set<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategoryEntity> categories) {
+        this.categories = categories;
+    }
+
 
     @PreUpdate
     @PrePersist

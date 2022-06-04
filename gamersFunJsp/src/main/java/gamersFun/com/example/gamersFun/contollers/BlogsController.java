@@ -1,5 +1,6 @@
 package gamersFun.com.example.gamersFun.contollers;
 
+import gamersFun.com.example.gamersFun.action.ActionEnum;
 import gamersFun.com.example.gamersFun.configuration.WebSecurityConfig;
 import gamersFun.com.example.gamersFun.entity.Blogs;
 import gamersFun.com.example.gamersFun.entity.FileInfo;
@@ -28,6 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URLConnection;
@@ -83,61 +86,53 @@ public class BlogsController {
 
 
     @PostMapping("/addBlogs")
-    public ModelAndView singleFileUpload(@RequestParam("file") MultipartFile file,
-                                         ModelAndView modelAndView,@ModelAttribute("blog") @Valid Blogs blogs, BindingResult result) throws Exception{
+    public String singleFileUpload(HttpSession session, @RequestParam("file") MultipartFile file,
+                                   ModelAndView modelAndView, @ModelAttribute("blog") @Valid Blogs blogs, BindingResult result) throws Exception{
         ModelAndView modelAndView1 = new ModelAndView();
         if(result.hasErrors()){
             modelAndView1.setViewName("redirect:/profile");
-            return modelAndView1;
+            modelAndView1.getModel().put("tab","add-new-blog");
+            return "/profile";
         }
 
         UserEntity user = userService.getUser();
         Profile profile =  profileService.getUserProfile(user);
         String cleanedBody = htmlPolicy.sanitize(blogs.getBody());
-        Blogs blogs1 = new Blogs(blogs.getSubject(),cleanedBody,profile);
-
+        blogs.setBody(cleanedBody);
+        blogs.setProfile(profile);
+        String message = "";
+        String error = "";
         try {
             FileInfo fileInfo = fileService.saveImageFile(file,System.getProperty("user.dir") +"/" + blogImagesDirectory + "/","photo","p" + user.getId(),100,100);
-            blogs1.setPhotoDetails(fileInfo);
-            blogsService.save(blogs1);
+            blogs.setPhotoDetails(fileInfo);
+            blogsService.save(blogs);
             profileService.save(profile);
-            modelAndView1.getModel().put("message",blogsAdded);
+            message=blogsAdded;
             System.out.println(fileInfo);
         } catch (InvalidFileException e) {
             e.printStackTrace();
-            modelAndView1.getModel().put("error",uploadImageError);
-            //photoUploadStatus.setMessage(photoInvalid);
+            error=uploadImageError;
         } catch (IOException e) {
             e.printStackTrace();
-            modelAndView1.getModel().put("error",uploadImageError);
-            //photoUploadStatus.setMessage(photoIOExceptioon);
+            error=uploadImageError;
         } catch (ImageTooSmallException e) {
             e.printStackTrace();
-            modelAndView1.getModel().put("error",uploadImageError);
-           // photoUploadStatus.setMessage(photoTooSmall);
+            error=uploadImageError;
         }
+        session.setAttribute("blogs", blogs);
 
-
-
-        modelAndView1.getModel().put("blog", new Blogs());
-        modelAndView1.getModel().put("blogs",blogsService.findAllByProfile(profile));
-        modelAndView1.setViewName("app.profile");
-        modelAndView1.getModel().put("tab","add-new-blog");
-        return modelAndView1;
+        return "/profile?tab=add-new-blog&action="+ ActionEnum.ADD_BLOG + "&message=" + message + "&error=" + error;
 
     }
 
     @RequestMapping(value = "/editBlog",method = RequestMethod.GET)
-    ModelAndView getEditBlogPage(SecurityContextHolderAwareRequestWrapper requestWrapper,ModelAndView model, @RequestParam("id") Long id, @RequestParam("tab") String tab){
+    String getEditBlogPage(HttpServletRequest request,SecurityContextHolderAwareRequestWrapper requestWrapper,ModelAndView model, @RequestParam("id") Long id, @RequestParam("tab") String tab){
         model.setViewName("app.profile");
-        Profile profile = getProfile();
-        if(requestWrapper.isUserInRole(WebSecurityConfig.BLOGGER_ROLE)){
-            model.getModel().put("blogs",blogsService.findAllByProfile(profile));
-        }
-
-        model.getModel().put("blog",blogsService.findById(id));
-        model.getModel().put("tab","edit-blog");
-        return model;
+        request.setAttribute("userService",userService);
+        request.setAttribute("profileService",profileService);
+        request.setAttribute("blogService",blogsService);
+        request.setAttribute("requestWrapper",requestWrapper);
+        return "/profile?tab=edit-blog&action="+ ActionEnum.EDIT_BLOG + "&id="+id ;
     }
 
     private Profile getProfile() {
