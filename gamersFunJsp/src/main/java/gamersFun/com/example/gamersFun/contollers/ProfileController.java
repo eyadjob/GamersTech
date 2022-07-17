@@ -4,10 +4,7 @@ import gamersFun.com.example.gamersFun.action.ActionAttributesFactory;
 import gamersFun.com.example.gamersFun.action.IAction;
 import gamersFun.com.example.gamersFun.configuration.WebSecurityConfig;
 import gamersFun.com.example.gamersFun.entity.*;
-import gamersFun.com.example.gamersFun.service.BlogsService;
-import gamersFun.com.example.gamersFun.service.CategoryService;
-import gamersFun.com.example.gamersFun.service.ProfileService;
-import gamersFun.com.example.gamersFun.service.UserService;
+import gamersFun.com.example.gamersFun.service.*;
 import gamersFun.com.example.gamersFun.utility.CollectionsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,17 +24,7 @@ import java.util.List;
 public class ProfileController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ProfileService profileService;
-
-    @Autowired
-    private BlogsService blogsService;
-
-    @Autowired
-    private CategoryService categoryService;
-
+    private BlogsModule blogsModule;
 
     private String photoUploadDirectory;
 
@@ -49,12 +36,12 @@ public class ProfileController {
     ModelAndView showProfilePage(HttpServletRequest req, SecurityContextHolderAwareRequestWrapper requestWrapper,
                                  @RequestParam(value = "action", required = false) String action,
                                   RedirectAttributes redirectAttrs) {
-        UserEntity UserEntity = userService.getUser();
+        UserEntity UserEntity = blogsModule.getUserService().getUser();
         ModelAndView modelAndView = showProfile(UserEntity);
         populateActionAttributes(req, modelAndView);
         if(requestWrapper.isUserInRole(WebSecurityConfig.BLOGGER_ROLE)){
-            Profile profile = profileService.getUserProfile(UserEntity);
-            modelAndView.getModel().put("blogs",blogsService.findAllByProfile(profile));
+            Profile profile = blogsModule.getProfileService().getUserProfile(UserEntity);
+            modelAndView.getModel().put("blogs",blogsModule.getBlogsService().findAllByProfile(profile));
         }
 
         return modelAndView;
@@ -74,17 +61,17 @@ public class ProfileController {
             return view;
         }
 
-        Profile profileDb = profileService.getUserProfile(UserEntity);
+        Profile profileDb = blogsModule.getProfileService().getUserProfile(UserEntity);
         if (profileDb == null) {
             Profile profile = new Profile();
             profile.setUser(UserEntity);
-            profileDb = profileService.save(profile);
+            profileDb = blogsModule.getProfileService().save(profile);
         }
 
         Profile readOnlyProfile = new Profile();
         readOnlyProfile.safeCopyFrom(profileDb);
-        List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator( categoryService.findAll());
-        view.getModel().put("blogs",blogsService.findAllByProfile(profileDb));
+        List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator( blogsModule.getCategoryService().findAll());
+        view.getModel().put("blogs",blogsModule.getBlogsService().findAllByProfile(profileDb));
         view.getModel().put("blog", new Blogs());
         view.setViewName("app.profile");
         view.getModel().put("profile", readOnlyProfile);
