@@ -3,6 +3,7 @@ package gamersFun.com.example.gamersFun.contollers;
 import gamersFun.com.example.gamersFun.entity.TokenTypeEntity;
 import gamersFun.com.example.gamersFun.entity.UserEntity;
 import gamersFun.com.example.gamersFun.entity.VerificationTokenEntity;
+import gamersFun.com.example.gamersFun.service.BlogsModule;
 import gamersFun.com.example.gamersFun.service.EmailService;
 import gamersFun.com.example.gamersFun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,7 @@ import java.util.Date;
 public class RegistrationContoller {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private EmailService emailService;
+    private BlogsModule blogsModule;
 
     @Value("${message.registration.confirmed}")
     private String registrationConfirmMessage;
@@ -45,14 +43,14 @@ public class RegistrationContoller {
         modelAndView.setViewName("app.signup");
         if(!bindingResult.hasErrors()){
 
-            UserDetails userDetails = userService.loadUserByUsername(userEntity.getEmail());
+            UserDetails userDetails = blogsModule.getUserService().loadUserByUsername(userEntity.getEmail());
             if(userDetails != null){
                 bindingResult.addError(new ObjectError("email","Email already used."));
                 return modelAndView;
             }
-            userService.register(userEntity);
-            String token = userService.createVerificationToken(userEntity, TokenTypeEntity.REGISTRATION);
-            emailService.sendVerificationEmail(userEntity.getUserName(), userEntity.getEmail(),token,"");
+            blogsModule.getUserService().register(userEntity);
+            String token = blogsModule.getUserService().createVerificationToken(userEntity, TokenTypeEntity.REGISTRATION);
+            blogsModule.getEmailService().sendVerificationEmail(userEntity.getUserName(), userEntity.getEmail(),token,"");
             modelAndView.setViewName("redirect:/verifyEmail");
         }
         return modelAndView;
@@ -65,7 +63,7 @@ public class RegistrationContoller {
 
     @RequestMapping(value = "/confirmRegister",method = RequestMethod.GET)
     ModelAndView configrmRegistration(ModelAndView modelAndView, @RequestParam("t") String token){
-        VerificationTokenEntity verificationTokenEntity = userService.getVerification(token);
+        VerificationTokenEntity verificationTokenEntity = blogsModule.getUserService().getVerification(token);
         if(null == verificationTokenEntity){
             modelAndView.setViewName("redirect:/invalidUser");
             return modelAndView;
@@ -73,21 +71,21 @@ public class RegistrationContoller {
 
         Date exireDate = verificationTokenEntity.getExpire();
         if(exireDate.before(new Date())){
-            userService.deleteToken(verificationTokenEntity);
+            blogsModule.getUserService().deleteToken(verificationTokenEntity);
             modelAndView.setViewName("redirect:/expiredToken");
             return modelAndView;
         }
 
         UserEntity userEntity = verificationTokenEntity.getUser();
         if(userEntity == null){
-            userService.deleteToken(verificationTokenEntity);
+            blogsModule.getUserService().deleteToken(verificationTokenEntity);
             modelAndView.setViewName("redirect:/invalidUser");
             return modelAndView;
         }
 
-        userService.deleteToken(verificationTokenEntity);
+        blogsModule.getUserService().deleteToken(verificationTokenEntity);
         userEntity.setEnabled(Boolean.TRUE);
-        userService.save(userEntity);
+        blogsModule.getUserService().save(userEntity);
         modelAndView.getModel().put("message",registrationConfirmMessage);
         modelAndView.setViewName("app.message");
 

@@ -1,20 +1,13 @@
 package gamersFun.com.example.gamersFun.contollers;
 
 import gamersFun.com.example.gamersFun.action.ActionEnum;
-import gamersFun.com.example.gamersFun.configuration.WebSecurityConfig;
 import gamersFun.com.example.gamersFun.entity.Blogs;
 import gamersFun.com.example.gamersFun.entity.FileInfo;
 import gamersFun.com.example.gamersFun.entity.Profile;
 import gamersFun.com.example.gamersFun.entity.UserEntity;
 import gamersFun.com.example.gamersFun.exception.ImageTooSmallException;
 import gamersFun.com.example.gamersFun.exception.InvalidFileException;
-import gamersFun.com.example.gamersFun.repository.BlogsDao;
-import gamersFun.com.example.gamersFun.service.BlogsService;
-import gamersFun.com.example.gamersFun.service.FileService;
-import gamersFun.com.example.gamersFun.service.ProfileService;
-import gamersFun.com.example.gamersFun.service.UserService;
-import org.checkerframework.checker.units.qual.A;
-import org.owasp.html.PolicyFactory;
+import gamersFun.com.example.gamersFun.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -38,27 +31,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 public class BlogsController {
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
-    private ProfileService profileService;
-
-    @Autowired
-    private BlogsService blogsService;
-
-    @Autowired
-    private PolicyFactory htmlPolicy;
-
-    @Autowired
-    private FileService fileService;
+    private BlogsModule blogsModule;
 
     @Value("${message.blogs.added}")
     private String blogsAdded;
@@ -95,18 +74,18 @@ public class BlogsController {
             return "/profile";
         }
 
-        UserEntity user = userService.getUser();
-        Profile profile =  profileService.getUserProfile(user);
-        String cleanedBody = htmlPolicy.sanitize(blogs.getBody());
+        UserEntity user = blogsModule.getUserService().getUser();
+        Profile profile =  blogsModule.getProfileService().getUserProfile(user);
+        String cleanedBody = blogsModule.getHtmlPolicy().sanitize(blogs.getBody());
         blogs.setBody(cleanedBody);
         blogs.setProfile(profile);
         String message = "";
         String error = "";
         try {
-            FileInfo fileInfo = fileService.saveImageFile(file,System.getProperty("user.dir") +"/" + blogImagesDirectory + "/","photo","p" + user.getId(),100,100);
+            FileInfo fileInfo = blogsModule.getFileService().saveImageFile(file,System.getProperty("user.dir") +"/" + blogImagesDirectory + "/","photo","p" + user.getId(),100,100);
             blogs.setPhotoDetails(fileInfo);
-            blogsService.save(blogs);
-            profileService.save(profile);
+            blogsModule.getBlogsService().save(blogs);
+            blogsModule.getProfileService().save(profile);
             message=blogsAdded;
             System.out.println(fileInfo);
         } catch (InvalidFileException e) {
@@ -128,16 +107,16 @@ public class BlogsController {
     @RequestMapping(value = "/editBlog",method = RequestMethod.GET)
     String getEditBlogPage(HttpServletRequest request,SecurityContextHolderAwareRequestWrapper requestWrapper,ModelAndView model, @RequestParam("id") Long id, @RequestParam("tab") String tab){
         model.setViewName("app.profile");
-        request.setAttribute("userService",userService);
-        request.setAttribute("profileService",profileService);
-        request.setAttribute("blogService",blogsService);
+        request.setAttribute("userService", blogsModule.getUserService());
+        request.setAttribute("profileService", blogsModule.getProfileService());
+        request.setAttribute("blogService", blogsModule.getBlogsService());
         request.setAttribute("requestWrapper",requestWrapper);
         return "/profile?tab=edit-blog&action="+ ActionEnum.EDIT_BLOG + "&id="+id ;
     }
 
     private Profile getProfile() {
-        UserEntity user = userService.getUser();
-        return profileService.getUserProfile(user);
+        UserEntity user = blogsModule.getUserService().getUser();
+        return blogsModule.getProfileService().getUserProfile(user);
     }
 
     @RequestMapping(value = "/editBlog",method = RequestMethod.POST)
@@ -145,7 +124,7 @@ public class BlogsController {
         model.setViewName("app.profile");
         if(!result.hasErrors()) {
             blog.setProfile(getProfile());
-            blogsService.save(blog);
+            blogsModule.getBlogsService().save(blog);
             redirectAttrs.addAttribute("id",blog.getId());
             redirectAttrs.addAttribute("tab","edit-blog");
             model.getModel().put("message","ok");
@@ -169,8 +148,8 @@ public class BlogsController {
    @RequestMapping(value = "/deleteBlog",method = RequestMethod.GET)
    ModelAndView deleteBlog(ModelAndView model, @RequestParam("id") Long id,RedirectAttributes redirectAttrs){
         model.setViewName("app.profile");
-        Blogs blog = blogsService.findById(id);
-        blogsService.deleteBlog(blog);
+        Blogs blog = blogsModule.getBlogsService().findById(id);
+        blogsModule.getBlogsService().deleteBlog(blog);
        redirectAttrs.addAttribute("id",blog.getId());
        redirectAttrs.addAttribute("tab","show-my-blogs");
        model.getModel().put("message","deleted");
@@ -182,12 +161,12 @@ public class BlogsController {
     @RequestMapping(value = "/save-tag",method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> saveInterest(@RequestParam("name") String tagName){
-        UserEntity user = userService.getUser();
-        Profile profile = profileService.getUserProfile(user);
-        String cleanedIntrestName =  htmlPolicy.sanitize(tagName);
+        UserEntity user = blogsModule.getUserService().getUser();
+        Profile profile = blogsModule.getProfileService().getUserProfile(user);
+        String cleanedIntrestName =  blogsModule.getHtmlPolicy().sanitize(tagName);
         /*Interest interest = interestService.createIfNotExists(cleanedIntrestName);
         profile.addInterest(interest);*/
-        profileService.save(profile);
+        blogsModule.getProfileService().save(profile);
 
         return new ResponseEntity<>(null,HttpStatus.OK);
     }
@@ -195,11 +174,11 @@ public class BlogsController {
     @RequestMapping(value = "/delete-tag",method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> deleteInterest(@RequestParam("name") String tagName){
-        UserEntity user = userService.getUser();
-        Profile profile = profileService.getUserProfile(user);
+        UserEntity user = blogsModule.getUserService().getUser();
+        Profile profile = blogsModule.getProfileService().getUserProfile(user);
        /* String cleanedIntrestName =  htmlPolicy.sanitize(interestName);
         profile.removeInterest(interestName);*/
-        profileService.save(profile);
+        blogsModule.getProfileService().save(profile);
 
         return new ResponseEntity<>(null,HttpStatus.OK);
     }
@@ -207,7 +186,7 @@ public class BlogsController {
     @RequestMapping(value = "/blogPhoto/{id}",method = RequestMethod.GET)
     @ResponseBody
     ResponseEntity<InputStreamResource> profilePhoto(@PathVariable("id") Long id, ModelAndView modelAndView) throws IOException {
-        Blogs blog = blogsService.findById(id);
+        Blogs blog = blogsModule.getBlogsService().findById(id);
         Path photoPath = Paths.get(System.getProperty("user.dir"),"default","avatar.jpg");
 
         if(blog != null && blog.getPhoto(System.getProperty("user.dir")) != null){
