@@ -134,6 +134,10 @@ public class Blogs {
     public Blogs(){
 
     }
+    public Blogs(Blogs blogs){
+        this.id = blogs.id;
+
+    }
     public Blogs(String subject,String body,Profile profile){
         this.subject = subject;
         this.body = body;

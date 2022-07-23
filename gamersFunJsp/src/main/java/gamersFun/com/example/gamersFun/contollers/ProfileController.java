@@ -35,13 +35,14 @@ public class ProfileController {
     @RequestMapping("/profile")
     ModelAndView showProfilePage(HttpServletRequest req, SecurityContextHolderAwareRequestWrapper requestWrapper,
                                  @RequestParam(value = "action", required = false) String action,
+                                 @RequestParam(name = "p",defaultValue = "1") int pageNumber,
                                   RedirectAttributes redirectAttrs) {
         UserEntity UserEntity = blogsModule.getUserService().getUser();
         ModelAndView modelAndView = showProfile(UserEntity);
         populateActionAttributes(req, modelAndView);
         if(requestWrapper.isUserInRole(WebSecurityConfig.BLOGGER_ROLE)){
             Profile profile = blogsModule.getProfileService().getUserProfile(UserEntity);
-            modelAndView.getModel().put("blogs",blogsModule.getBlogsService().findAllByProfile(profile));
+            modelAndView.getModel().put("blogs",blogsModule.getBlogsService().findAllByProfile(profile,pageNumber));
         }
 
         return modelAndView;
@@ -71,7 +72,7 @@ public class ProfileController {
         Profile readOnlyProfile = new Profile();
         readOnlyProfile.safeCopyFrom(profileDb);
         List<CategoryEntity> categoryEntityList = CollectionsConverter.getListFromIterator( blogsModule.getCategoryService().findAll());
-        view.getModel().put("blogs",blogsModule.getBlogsService().findAllByProfile(profileDb));
+        view.getModel().put("blogs",blogsModule.getBlogsService().findAllByProfile(profileDb,1));
         view.getModel().put("blog", new Blogs());
         view.setViewName("app.profile");
         view.getModel().put("profile", readOnlyProfile);

@@ -11,6 +11,7 @@ public class AddBlogAttributes implements IAction {
     public void populateActionAttributes(HttpServletRequest request, ModelAndView modelAndView) {
         modelAndView.getModel().put("error", request.getParameter("error"));
         modelAndView.getModel().put("tab", request.getParameter("tab"));
+        modelAndView.getModel().put("p", request.getParameter("p"));
         modelAndView.getModel().put("blog", new Blogs());
         modelAndView.getModel().put("message", request.getParameter("message"));
         Blogs blogs = (Blogs) request.getSession().getAttribute("blogs");
