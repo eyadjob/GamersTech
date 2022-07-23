@@ -6,6 +6,10 @@ import gamersFun.com.example.gamersFun.repository.BlogsDao;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.FetchType;
@@ -22,6 +26,9 @@ public class BlogsService {
     @Autowired
     private BlogsDao blogsDao;
 
+    @Value("${blogs.pageSize}")
+    private int pageSize;
+
     public Blogs save(Blogs blogs){
         return  blogsDao.save(blogs);
     }
@@ -37,8 +44,15 @@ public class BlogsService {
 
 
 
-    public List<Blogs>  findAllByProfile(Profile profile){
-       return blogsDao.findAllByProfile(profile);
+    public Page<Blogs>  findAllByProfile(Profile profile,int pageNumber){
+        PageRequest request = PageRequest.of(pageNumber-1,pageSize,Sort.Direction.DESC,"created_date");//new PageRequest(pageNumber-1,PAGESIZE, Sort.Direction.DESC,"added");
+
+        return blogsDao.findAllByProfile(profile.getId(),request);
+    }
+
+    public Page<Blogs> getPage(int pageNumber){
+        PageRequest request = PageRequest.of(pageNumber-1,pageSize, Sort.Direction.DESC,"created_date");//new PageRequest(pageNumber-1,PAGESIZE, Sort.Direction.DESC,"added");
+        return blogsDao.findAll(request);
     }
 
     public List<Blogs> findAll(){

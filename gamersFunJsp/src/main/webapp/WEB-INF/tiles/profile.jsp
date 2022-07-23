@@ -7,7 +7,9 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="st"%>
+<%@ taglib prefix="pg" tagdir="/WEB-INF/tags" %>
 <c:set var="contextRoot" value="${pageContext.request.contextPath}"/>
+
 <%--@elvariable id="blog" type="gamersFun.com.example.gamersFun.entity.Blogs"--%>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -550,10 +552,11 @@
                                                         <th></th>
                                                     </tr>
                                                     </thead>
-
+                                                    <c:url var="url" value="/profile?tab=show-my-blogs"/>
+                                                    <pg:pagination url="${url}" page="${blogs}" size="10"></pg:pagination>
                                                     <c:url value="${contextRoot}/upload-profile-photo" var="uploadPhotoLink"/>
                                                     <tbody>
-                                                    <c:forEach var="blog" items="${blogs}">
+                                                    <c:forEach var="blog" items="${blogs.content}">
                                                         <tr>
                                                             <td>${blog.createdDate}</td>
                                                             <td>${blog.subject}</td>
