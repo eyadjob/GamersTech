@@ -114,6 +114,17 @@ public class BlogsController {
         return "/profile?tab=edit-blog&action="+ ActionEnum.EDIT_BLOG + "&id="+id ;
     }
 
+    @RequestMapping(value = "/showBlog")
+    ModelAndView showBlogPage(HttpServletRequest request, @RequestParam("id") Long id){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("app.blog");
+        Blogs blog =  blogsModule.getBlogsService().findById(id);
+        if(blog != null){
+            view.getModel().put("blog", blog);
+        }
+        return view;
+    }
+
     private Profile getProfile() {
         UserEntity user = blogsModule.getUserService().getUser();
         return blogsModule.getProfileService().getUserProfile(user);

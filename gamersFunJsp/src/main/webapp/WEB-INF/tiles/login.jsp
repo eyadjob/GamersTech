@@ -241,7 +241,7 @@
                                     </div>
                                     <ul class="btn-login list_none text-center mb-15">
                                         <li><a href="#" class="btn btn-facebook"><i class="ti-facebook mr-5"></i>Facebook</a></li>
-                                        <li><a href="#" class="btn btn-google"><i class="ti-google mr-5"></i>Google</a></li>
+                                        <li><a href="/oauth2/authorization/google" class="btn btn-google"><i class="ti-google mr-5"></i>Google</a></li>
                                     </ul>
                                     <div class="text-muted text-center">Don't Have an Account? <a href="signup.html">Sign up now</a></div>
                                 </div>

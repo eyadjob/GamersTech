@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -96,6 +98,21 @@ public class UserService implements UserDetailsService {
 
     public List getListOfUsersWithRecordsSizeAndSorting2(int pageIndex, int recordsSize, String sortingType) {
         return genericDaoService.getListRecordsWithRecordsSizeAndSorting(pageIndex,recordsSize,sortingType,userDao);
+    }
+
+
+    public void processOAuthPostLogin(String username) {
+        UserEntity existUser = userDao.findByEmail(username);
+
+        if (existUser == null) {
+            UserEntity newUser = new UserEntity();
+            newUser.setUserName(new Random().ints(10,0,10).mapToObj(Integer::toString).collect(Collectors.joining("")));
+            newUser.setEmail(username);
+            newUser.setRole("ROLE_USER");
+            newUser.setEnabled(true);
+            userDao.save(newUser);
+        }
+
     }
 
 }
