@@ -55,6 +55,10 @@ public class BlogsModule {
         return registrationContoller;
     }
 
+    public CommentService getCommentService() {
+        return commentService;
+    }
+
     @Autowired
     private UserService userService;
 
@@ -95,5 +99,8 @@ public class BlogsModule {
     @Autowired
     private EmailService emailService;
 
+
+    @Autowired
+    private CommentService commentService;
 
 }

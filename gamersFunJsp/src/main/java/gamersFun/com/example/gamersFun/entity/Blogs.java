@@ -49,6 +49,18 @@ public class Blogs {
     private Date updatedDate;
 
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "blog")
+    private List<Comment> comments = new ArrayList<>();// we need to use TreeSet if its not ordered
+
+
 
     public Date getUpdatedDate() {
         return updatedDate;
@@ -207,6 +219,10 @@ public class Blogs {
             return null;
         }
         return Paths.get(baseDiercory,photoDirectory,photoName.concat(".").concat(photoExtension));
+    }
+
+    public Path getPhoto(){
+        return getPhoto(System.getProperty("user.dir"));
     }
 
 

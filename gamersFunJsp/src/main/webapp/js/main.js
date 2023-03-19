@@ -1,5 +1,4 @@
-// create global namespace for all JS modules
-window.gamersFun = {};
+
 
 (function ($) {
     'use strict';
@@ -492,6 +491,7 @@ window.gamersFun = {};
         gridListView();
         productDetails();
         gamersFun.profilePage.init();
+        comments.blogsPage.init();
     });
 
 })(jQuery);
