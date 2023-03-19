@@ -23,8 +23,10 @@
 <script src="${contextRoot}/js/vendor/jquery.theia.sticky.js"></script>
         <!-- UltraNews JS -->
 
+<script src="${contextRoot}/js/namespace.js"></script>
 <script src="${contextRoot}/js/main.js"></script>
 <script src="${contextRoot}/js/Blogs.js"></script>
+<script src="${contextRoot}/js/comments.js"></script>
 <!--This is only for javascript tagging on the profile -->
 <script src="${contextRoot}/js/jquery-ui.min.js"></script>
 <script src="${contextRoot}/js/tag-it.min.js"></script>

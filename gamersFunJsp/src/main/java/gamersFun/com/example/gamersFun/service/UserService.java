@@ -1,6 +1,7 @@
 package gamersFun.com.example.gamersFun.service;
 
 
+import gamersFun.com.example.gamersFun.configuration.WebSecurityConfig;
 import gamersFun.com.example.gamersFun.entity.TokenTypeEntity;
 import gamersFun.com.example.gamersFun.entity.UserEntity;
 import gamersFun.com.example.gamersFun.entity.VerificationTokenEntity;
@@ -17,6 +18,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -66,6 +70,15 @@ public class UserService implements UserDetailsService {
         return userDao.findByEmail(email);
     }
 
+    public UserEntity getUser(HttpServletRequest request) {
+        Object userAttr = request.getSession().getAttribute(WebSecurityConfig.SESSION_USER_ATTRIBUTE);
+        UserEntity user = null;
+        if(userAttr != null){
+             user = (UserEntity) userAttr;
+        }
+        return user;
+    }
+
     public Optional<UserEntity> get(Long id) {
         return userDao.findById(id);
     }
@@ -101,7 +114,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public void processOAuthPostLogin(String username) {
+    public UserEntity processOAuthPostLogin(String username) {
         UserEntity existUser = userDao.findByEmail(username);
 
         if (existUser == null) {
@@ -110,8 +123,10 @@ public class UserService implements UserDetailsService {
             newUser.setEmail(username);
             newUser.setRole("ROLE_USER");
             newUser.setEnabled(true);
-            userDao.save(newUser);
+            existUser = userDao.save(newUser);
         }
+
+        return existUser;
 
     }
 

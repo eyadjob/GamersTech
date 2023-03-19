@@ -162,4 +162,14 @@ public class GlopalExceptionHandler {
         return modelAndView;
     }
 
+    @ExceptionHandler(value = BlogsNotFoundException.class)
+    public ModelAndView blogsNotFounded(HttpServletRequest request, Exception exception){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.getModel().put("message",exception.getMessage());
+        modelAndView.getModel().put("url",request.getRequestURL());
+        modelAndView.getModel().put("exception",exception);
+        modelAndView.setViewName("app.exception");
+        return modelAndView;
+    }
+
 }

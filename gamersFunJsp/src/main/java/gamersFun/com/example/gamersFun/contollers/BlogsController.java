@@ -1,10 +1,8 @@
 package gamersFun.com.example.gamersFun.contollers;
 
 import gamersFun.com.example.gamersFun.action.ActionEnum;
-import gamersFun.com.example.gamersFun.entity.Blogs;
-import gamersFun.com.example.gamersFun.entity.FileInfo;
-import gamersFun.com.example.gamersFun.entity.Profile;
-import gamersFun.com.example.gamersFun.entity.UserEntity;
+import gamersFun.com.example.gamersFun.entity.*;
+import gamersFun.com.example.gamersFun.exception.BlogsNotFoundException;
 import gamersFun.com.example.gamersFun.exception.ImageTooSmallException;
 import gamersFun.com.example.gamersFun.exception.InvalidFileException;
 import gamersFun.com.example.gamersFun.service.*;
@@ -31,6 +29,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class BlogsController {
@@ -115,14 +115,44 @@ public class BlogsController {
     }
 
     @RequestMapping(value = "/showBlog")
-    ModelAndView showBlogPage(HttpServletRequest request, @RequestParam("id") Long id){
+    ModelAndView showBlogPage(HttpServletRequest request, @RequestParam("id") Long id) throws Exception{
         ModelAndView view = new ModelAndView();
         view.setViewName("app.blog");
         Blogs blog =  blogsModule.getBlogsService().findById(id);
         if(blog != null){
+            List<Comment> commentsWithoutDuplicate = getCommentsWithoutDuplicate(0,new HashSet<>(),blog.getComments());
+            Collections.sort(commentsWithoutDuplicate);
             view.getModel().put("blog", blog);
+            view.getModel().put("comment", new Comment());
+            view.getModel().put("thread", commentsWithoutDuplicate);
+        }else{
+            throw new BlogsNotFoundException("Blogs not found .");
         }
         return view;
+    }
+
+    private List<Comment> getCommentsWithoutDuplicate(int page ,Set<Long> visitedComment , List<Comment> comments) {
+     /*   return blogsModule.getCommentService().getCommentsByBlog(blog.getId())
+       .stream()
+       .filter(comment -> comment.getComment() == null)
+       .collect(Collectors.toList());*/
+        page++;
+        Iterator<Comment> commentIterator =  comments.iterator();
+        while (commentIterator.hasNext()){
+            Comment comment = commentIterator.next();
+            boolean addedToVisitedComment = visitedComment.add(comment.getId());
+            if(!addedToVisitedComment){
+                commentIterator.remove();
+                if(page != 1){
+                    return comments;
+                }
+           }
+            if(addedToVisitedComment && !comment.getComments().isEmpty())
+                getCommentsWithoutDuplicate(page,visitedComment,comment.getComments());
+        }
+
+
+        return comments;
     }
 
     private Profile getProfile() {

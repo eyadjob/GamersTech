@@ -10,6 +10,7 @@
 <%@ taglib prefix="pg" tagdir="/WEB-INF/tags" %>
 <c:set var="contextRoot" value="${pageContext.request.contextPath}"/>
 <%--@elvariable id="blog" type="gamersFun.com.example.gamersFun.entity.Blogs"--%>
+<%--@elvariable id="comment" type="gamersFun.com.example.gamersFun.entity.Comment"--%>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -203,7 +204,7 @@
                 </div>
             </div>
             <!--main content-->
-            <div class="main_content sidebar_right pb-50 pt-50">
+            <div class="main_content sidebar_right pb-50 pt-50 blogs-page">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 col-md-12 col-sm-12">
@@ -221,7 +222,7 @@
                                 <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                 <div class="single-social-share clearfix ">
                                     <div class="entry-meta meta-1 font-small color-grey float-left mt-10">
-                                        <span class="hit-count"><i class="ti-comment mr-5"></i>82 comments</span>
+                                        <span class="hit-count"><i class="ti-comment mr-5"></i>${fn:length(comments)} comments</span>
                                         <span class="hit-count"><i class="ti-heart mr-5"></i>68 likes</span>
                                         <span class="hit-count"><i class="ti-star mr-5"></i>8/10</span>
                                     </div>
@@ -238,14 +239,16 @@
                                 <div class="featured-slider-1 border-radius-5">
                                     <div class="featured-slider-1-items">
                                         <div class="slider-single">
+                                            <c:set var="blogPhoto" value="/blogPhoto/${blog.id}"/>
+                                            <img src="${blogPhoto}" id="blogPhotoImg" />
+
+                                        </div>
+                                       <%-- <div class="slider-single">
                                             <img src="http://via.placeholder.com/900x630" alt="">
                                         </div>
                                         <div class="slider-single">
                                             <img src="http://via.placeholder.com/900x630" alt="">
-                                        </div>
-                                        <div class="slider-single">
-                                            <img src="http://via.placeholder.com/900x630" alt="">
-                                        </div>
+                                        </div>--%>
                                     </div>
                                 </div>
                                 <div class="arrow-cover"></div>
@@ -382,93 +385,143 @@
                             <!--Comments-->
                             <div class="comments-area">
                                 <h3 class="mb-30">03 Comments</h3>
-                                <div class="comment-list">
-                                    <div class="single-comment justify-content-between d-flex">
-                                        <div class="userEntity justify-content-between d-flex">
-                                            <div class="thumb">
-                                                <img src="http://via.placeholder.com/223x223" alt="">
-                                            </div>
-                                            <div class="desc">
-                                                <p class="comment">
-                                                    Vestibulum euismod, leo eget varius gravida, eros enim interdum urna, non rutrum enim ante quis metus. Duis porta ornare nulla ut bibendum
-                                                </p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <h5>
-                                                            <a href="#">Robert</a>
-                                                        </h5>
-                                                        <p class="date">December 4, 2020 at 3:12 pm </p>
+                                <c:forEach var="comment" items="${thread}">
+                                    <c:set var="attribute" value="${comment}" scope="request"/>
+                                    <div class="comment-list">
+                                        <div class="single-comment justify-content-between d-flex">
+                                            <div class="userEntity justify-content-between d-flex">
+                                                <div class="thumb">
+                                                    <img src="http://via.placeholder.com/223x223" alt="">
+                                                </div>
+                                                <div class="desc">
+                                                    <p class="comment">
+                                                            ${comment.text}
+                                                    </p>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="d-flex align-items-center">
+                                                            <h5>
+                                                                <a href="#">${comment.user.userName}</a>
+                                                            </h5>
+                                                            <p class="date">${comment.createdDate} </p>
+                                                        </div>
+                                                        <div class="reply-btn">
+                                                            <a href="#" class="btn-reply text-uppercase">reply</a>
+                                                        </div>
                                                     </div>
-                                                    <div class="reply-btn">
-                                                        <a href="#" class="btn-reply text-uppercase">reply</a>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <jsp:include page="comment.jsp">
+                                        <jsp:param name="attribute" value="${comment}" />
+                                    </jsp:include>
+                                    <%--<div class="comment-list">
+                                        <div class="single-comment justify-content-between d-flex">
+                                            <div class="userEntity justify-content-between d-flex">
+                                                <div class="thumb">
+                                                    <img src="http://via.placeholder.com/223x223" alt="">
+                                                </div>
+                                                <div class="desc">
+                                                    <p class="comment">
+                                                        ${comment.text}
+                                                    </p>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="d-flex align-items-center">
+                                                            <h5>
+                                                                <a href="#">${comment.blog.profile.user.userName}</a>
+                                                            </h5>
+                                                            <p class="date">${comment.createdDate} </p>
+                                                        </div>
+                                                        <div class="reply-btn">
+                                                            <a href="#" class="btn-reply text-uppercase">reply</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <c:forEach var="commentLevel1" items="${comment.comments}">
+                                        <div class="single-comment justify-content-between d-flex" style="margin-left: 100px">
+                                            <div class="userEntity justify-content-between d-flex" style="margin-bottom: 50px;">
+                                                <div class="thumb">
+                                                    <img src="http://via.placeholder.com/223x223" alt="">
+                                                </div>
+                                                <div class="desc">
+                                                    <p class="comment">
+                                                            ${commentLevel1.text}
+                                                    </p>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="d-flex align-items-center">
+                                                            <h5>
+                                                                <a href="#">${commentLevel1.user.userName}</a>
+                                                            </h5>
+                                                            <p class="date">${commentLevel1.createdDate} </p>
+                                                        </div>
+                                                        <div class="reply-btn">
+                                                            <a href="#" class="btn-reply text-uppercase">reply</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="comment-list">
-                                    <div class="single-comment justify-content-between d-flex">
-                                        <div class="userEntity justify-content-between d-flex">
-                                            <div class="thumb">
-                                                <img src="http://via.placeholder.com/223x223" alt="">
-                                            </div>
-                                            <div class="desc">
-                                                <p class="comment">
-                                                    Sed ac lorem felis. Ut in odio lorem. Quisque magna dui, maximus ut commodo sed, vestibulum ac nibh. Aenean a tortor in sem tempus auctor
-                                                </p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <h5>
-                                                            <a href="#">Maria</a>
-                                                        </h5>
-                                                        <p class="date">December 4, 2020 at 3:12 pm </p>
+                                        <c:forEach var="commentLevel2" items="${commentLevel1.comments}">
+                                            <div class="single-comment justify-content-between d-flex" style="margin-left: 120px">
+                                                <div class="userEntity justify-content-between d-flex" style="margin-bottom: 50px;">
+                                                    <div class="thumb">
+                                                        <img src="http://via.placeholder.com/223x223" alt="">
                                                     </div>
-                                                    <div class="reply-btn">
-                                                        <a href="#" class="btn-reply text-uppercase">reply</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="comment-list">
-                                    <div class="single-comment justify-content-between d-flex">
-                                        <div class="userEntity justify-content-between d-flex">
-                                            <div class="thumb">
-                                                <img src="http://via.placeholder.com/223x223" alt="">
-                                            </div>
-                                            <div class="desc">
-                                                <p class="comment">
-                                                    Donec in ullamcorper quam. Aenean vel nibh eu magna gravida fermentum. Praesent eget nisi pulvinar, sollicitudin eros vitae, tristique odio.
-                                                </p>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <h5>
-                                                            <a href="#">Robert</a>
-                                                        </h5>
-                                                        <p class="date">December 4, 2020 at 3:12 pm </p>
-                                                    </div>
-                                                    <div class="reply-btn">
-                                                        <a href="#" class="btn-reply text-uppercase">reply</a>
+                                                    <div class="desc">
+                                                        <p class="comment">
+                                                                ${commentLevel2.text}
+                                                        </p>
+                                                        <div class="d-flex justify-content-between">
+                                                            <div class="d-flex align-items-center">
+                                                                <h5>
+                                                                    <a href="#">${commentLevel2.user.userName}</a>
+                                                                </h5>
+                                                                <p class="date">${commentLevel2.createdDate} </p>
+                                                            </div>
+                                                            <div class="reply-btn">
+                                                                <a href="#" class="btn-reply text-uppercase">reply</a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            <c:forEach var="commentLevel3" items="${commentLevel2.comments}">
+                                                ${commentLevel3.text}
+                                            </c:forEach>
+                                        </c:forEach>
+                                    </c:forEach>--%>
+                                </c:forEach>
+
                             </div>
                             <!--comment form-->
                             <div class="comment-form">
                                 <h3 class="mb-30">Leave a Reply</h3>
-                                <form class="form-contact comment_form" action="#" id="commentForm">
+                                <c:url value="${contextRoot}/addComment" var="addCommentAction"/>
+                                <form:form class="form-contact comment_form" action="${addCommentAction}" id="commentForm" modelAttribute="comment">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <input type="hidden" name="blogID" value="${blog.id}"/>
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="form-group">
-                                                <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9" placeholder="Write Comment"></textarea>
+                                            <div class="alert alert-success d-none" role="alert">
+                                                <strong>Thanks!</strong> You successfully add comment.
+                                            </div>
+                                            <div class="alert alert-danger d-none" role="alert">
+                                                <strong>ERROR!</strong> Sorry you unable to add new comment.
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <form:textarea path="text" cssClass="form-control w-100" id="comment" cols="30" rows="9" title="Write Comment"/>
+                                            </div>
+                                        </div>
+                                        <%--<div class="col-sm-6">
                                             <div class="form-group">
                                                 <input class="form-control" name="name" id="name" type="text" placeholder="Name">
                                             </div>
@@ -482,12 +535,12 @@
                                             <div class="form-group">
                                                 <input class="form-control" name="website" id="website" type="text" placeholder="Website">
                                             </div>
-                                        </div>
+                                        </div>--%>
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="button button-contactForm">Post Comment</button>
                                     </div>
-                                </form>
+                                </form:form>
                             </div>
                         </div>
                         <!--col-lg-8-->
