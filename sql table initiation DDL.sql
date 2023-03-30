@@ -63,6 +63,22 @@ CREATE TABLE IF NOT EXISTS `category_newspage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
+CREATE TABLE  IF NOT EXISTS `comments` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_date` datetime DEFAULT NULL,
+  `text` varchar(250) NOT NULL,
+  `blog_id` bigint DEFAULT NULL,
+  `comment_id` bigint DEFAULT NULL,
+  `user_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK9aakob3a7aghrm94k9kmbrjqd` (`blog_id`),
+  KEY `FKe2dbs56lhmp8fucafi3xvhjyd` (`comment_id`),
+  KEY `FK8omq0tc18jd43bu5tjh6jvraq` (`user_id`),
+  CONSTRAINT `FK8omq0tc18jd43bu5tjh6jvraq` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK9aakob3a7aghrm94k9kmbrjqd` FOREIGN KEY (`blog_id`) REFERENCES `blogs` (`id`),
+  CONSTRAINT `FKe2dbs56lhmp8fucafi3xvhjyd` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
 INSERT  INTO category (id, name, created_date) VALUES 
 (1,"PC",current_timestamp()),
 (2,"PS5",current_timestamp()),
@@ -71,7 +87,7 @@ INSERT  INTO category (id, name, created_date) VALUES
 
 
 INSERT  INTO news_page (id,subject, body,  image_url,created_date, lastupdated_date )  VALUES
-('2','sniper elite 5','<p>Sniper elite 5 is released and graphics is amazing</p>','image url',current_date(),current_timestamp()),
+('2','sniper elite 5','<p>Sniper elite 5 is released and graphics is amazing</p>','image url',current_timestamp(),current_timestamp()),
 ('3','Resident evil vilage','<p>Resident evil vilage is amazing</p>','image url',current_timestamp(),current_timestamp()),
 ('1','image_news_page_1024','<p>this si eyad blog</p>','image url',current_timestamp(),current_timestamp());
 
