@@ -22,7 +22,7 @@ public class CategoryEntity {
     @Column(name = "name")
     private String name;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     @Generated(GenerationTime.INSERT)
     private Date created_date;

@@ -31,12 +31,12 @@ public class NewsPageEntity {
     @Column(name = "body")
     private String body;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     @Generated(GenerationTime.INSERT)
     private Date createdDate;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "lastupdated_date")
     @Generated(GenerationTime.ALWAYS)
     private Date lastUpdatedDate;

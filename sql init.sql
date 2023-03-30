@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS eyadodai; 
+CREATE SCHEMA IF NOT EXISTS gamesfun; 
 
-USE eyadodai;
+USE gamesfun;
 
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -63,17 +63,17 @@ CREATE TABLE IF NOT EXISTS `category_newspage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-INSERT  INTO category VALUES
+INSERT  INTO category (id, name, created_date) VALUES 
 (1,"PC",current_timestamp()),
 (2,"PS5",current_timestamp()),
 (3,"XBOX Series X",current_timestamp()),
 (4,"Switch",current_timestamp());
 
 
-INSERT  INTO news_page VALUES
-('2','sniper elite 5','Sniper elite 5 is released','<p>Sniper elite 5 is released and graphics is amazing</p>',current_timestamp()),
-('3','Resident evil vilage','Resident evil vilage is released','<p>Resident evil vilage is amazing</p>',current_timestamp()),
-('1','image_news_page_1024','First Gaming News Page','<p>this si eyad blog</p>',current_timestamp());
+INSERT  INTO news_page (id,subject, body,  image_url,created_date, lastupdated_date )  VALUES
+('2','sniper elite 5','<p>Sniper elite 5 is released and graphics is amazing</p>','image url',current_date(),current_timestamp()),
+('3','Resident evil vilage','<p>Resident evil vilage is amazing</p>','image url',current_timestamp(),current_timestamp()),
+('1','image_news_page_1024','<p>this si eyad blog</p>','image url',current_timestamp(),current_timestamp());
 
 
 INSERT  INTO category_newspage VALUES
